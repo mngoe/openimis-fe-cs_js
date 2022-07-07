@@ -1,2 +1,6 @@
 {
+    "currency": "Fcfa",
+    "cheque.mainMenu": "Check",
+    "menu.chequeImport": "Import Check",
+    "menu.chequeList": "Check List"
 }
