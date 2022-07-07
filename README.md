@@ -7,6 +7,7 @@ Here is the method we found :
 
 `
 cd ../openimis-fe-cmr-cs_js
+yarn install
 yarn build
 yarn link
 cd ../openimis-fe_js
