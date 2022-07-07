@@ -1,5 +1,6 @@
 {
     "currency": "Fcfa",
     "cheque.mainMenu": "Chèque",
-    "menu.chequeImport": "Import Cheque"
+    "menu.chequeImport": "Import Cheque",
+    "menu.chequeList": "Liste Cheque"
 }

@@ -8,7 +8,7 @@ import _getPrototypeOf from '@babel/runtime/helpers/getPrototypeOf';
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { Keyboard, ScreenShare } from '@material-ui/icons';
+import { ImportExport, ListAlt, ScreenShare } from '@material-ui/icons';
 import { withModulesManager, formatMessage, MainMenuContribution } from '@openimis/fe-core';
 import 'lodash';
 
@@ -16,14 +16,16 @@ var currency$1 = "Fcfa";
 var messages_en = {
 	currency: currency$1,
 	"cheque.mainMenu": "Check",
-	"menu.chequeImport": "Import Check"
+	"menu.chequeImport": "Import Check",
+	"menu.chequeList": "Check List"
 };
 
 var currency = "Fcfa";
 var messages_fr = {
 	currency: currency,
 	"cheque.mainMenu": "Chèque",
-	"menu.chequeImport": "Import Cheque"
+	"menu.chequeImport": "Import Cheque",
+	"menu.chequeList": "Liste Cheque"
 };
 
 var RIGHT_ADD = 111002;
@@ -56,8 +58,13 @@ var CmrCseMainMenu = /*#__PURE__*/function (_Component) {
         // RIGHT_SEARCH is shared by HF & HQ staff)
         entries.push({
           text: formatMessage(this.props.intl, "cheque", "menu.chequeImport"),
-          icon: /*#__PURE__*/React.createElement(Keyboard, null),
-          route: "/cheque"
+          icon: /*#__PURE__*/React.createElement(ImportExport, null),
+          route: "/cheque/import"
+        });
+        entries.push({
+          text: formatMessage(this.props.intl, "cheque", "menu.chequeList"),
+          icon: /*#__PURE__*/React.createElement(ListAlt, null),
+          route: "/cheque/list"
         });
       }
 

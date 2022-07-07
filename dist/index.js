@@ -31,14 +31,16 @@ var currency$1 = "Fcfa";
 var messages_en = {
 	currency: currency$1,
 	"cheque.mainMenu": "Check",
-	"menu.chequeImport": "Import Check"
+	"menu.chequeImport": "Import Check",
+	"menu.chequeList": "Check List"
 };
 
 var currency = "Fcfa";
 var messages_fr = {
 	currency: currency,
 	"cheque.mainMenu": "Chèque",
-	"menu.chequeImport": "Import Cheque"
+	"menu.chequeImport": "Import Cheque",
+	"menu.chequeList": "Liste Cheque"
 };
 
 var RIGHT_ADD = 111002;
@@ -71,8 +73,13 @@ var CmrCseMainMenu = /*#__PURE__*/function (_Component) {
         // RIGHT_SEARCH is shared by HF & HQ staff)
         entries.push({
           text: feCore.formatMessage(this.props.intl, "cheque", "menu.chequeImport"),
-          icon: /*#__PURE__*/React__default["default"].createElement(icons.Keyboard, null),
-          route: "/cheque"
+          icon: /*#__PURE__*/React__default["default"].createElement(icons.ImportExport, null),
+          route: "/cheque/import"
+        });
+        entries.push({
+          text: feCore.formatMessage(this.props.intl, "cheque", "menu.chequeList"),
+          icon: /*#__PURE__*/React__default["default"].createElement(icons.ListAlt, null),
+          route: "/cheque/list"
         });
       }
 
