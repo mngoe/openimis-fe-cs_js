@@ -28,8 +28,7 @@ export default {
     "moment",
     "prop-types",
     /^react.*/,
-    /^redux.*/,
-    "flat",
+    /^redux.*/
   ],
   plugins: [
     json(),

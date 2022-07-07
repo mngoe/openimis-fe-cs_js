@@ -1,16 +1,11 @@
-# openimis-fe-cs_js
+# openIMIS Frontend Template module
+This repository holds the files of the openIMIS Frontend Template module.
+It is dedicated to be bootstrap development of [openimis-fe_js](https://github.com/openimis/openimis-fe_js) modules, providing an empty (yet deployable) module.
 
+Please refer to [openimis-fe_js](https://github.com/openimis/openimis-fe_js) to see how to build and and deploy (in developement or server mode).
 
-Register new link :
+The module is built with [rollup](https://rollupjs.org/).
+In development mode, you can use `yarn link` and `yarn start` to continuously scan for changes and automatically update your development server.
 
-cd ../openimis-fe-cs_js
-yarn unlink
-cd ../openimis-fe_js
-yarn unlink @openimis/fe-cs
-cd ../openimis-fe-cs_js
-yarn install
-yarn link
-cd ../openimis-fe_js
-yarn link ../openimis-fe-cs_js
-yarn load-config openimis.json
-yarn install
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/openimis/openimis-fe-template_js.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/openimis/openimis-fe-template_js/alerts/)

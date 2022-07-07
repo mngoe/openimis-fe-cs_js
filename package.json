@@ -1,9 +1,10 @@
 {
-  "name": "@openimis/fe-cs",
+  "name": "@openimis/fe-cmr-cs",
   "version": "0.1.0",
   "license": "AGPL-3.0-only",
-  "main": "dist/index.js",
   "description": "Module Cheque Santé OpenImis",
+  "repository": "mngoe/openimis-fe-cmr-cs",
+  "main": "dist/index.js",
   "module": "dist/index.es.js",
   "engines": {
     "node": ">=8",
@@ -34,7 +35,7 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "flat": "^5.0.2"
+  "resolutions": {
+    "@openimis/fe": "portal:/private/var/www/openImis/openimis-fe_js"
   }
 }
