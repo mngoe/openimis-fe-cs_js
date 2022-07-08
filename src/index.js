@@ -1,6 +1,6 @@
 import messages_en from "./translations/en.json";
 import messages_fr from "./translations/fr.json";
-
+import reducer from "./reducer";
 import CmrCsModuleMainMenu from "./menus/CmrCsModuleMainMenu";
 
 import ChequeListPage from "./pages/ChequeListPage";
@@ -13,6 +13,7 @@ const DEFAULT_CONFIG = {
     { key: "en", messages: messages_en },
     { key: "fr", messages: messages_fr },
   ],
+  "reducers": [{ key: 'cmr_cs', reducer }],
   "core.MainMenu" : [CmrCsModuleMainMenu],
   "core.Router": [
     { path: ROUTE_CMR_CS_LIST, component: ChequeListPage },

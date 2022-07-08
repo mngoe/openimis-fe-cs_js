@@ -2,5 +2,6 @@
     "currency": "Fcfa",
     "cheque.mainMenu": "Chèque",
     "menu.chequeImport": "Import Cheque",
-    "menu.chequeList": "Liste Cheque"
+    "menu.chequeList": "Liste Cheque",
+    "Cheque.List.Header": "Liste des cheques"
 }

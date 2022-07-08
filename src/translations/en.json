@@ -2,5 +2,6 @@
     "currency": "Fcfa",
     "cheque.mainMenu": "Check",
     "menu.chequeImport": "Import Check",
-    "menu.chequeList": "Check List"
+    "menu.chequeList": "Check List",
+    "Cheque.List.Header": "Check List"
 }
