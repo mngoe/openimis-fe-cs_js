@@ -1,5 +1,5 @@
 import _defineProperty from '@babel/runtime/helpers/defineProperty';
-import { dispatchMutationResp, dispatchMutationErr, dispatchMutationReq, formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, FormattedMessage } from '@openimis/fe-core';
+import { dispatchMutationResp, dispatchMutationErr, dispatchMutationReq, formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, Table, formatMessageWithValues } from '@openimis/fe-core';
 import _extends from '@babel/runtime/helpers/extends';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
 import _createClass from '@babel/runtime/helpers/createClass';
@@ -11,6 +11,7 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { ImportExport, ListAlt, ScreenShare } from '@material-ui/icons';
 import 'lodash';
+import _assertThisInitialized from '@babel/runtime/helpers/assertThisInitialized';
 import { withTheme, withStyles } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux';
 
@@ -20,7 +21,10 @@ var messages_en = {
 	"cheque.mainMenu": "Check",
 	"menu.chequeImport": "Import Check",
 	"menu.chequeList": "Check List",
-	"Cheque.List.Header": "Check List"
+	"Cheque.List.Header": "Check List",
+	"cmr_cs.table": "Table Check ({count})",
+	"cmr_cs.checknum": "Check Number",
+	"cmr_cs.checkstate": "Check Status"
 };
 
 var currency = "Fcfa";
@@ -29,7 +33,10 @@ var messages_fr = {
 	"cheque.mainMenu": "Chèque",
 	"menu.chequeImport": "Import Cheque",
 	"menu.chequeList": "Liste Cheque",
-	"Cheque.List.Header": "Liste des cheques"
+	"Cheque.List.Header": "Liste des cheques",
+	"cmr_cs.table": "Table Chèque {count}",
+	"cmr_cs.checknum": "Numéro Cheque",
+	"cmr_cs.checkstate": "Statut Cheque"
 };
 
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -176,9 +183,24 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(ChequeListPage);
 
   function ChequeListPage() {
+    var _this;
+
     _classCallCheck(this, ChequeListPage);
 
-    return _super.apply(this, arguments);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      page: 0,
+      pageSize: 10,
+      afterCursor: null,
+      beforeCursor: null
+    });
+
+    return _this;
   }
 
   _createClass(ChequeListPage, [{
@@ -189,25 +211,41 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props;
-          _this$props.intl;
-          var classes = _this$props.classes,
+      var _this$props = this.props,
+          intl = _this$props.intl,
+          classes = _this$props.classes,
           fetchingCheques = _this$props.fetchingCheques,
           errorCheques = _this$props.errorCheques;
           _this$props.fetchedMyCheques;
-          var myCheques = _this$props.myCheques;
-          _this$props.myChequesPageInfo;
+          var myCheques = _this$props.myCheques,
+          myChequesPageInfo = _this$props.myChequesPageInfo;
+      var headers = ["cmr_cs.checknum", "cmr_cs.checkstate"];
+      var itemFormatters = [function (e) {
+        return e.code;
+      }, function (e) {
+        return e.name;
+      }];
       return /*#__PURE__*/React.createElement("div", {
         className: classes.page
       }, /*#__PURE__*/React.createElement(ProgressOrError, {
         progress: fetchingCheques,
         error: errorCheques
-      }), /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement(FormattedMessage, {
-        module: "CmrCs",
-        id: "Cheque.List.Header"
-      })), /*#__PURE__*/React.createElement("table", null, !!myCheques && myCheques.map(function (e) {
-        return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, e.code), /*#__PURE__*/React.createElement("td", null, e.name));
-      })));
+      }), /*#__PURE__*/React.createElement(Table, {
+        module: "cmr_cs",
+        header: formatMessageWithValues(intl, "CmrCS", "cmr_cs.table", {
+          count: myChequesPageInfo.totalCount
+        }),
+        headers: headers,
+        itemFormatters: itemFormatters,
+        items: myCheques,
+        withPagination: true,
+        page: this.state.page,
+        pageSize: this.state.pageSize,
+        count: myChequesPageInfo.totalCount,
+        onChangePage: this.onChangePage,
+        onChangeRowsPerPage: this.onChangeRowsPerPage,
+        rowsPerPageOptions: this.rowsPerPageOptions
+      }));
     }
   }]);
 

@@ -3,5 +3,8 @@
     "cheque.mainMenu": "Chèque",
     "menu.chequeImport": "Import Cheque",
     "menu.chequeList": "Liste Cheque",
-    "Cheque.List.Header": "Liste des cheques"
+    "Cheque.List.Header": "Liste des cheques",
+    "cmr_cs.table": "Table Chèque {count}",
+    "cmr_cs.checknum": "Numéro Cheque",
+    "cmr_cs.checkstate": "Statut Cheque"
 }

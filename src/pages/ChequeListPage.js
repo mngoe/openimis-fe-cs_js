@@ -13,6 +13,13 @@ const styles = theme => ({
 
 class ChequeListPage extends Component {
 
+    state = {
+        page: 0,
+        pageSize: 10,
+        afterCursor: null,
+        beforeCursor: null,
+    }
+
     componentDidMount() {
         this.props.fetchCheques();
     }
@@ -28,18 +35,35 @@ class ChequeListPage extends Component {
             myChequesPageInfo 
         } = this.props;
 
+        let headers = [
+            "cmr_cs.checknum",
+            "cmr_cs.checkstate",
+        ]
+
+        let itemFormatters = [
+            e => e.code,
+            e => e.name,
+        ]
+
         return (
             <div className={classes.page}>
-                <ProgressOrError progress={fetchingCheques} error={errorCheques} />
-                <h1>
-                    <FormattedMessage module="CmrCs" id="Cheque.List.Header" />
-                </h1>
-                <table>
-                    {!!myCheques && myCheques.map(e=> (
-                        <tr><td>{e.code}</td><td>{e.name}</td></tr>
-                    ))}
-                </table>
-            </div>
+                <ProgressOrError progress={fetchingCheques} error={errorCheques} /> 
+                <Table
+                    module="cmr_cs"
+                    header={formatMessageWithValues(intl, "CmrCS", "cmr_cs.table", 
+                    {count: myChequesPageInfo.totalCount})}
+                    headers={headers}
+                    itemFormatters={itemFormatters}
+                    items={myCheques}
+                    withPagination={true}
+                    page={this.state.page}
+                    pageSize={this.state.pageSize}
+                    count={myChequesPageInfo.totalCount}
+                    onChangePage={this.onChangePage}
+                    onChangeRowsPerPage={this.onChangeRowsPerPage}
+                    rowsPerPageOptions={this.rowsPerPageOptions}
+                />
+                </div>
         )
     }
 }
