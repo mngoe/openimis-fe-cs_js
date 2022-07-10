@@ -10,8 +10,15 @@ function reducer(
         fetchedMyCheque: false,
         myCheques: [],
         myChequesPageInfo: { totalCount: 0 },
+
+        fetchingChequesImport: false,
+        errorChequesImport: null,
+        fetchedMyChequeImport: false,
+        myChequesImport: [],
+        myChequesImportPageInfo: { totalCount: 0 },
+
         submittingMutation: false,
-        mutation: {},        
+        mutation: {},    
     },
     action,
 ) {
@@ -40,8 +47,56 @@ function reducer(
         case 'CMS_CS_CHECKLIST_ERR':
             return {
                 ...state,
-                fetchingMyEntities: false,
-                errorMyEntities: formatServerError(action.payload)
+                fetchedMyCheques: false,
+                errorCheques: formatServerError(action.payload)
+            };
+        case 'CMS_CS_CHECKLIST_REQ':
+            return {
+                ...state,
+                fetchingCheques: true,
+                fetchedMyCheques: false,
+                myCheques: [],
+                myChequesPageInfo: { totalCount: 0 },
+                errorCheques: null,
+            };
+        case 'CMS_CS_CHECKLIST_RESP':
+            return {
+                ...state,
+                fetchingCheques: false,
+                fetchedMyCheques: true,
+                myCheques: parseData(action.payload.data.healthFacilities),
+                myChequesPageInfo: pageInfo(action.payload.data.healthFacilities),
+                errorCheques: formatGraphQLError(action.payload)
+            };
+        case 'CMS_CS_CHECKLIST_ERR':
+            return {
+                ...state,
+                fetchedMyCheques: false,
+                errorCheques: formatServerError(action.payload)
+            };
+        case 'CMS_CS_CHECKIMPORT_REQ':
+            return {
+                ...state,
+                fetchingChequesImport: true,
+                fetchedMyChequesImport: false,
+                myChequesImport: [],
+                myChequesImportPageInfo: { totalCount: 0 },
+                errorChequesImport: null,
+            };
+        case 'CMS_CS_CHECKIMPORT_RESP':
+            return {
+                ...state,
+                fetchingChequesImport: false,
+                fetchedMyChequesImport: true,
+                myChequesImport: parseData(action.payload.data.healthFacilities),
+                myChequesImportPageInfo: pageInfo(action.payload.data.healthFacilities),
+                errorChequesImport: formatGraphQLError(action.payload)
+            };
+        case 'CMS_CS_CHECKIMPORT_ERR':
+            return {
+                ...state,
+                fetchedMyChequesImport: false,
+                errorChequesImport: formatServerError(action.payload)
             };
         case 'MY_MODULE_CREATE_ENTITY_REQ':
             return dispatchMutationReq(state, action)
