@@ -6,5 +6,12 @@
     "Cheque.List.Header": "Liste des cheques",
     "cmr_cs.table": "Table Chèque {count}",
     "cmr_cs.checknum": "Numéro Cheque",
-    "cmr_cs.checkstate": "Statut Cheque"
+    "cmr_cs.checkstate": "Statut Cheque",
+    "cmr_cs.tableImport": "Table Import Check ({count})",
+    "cmr_cs.importId": "Import Id",
+    "cmr_cs.importDate": "Import Date",
+    "cmr_cs.importUser": "Import User",
+    "cmr_cs.uploadFile": "Envoyer fichier",
+    "cmr_cs.importChecks": "Importer les cheques",
+    "cmr_cs.importCheckFile": "Importer les fichiers de cheques"
 }

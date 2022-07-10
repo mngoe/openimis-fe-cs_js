@@ -15,14 +15,28 @@ class ChequeListPage extends Component {
 
     state = {
         page: 0,
-        pageSize: 10,
+        pageSize: 20,
         afterCursor: null,
         beforeCursor: null,
     }
 
     componentDidMount() {
-        this.props.fetchCheques();
+        this.query();
     }
+
+    query = () => {
+        let prms = [];
+        prms.push(`first: ${this.state.pageSize}`);
+        if (!!this.state.afterCursor) {
+            prms.push(`after: "${this.state.afterCursor}"`)
+        }
+        if (!!this.state.beforeCursor) {
+            prms.push(`before: "${this.state.beforeCursor}"`)
+        }
+        prms.push(`orderBy: ["code"]`);
+        this.props.fetchCheques(prms);
+    }
+
 
     render() {
         const { 

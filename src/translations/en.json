@@ -6,5 +6,12 @@
     "Cheque.List.Header": "Check List",
     "cmr_cs.table": "Table Check ({count})",
     "cmr_cs.checknum": "Check Number",
-    "cmr_cs.checkstate": "Check Status"
+    "cmr_cs.checkstate": "Check Status",
+    "cmr_cs.tableImport": "Table Import Check ({count})",
+    "cmr_cs.importId": "Import Id",
+    "cmr_cs.importDate": "Import Date",
+    "cmr_cs.importUser": "Import User",
+    "cmr_cs.uploadFile": "Upload File",
+    "cmr_cs.importChecks": "Import Checks",
+    "cmr_cs.importCheckFile": "Import Check File"
 }

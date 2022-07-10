@@ -4,9 +4,10 @@ import reducer from "./reducer";
 import CmrCsModuleMainMenu from "./menus/CmrCsModuleMainMenu";
 
 import ChequeListPage from "./pages/ChequeListPage";
+import ChequeImportPage from "./pages/ChequeImportPage";
 
 const ROUTE_CMR_CS_LIST = "cheque/list"
-const ROUTE_CMR_CS_IMPORT = "cheque/list"
+const ROUTE_CMR_CS_IMPORT = "cheque/import"
 
 const DEFAULT_CONFIG = {
   "translations": [
@@ -17,7 +18,7 @@ const DEFAULT_CONFIG = {
   "core.MainMenu" : [CmrCsModuleMainMenu],
   "core.Router": [
     { path: ROUTE_CMR_CS_LIST, component: ChequeListPage },
-   // { path: ROUTE_CMR_CS_IMPORT, component: ChequeImportPage },
+    { path: ROUTE_CMR_CS_IMPORT, component: ChequeImportPage },
   ],
 }
 
