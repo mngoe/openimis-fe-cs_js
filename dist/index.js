@@ -384,12 +384,49 @@ var ChequeListPage$1 = reactIntl.injectIntl(styles$2.withTheme(styles$2.withStyl
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var CREATECHEQUE_URL = "".concat(feCore.baseApiUrl, "/cheque/importfile");
 
 var styles = function styles(theme) {
   return {
     page: theme.page
   };
 };
+
+var file = '';
+
+function handleChange(event) {
+  file = event.target.files[0];
+  console.log(file);
+}
+
+function handleSubmit(event) {
+  console.log(file);
+  event.preventDefault();
+  var formData = new FormData();
+  console.log("Submit");
+  formData.append('file', file);
+  formData.append('fileName', file.name);
+  console.log(formData);
+
+  try {
+    fetch("".concat(CREATECHEQUE_URL, "/upload"), {
+      headers: feCore.apiHeaders,
+      body: formData,
+      method: "POST",
+      credentials: "same-origin"
+    }).then(function (response) {
+      if (response.status >= 400) {
+        throw new Error("Unknown error");
+      }
+
+      var payload = response.json();
+      console > log(payload);
+    });
+  } catch (error) {
+    console.error(error);
+    console > log(error);
+  }
+}
 
 var ChequeImportPage = /*#__PURE__*/function (_Component) {
   _inherits__default["default"](ChequeImportPage, _Component);
@@ -487,12 +524,14 @@ var ChequeImportPage = /*#__PURE__*/function (_Component) {
         inputProps: {
           accept: ".csv, application/csv, text/csv"
         },
-        type: "file"
+        type: "file",
+        onChange: handleChange
       })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
         item: true
       }, /*#__PURE__*/React__default["default"].createElement(core.Button, {
         variant: "contained",
-        color: "primary"
+        color: "primary",
+        onClick: handleSubmit
       }, feCore.formatMessageWithValues(intl, "CmrCS", "cmr_cs.uploadFile"))))))), /*#__PURE__*/React__default["default"].createElement("hr", null), /*#__PURE__*/React__default["default"].createElement(feCore.Table, {
         module: "cmr_cs",
         header: feCore.formatMessageWithValues(intl, "CmrCS", "cmr_cs.tableImport", {

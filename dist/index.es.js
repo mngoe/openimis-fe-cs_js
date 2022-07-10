@@ -1,5 +1,5 @@
 import _defineProperty from '@babel/runtime/helpers/defineProperty';
-import { dispatchMutationResp, dispatchMutationErr, dispatchMutationReq, formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, Table, formatMessageWithValues } from '@openimis/fe-core';
+import { dispatchMutationResp, dispatchMutationErr, dispatchMutationReq, formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, Table, formatMessageWithValues, apiHeaders, baseApiUrl } from '@openimis/fe-core';
 import _extends from '@babel/runtime/helpers/extends';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
 import _createClass from '@babel/runtime/helpers/createClass';
@@ -368,12 +368,49 @@ var ChequeListPage$1 = injectIntl(withTheme(withStyles(styles$1)(connect(mapStat
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var CREATECHEQUE_URL = "".concat(baseApiUrl, "/cheque/importfile");
 
 var styles = function styles(theme) {
   return {
     page: theme.page
   };
 };
+
+var file = '';
+
+function handleChange(event) {
+  file = event.target.files[0];
+  console.log(file);
+}
+
+function handleSubmit(event) {
+  console.log(file);
+  event.preventDefault();
+  var formData = new FormData();
+  console.log("Submit");
+  formData.append('file', file);
+  formData.append('fileName', file.name);
+  console.log(formData);
+
+  try {
+    fetch("".concat(CREATECHEQUE_URL, "/upload"), {
+      headers: apiHeaders,
+      body: formData,
+      method: "POST",
+      credentials: "same-origin"
+    }).then(function (response) {
+      if (response.status >= 400) {
+        throw new Error("Unknown error");
+      }
+
+      var payload = response.json();
+      console > log(payload);
+    });
+  } catch (error) {
+    console.error(error);
+    console > log(error);
+  }
+}
 
 var ChequeImportPage = /*#__PURE__*/function (_Component) {
   _inherits(ChequeImportPage, _Component);
@@ -471,12 +508,14 @@ var ChequeImportPage = /*#__PURE__*/function (_Component) {
         inputProps: {
           accept: ".csv, application/csv, text/csv"
         },
-        type: "file"
+        type: "file",
+        onChange: handleChange
       })), /*#__PURE__*/React.createElement(Grid, {
         item: true
       }, /*#__PURE__*/React.createElement(Button, {
         variant: "contained",
-        color: "primary"
+        color: "primary",
+        onClick: handleSubmit
       }, formatMessageWithValues(intl, "CmrCS", "cmr_cs.uploadFile"))))))), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(Table, {
         module: "cmr_cs",
         header: formatMessageWithValues(intl, "CmrCS", "cmr_cs.tableImport", {
