@@ -4,18 +4,18 @@ import {
 
 export function fetchCheques() {
     const payload = formatPageQueryWithCount(
-        "healthFacilities",
+        "chequeimportline",
         null,
-        ["code", "name"]
+        ["idChequeImportLine", "chequeImportLineCode" ,"chequeImportLineDate", "chequeImportLineStatus"]
     );
     return graphql(payload, 'CMS_CS_CHECKLIST');
 }
 
 export function fetchChequesImport() {
     const payload = formatPageQueryWithCount(
-        "healthFacilities",
+        "chequeimport",
         null,
-        ["id","code", "name"]
+        ["idChequeImport","importDate", "storedFile"]
     );
     return graphql(payload, 'CMS_CS_CHECKIMPORT');
 }

@@ -11,6 +11,7 @@
     "cmr_cs.importId": "Import Id",
     "cmr_cs.importDate": "Import Date",
     "cmr_cs.importUser": "Import User",
+    "cmr_cs.storedFile": "Import File",
     "cmr_cs.uploadFile": "Upload File",
     "cmr_cs.importChecks": "Import Checks",
     "cmr_cs.importCheckFile": "Import Check File"

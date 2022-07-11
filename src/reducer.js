@@ -23,9 +23,6 @@ function reducer(
     action,
 ) {
     switch (action.type) {
-        case 'LOCATION_USER_DISTRICTS_RESP':
-            console.log(`Hé, I'm My Module... are you in ${action.payload.data.userDistricts[0].name}?`);
-            return state;                                  
         case 'CMS_CS_CHECKLIST_REQ':
             return {
                 ...state,
@@ -40,32 +37,8 @@ function reducer(
                 ...state,
                 fetchingCheques: false,
                 fetchedMyCheques: true,
-                myCheques: parseData(action.payload.data.healthFacilities),
-                myChequesPageInfo: pageInfo(action.payload.data.healthFacilities),
-                errorCheques: formatGraphQLError(action.payload)
-            };
-        case 'CMS_CS_CHECKLIST_ERR':
-            return {
-                ...state,
-                fetchedMyCheques: false,
-                errorCheques: formatServerError(action.payload)
-            };
-        case 'CMS_CS_CHECKLIST_REQ':
-            return {
-                ...state,
-                fetchingCheques: true,
-                fetchedMyCheques: false,
-                myCheques: [],
-                myChequesPageInfo: { totalCount: 0 },
-                errorCheques: null,
-            };
-        case 'CMS_CS_CHECKLIST_RESP':
-            return {
-                ...state,
-                fetchingCheques: false,
-                fetchedMyCheques: true,
-                myCheques: parseData(action.payload.data.healthFacilities),
-                myChequesPageInfo: pageInfo(action.payload.data.healthFacilities),
+                myCheques: parseData(action.payload.data.chequeimportline),
+                myChequesPageInfo: pageInfo(action.payload.data.chequeimportline),
                 errorCheques: formatGraphQLError(action.payload)
             };
         case 'CMS_CS_CHECKLIST_ERR':
@@ -88,8 +61,8 @@ function reducer(
                 ...state,
                 fetchingChequesImport: false,
                 fetchedMyChequesImport: true,
-                myChequesImport: parseData(action.payload.data.healthFacilities),
-                myChequesImportPageInfo: pageInfo(action.payload.data.healthFacilities),
+                myChequesImport: parseData(action.payload.data.chequeimport),
+                myChequesImportPageInfo: pageInfo(action.payload.data.chequeimport),
                 errorChequesImport: formatGraphQLError(action.payload)
             };
         case 'CMS_CS_CHECKIMPORT_ERR':
@@ -97,13 +70,7 @@ function reducer(
                 ...state,
                 fetchedMyChequesImport: false,
                 errorChequesImport: formatServerError(action.payload)
-            };
-        case 'MY_MODULE_CREATE_ENTITY_REQ':
-            return dispatchMutationReq(state, action)
-        case 'MY_MODULE_CREATE_ENTITY_ERR':
-            return dispatchMutationErr(state, action);
-        case 'MY_MODULE_CREATE_ENTITY_RESP':
-            return dispatchMutationResp(state, "createLocation", action);         
+            };  
         default:
             return state;
     }

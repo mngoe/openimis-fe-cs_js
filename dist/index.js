@@ -46,6 +46,7 @@ var messages_en = {
 	"cmr_cs.importId": "Import Id",
 	"cmr_cs.importDate": "Import Date",
 	"cmr_cs.importUser": "Import User",
+	"cmr_cs.storedFile": "Import File",
 	"cmr_cs.uploadFile": "Upload File",
 	"cmr_cs.importChecks": "Import Checks",
 	"cmr_cs.importCheckFile": "Import Check File"
@@ -64,6 +65,7 @@ var messages_fr = {
 	"cmr_cs.tableImport": "Table Import Check ({count})",
 	"cmr_cs.importId": "Import Id",
 	"cmr_cs.importDate": "Import Date",
+	"cmr_cs.storedFile": "Fichier Importé",
 	"cmr_cs.importUser": "Import User",
 	"cmr_cs.uploadFile": "Envoyer fichier",
 	"cmr_cs.importChecks": "Importer les cheques",
@@ -96,10 +98,6 @@ function reducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case 'LOCATION_USER_DISTRICTS_RESP':
-      console.log("H\xE9, I'm My Module... are you in ".concat(action.payload.data.userDistricts[0].name, "?"));
-      return state;
-
     case 'CMS_CS_CHECKLIST_REQ':
       return _objectSpread$1(_objectSpread$1({}, state), {}, {
         fetchingCheques: true,
@@ -115,34 +113,8 @@ function reducer() {
       return _objectSpread$1(_objectSpread$1({}, state), {}, {
         fetchingCheques: false,
         fetchedMyCheques: true,
-        myCheques: feCore.parseData(action.payload.data.healthFacilities),
-        myChequesPageInfo: feCore.pageInfo(action.payload.data.healthFacilities),
-        errorCheques: feCore.formatGraphQLError(action.payload)
-      });
-
-    case 'CMS_CS_CHECKLIST_ERR':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
-        fetchedMyCheques: false,
-        errorCheques: feCore.formatServerError(action.payload)
-      });
-
-    case 'CMS_CS_CHECKLIST_REQ':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
-        fetchingCheques: true,
-        fetchedMyCheques: false,
-        myCheques: [],
-        myChequesPageInfo: {
-          totalCount: 0
-        },
-        errorCheques: null
-      });
-
-    case 'CMS_CS_CHECKLIST_RESP':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
-        fetchingCheques: false,
-        fetchedMyCheques: true,
-        myCheques: feCore.parseData(action.payload.data.healthFacilities),
-        myChequesPageInfo: feCore.pageInfo(action.payload.data.healthFacilities),
+        myCheques: feCore.parseData(action.payload.data.chequeimportline),
+        myChequesPageInfo: feCore.pageInfo(action.payload.data.chequeimportline),
         errorCheques: feCore.formatGraphQLError(action.payload)
       });
 
@@ -167,8 +139,8 @@ function reducer() {
       return _objectSpread$1(_objectSpread$1({}, state), {}, {
         fetchingChequesImport: false,
         fetchedMyChequesImport: true,
-        myChequesImport: feCore.parseData(action.payload.data.healthFacilities),
-        myChequesImportPageInfo: feCore.pageInfo(action.payload.data.healthFacilities),
+        myChequesImport: feCore.parseData(action.payload.data.chequeimport),
+        myChequesImportPageInfo: feCore.pageInfo(action.payload.data.chequeimport),
         errorChequesImport: feCore.formatGraphQLError(action.payload)
       });
 
@@ -177,15 +149,6 @@ function reducer() {
         fetchedMyChequesImport: false,
         errorChequesImport: feCore.formatServerError(action.payload)
       });
-
-    case 'MY_MODULE_CREATE_ENTITY_REQ':
-      return feCore.dispatchMutationReq(state, action);
-
-    case 'MY_MODULE_CREATE_ENTITY_ERR':
-      return feCore.dispatchMutationErr(state, action);
-
-    case 'MY_MODULE_CREATE_ENTITY_RESP':
-      return feCore.dispatchMutationResp(state, "createLocation", action);
 
     default:
       return state;
@@ -253,11 +216,11 @@ var mapStateToProps$2 = function mapStateToProps(state) {
 var CmrCsModuleMainMenu = feCore.withModulesManager(reactIntl.injectIntl(reactRedux.connect(mapStateToProps$2)(CmrCseMainMenu)));
 
 function fetchCheques() {
-  var payload = feCore.formatPageQueryWithCount("healthFacilities", null, ["code", "name"]);
+  var payload = feCore.formatPageQueryWithCount("chequeimportline", null, ["idChequeImportLine", "chequeImportLineCode", "chequeImportLineDate", "chequeImportLineStatus"]);
   return feCore.graphql(payload, 'CMS_CS_CHECKLIST');
 }
 function fetchChequesImport() {
-  var payload = feCore.formatPageQueryWithCount("healthFacilities", null, ["id", "code", "name"]);
+  var payload = feCore.formatPageQueryWithCount("chequeimport", null, ["idChequeImport", "importDate", "storedFile"]);
   return feCore.graphql(payload, 'CMS_CS_CHECKIMPORT');
 }
 
@@ -306,7 +269,7 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
         prms.push("before: \"".concat(_this.state.beforeCursor, "\""));
       }
 
-      prms.push("orderBy: [\"code\"]");
+      prms.push("orderBy: [\"chequeImportLineCode\"]");
 
       _this.props.fetchCheques(prms);
     });
@@ -332,9 +295,9 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
           myChequesPageInfo = _this$props.myChequesPageInfo;
       var headers = ["cmr_cs.checknum", "cmr_cs.checkstate"];
       var itemFormatters = [function (e) {
-        return e.code;
+        return e.chequeImportLineCode;
       }, function (e) {
-        return e.name;
+        return e.chequeImportLineStatus;
       }];
       return /*#__PURE__*/React__default["default"].createElement("div", {
         className: classes.page
@@ -384,12 +347,49 @@ var ChequeListPage$1 = reactIntl.injectIntl(styles$2.withTheme(styles$2.withStyl
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var CREATECHEQUE_URL = "".concat(feCore.baseApiUrl, "/cheque/importfile");
 
 var styles = function styles(theme) {
   return {
     page: theme.page
   };
 };
+
+var file = '';
+
+function handleChange(event) {
+  file = event.target.files[0];
+  console.log(file);
+}
+
+function handleSubmit(event) {
+  console.log(file);
+  event.preventDefault();
+  var formData = new FormData();
+  console.log("Submit");
+  formData.append('file', file);
+  formData.append('fileName', file.name);
+  console.log(formData);
+
+  try {
+    fetch("".concat(CREATECHEQUE_URL, "/upload"), {
+      headers: feCore.apiHeaders,
+      body: formData,
+      method: "POST",
+      credentials: "same-origin"
+    }).then(function (response) {
+      if (response.status >= 400) {
+        throw new Error("Unknown error");
+      }
+
+      var payload = response.json();
+      console > log(payload);
+    });
+  } catch (error) {
+    console.error(error);
+    console > log(error);
+  }
+}
 
 var ChequeImportPage = /*#__PURE__*/function (_Component) {
   _inherits__default["default"](ChequeImportPage, _Component);
@@ -450,13 +450,13 @@ var ChequeImportPage = /*#__PURE__*/function (_Component) {
           _this$props.fetchedMyChequesImport;
           var myChequesImport = _this$props.myChequesImport,
           myChequesImportPageInfo = _this$props.myChequesImportPageInfo;
-      var headers = ["cmr_cs.importId", "cmr_cs.importDate", "cmr_cs.importUser"];
+      var headers = ["cmr_cs.importId", "cmr_cs.importDate", "cmr_cs.storedFile"];
       var itemFormatters = [function (e) {
-        return e.id;
+        return e.idChequeImport;
       }, function (e) {
-        return e.code;
+        return e.importDate;
       }, function (e) {
-        return e.name;
+        return e.storedFile;
       }];
       return /*#__PURE__*/React__default["default"].createElement("div", {
         className: classes.page
@@ -487,12 +487,14 @@ var ChequeImportPage = /*#__PURE__*/function (_Component) {
         inputProps: {
           accept: ".csv, application/csv, text/csv"
         },
-        type: "file"
+        type: "file",
+        onChange: handleChange
       })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
         item: true
       }, /*#__PURE__*/React__default["default"].createElement(core.Button, {
         variant: "contained",
-        color: "primary"
+        color: "primary",
+        onClick: handleSubmit
       }, feCore.formatMessageWithValues(intl, "CmrCS", "cmr_cs.uploadFile"))))))), /*#__PURE__*/React__default["default"].createElement("hr", null), /*#__PURE__*/React__default["default"].createElement(feCore.Table, {
         module: "cmr_cs",
         header: feCore.formatMessageWithValues(intl, "CmrCS", "cmr_cs.tableImport", {

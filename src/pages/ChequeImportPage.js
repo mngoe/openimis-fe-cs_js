@@ -10,15 +10,61 @@ import {
     Divider,
     Input,
     FormControlLabel,
-    Checkbox
   } from "@material-ui/core";
-import { formatMessageWithValues, FormattedMessage } from "@openimis/fe-core";
+import { formatMessageWithValues, FormattedMessage, baseApiUrl, apiHeaders } from "@openimis/fe-core";
 import { fetchChequesImport } from "../actions"
 import { ProgressOrError, Table } from "@openimis/fe-core";
+
+const CREATECHEQUE_URL = `${baseApiUrl}/cheque/importfile`;
 
 const styles = theme => ({
     page: theme.page,
 });
+
+let file = '';
+
+function handleChange(event) {
+  file = event.target.files[0];
+  console.log(file);
+}
+
+function  handleSubmit(event) {
+  console.log(file);
+  event.preventDefault()
+  const url = 'http://localhost:3000/uploadFile';
+  const formData = new FormData();
+  console.log("Submit");
+  
+  formData.append('file', file);
+  formData.append('fileName', file.name);
+  console.log(formData);
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  };
+  try {
+    fetch(`${CREATECHEQUE_URL}/upload`, {
+      headers: apiHeaders,
+      body: formData,
+      method: "POST",
+      credentials: "same-origin",
+    }).then(response => {
+      if (response.status >= 400) {
+        throw new Error("Unknown error");
+      }
+  
+      const payload = response.json();
+      console>log(payload);
+    });
+
+  } catch (error) {
+    console.error(error);
+    console>log(error)
+  }
+
+}
+
 
 class ChequeImportPage extends Component {
 
@@ -61,15 +107,14 @@ class ChequeImportPage extends Component {
         let headers = [
             "cmr_cs.importId",
             "cmr_cs.importDate",
-            "cmr_cs.importUser",
+            "cmr_cs.storedFile",
         ]
 
         let itemFormatters = [
-            e => e.id,
-            e => e.code,
-            e => e.name,
+            e => e.idChequeImport,
+            e => e.importDate,
+            e => e.storedFile,
         ]
-
         return (
             <div className={classes.page}>
                 <ProgressOrError progress={fetchingChequesImport} error={errorChequesImport} /> 
@@ -90,12 +135,14 @@ class ChequeImportPage extends Component {
                               accept: ".csv, application/csv, text/csv",
                             }}
                             type="file"
+                            onChange={handleChange}
                           />
                         </Grid>
                         <Grid item>
                           <Button
                             variant="contained"
                             color="primary"
+                            onClick={handleSubmit}
                           >
                             {formatMessageWithValues(intl, "CmrCS", "cmr_cs.uploadFile")}
                           </Button>
