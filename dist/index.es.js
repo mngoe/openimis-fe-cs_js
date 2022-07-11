@@ -1,5 +1,5 @@
 import _defineProperty from '@babel/runtime/helpers/defineProperty';
-import { dispatchMutationResp, dispatchMutationErr, dispatchMutationReq, formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, Table, formatMessageWithValues, apiHeaders, baseApiUrl } from '@openimis/fe-core';
+import { formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, Table, formatMessageWithValues, apiHeaders, baseApiUrl } from '@openimis/fe-core';
 import _extends from '@babel/runtime/helpers/extends';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
 import _createClass from '@babel/runtime/helpers/createClass';
@@ -80,10 +80,6 @@ function reducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case 'LOCATION_USER_DISTRICTS_RESP':
-      console.log("H\xE9, I'm My Module... are you in ".concat(action.payload.data.userDistricts[0].name, "?"));
-      return state;
-
     case 'CMS_CS_CHECKLIST_REQ':
       return _objectSpread$1(_objectSpread$1({}, state), {}, {
         fetchingCheques: true,
@@ -99,34 +95,8 @@ function reducer() {
       return _objectSpread$1(_objectSpread$1({}, state), {}, {
         fetchingCheques: false,
         fetchedMyCheques: true,
-        myCheques: parseData(action.payload.data.healthFacilities),
-        myChequesPageInfo: pageInfo(action.payload.data.healthFacilities),
-        errorCheques: formatGraphQLError(action.payload)
-      });
-
-    case 'CMS_CS_CHECKLIST_ERR':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
-        fetchedMyCheques: false,
-        errorCheques: formatServerError(action.payload)
-      });
-
-    case 'CMS_CS_CHECKLIST_REQ':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
-        fetchingCheques: true,
-        fetchedMyCheques: false,
-        myCheques: [],
-        myChequesPageInfo: {
-          totalCount: 0
-        },
-        errorCheques: null
-      });
-
-    case 'CMS_CS_CHECKLIST_RESP':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
-        fetchingCheques: false,
-        fetchedMyCheques: true,
-        myCheques: parseData(action.payload.data.healthFacilities),
-        myChequesPageInfo: pageInfo(action.payload.data.healthFacilities),
+        myCheques: parseData(action.payload.data.chequeimportline),
+        myChequesPageInfo: pageInfo(action.payload.data.chequeimportline),
         errorCheques: formatGraphQLError(action.payload)
       });
 
@@ -161,15 +131,6 @@ function reducer() {
         fetchedMyChequesImport: false,
         errorChequesImport: formatServerError(action.payload)
       });
-
-    case 'MY_MODULE_CREATE_ENTITY_REQ':
-      return dispatchMutationReq(state, action);
-
-    case 'MY_MODULE_CREATE_ENTITY_ERR':
-      return dispatchMutationErr(state, action);
-
-    case 'MY_MODULE_CREATE_ENTITY_RESP':
-      return dispatchMutationResp(state, "createLocation", action);
 
     default:
       return state;
@@ -237,7 +198,7 @@ var mapStateToProps$2 = function mapStateToProps(state) {
 var CmrCsModuleMainMenu = withModulesManager(injectIntl(connect(mapStateToProps$2)(CmrCseMainMenu)));
 
 function fetchCheques() {
-  var payload = formatPageQueryWithCount("healthFacilities", null, ["code", "name"]);
+  var payload = formatPageQueryWithCount("chequeimportline", null, ["idChequeImportLine", "chequeImportLineCode", "chequeImportLineDate", "chequeImportLineStatus"]);
   return graphql(payload, 'CMS_CS_CHECKLIST');
 }
 function fetchChequesImport() {
@@ -290,7 +251,7 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
         prms.push("before: \"".concat(_this.state.beforeCursor, "\""));
       }
 
-      prms.push("orderBy: [\"code\"]");
+      prms.push("orderBy: [\"chequeImportLineCode\"]");
 
       _this.props.fetchCheques(prms);
     });
@@ -316,9 +277,9 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
           myChequesPageInfo = _this$props.myChequesPageInfo;
       var headers = ["cmr_cs.checknum", "cmr_cs.checkstate"];
       var itemFormatters = [function (e) {
-        return e.code;
+        return e.chequeImportLineCode;
       }, function (e) {
-        return e.name;
+        return e.chequeImportLineStatus;
       }];
       return /*#__PURE__*/React.createElement("div", {
         className: classes.page

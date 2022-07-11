@@ -4,9 +4,9 @@ import {
 
 export function fetchCheques() {
     const payload = formatPageQueryWithCount(
-        "healthFacilities",
+        "chequeimportline",
         null,
-        ["code", "name"]
+        ["idChequeImportLine", "chequeImportLineCode" ,"chequeImportLineDate", "chequeImportLineStatus"]
     );
     return graphql(payload, 'CMS_CS_CHECKLIST');
 }

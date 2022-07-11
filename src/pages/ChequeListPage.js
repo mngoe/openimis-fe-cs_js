@@ -33,7 +33,7 @@ class ChequeListPage extends Component {
         if (!!this.state.beforeCursor) {
             prms.push(`before: "${this.state.beforeCursor}"`)
         }
-        prms.push(`orderBy: ["code"]`);
+        prms.push(`orderBy: ["chequeImportLineCode"]`);
         this.props.fetchCheques(prms);
     }
 
@@ -55,8 +55,8 @@ class ChequeListPage extends Component {
         ]
 
         let itemFormatters = [
-            e => e.code,
-            e => e.name,
+            e => e.chequeImportLineCode,
+            e => e.chequeImportLineStatus,
         ]
 
         return (
