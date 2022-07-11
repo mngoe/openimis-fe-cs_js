@@ -46,6 +46,7 @@ var messages_en = {
 	"cmr_cs.importId": "Import Id",
 	"cmr_cs.importDate": "Import Date",
 	"cmr_cs.importUser": "Import User",
+	"cmr_cs.storedFile": "Import File",
 	"cmr_cs.uploadFile": "Upload File",
 	"cmr_cs.importChecks": "Import Checks",
 	"cmr_cs.importCheckFile": "Import Check File"
@@ -64,6 +65,7 @@ var messages_fr = {
 	"cmr_cs.tableImport": "Table Import Check ({count})",
 	"cmr_cs.importId": "Import Id",
 	"cmr_cs.importDate": "Import Date",
+	"cmr_cs.storedFile": "Fichier Importé",
 	"cmr_cs.importUser": "Import User",
 	"cmr_cs.uploadFile": "Envoyer fichier",
 	"cmr_cs.importChecks": "Importer les cheques",
@@ -137,8 +139,8 @@ function reducer() {
       return _objectSpread$1(_objectSpread$1({}, state), {}, {
         fetchingChequesImport: false,
         fetchedMyChequesImport: true,
-        myChequesImport: feCore.parseData(action.payload.data.healthFacilities),
-        myChequesImportPageInfo: feCore.pageInfo(action.payload.data.healthFacilities),
+        myChequesImport: feCore.parseData(action.payload.data.chequeimport),
+        myChequesImportPageInfo: feCore.pageInfo(action.payload.data.chequeimport),
         errorChequesImport: feCore.formatGraphQLError(action.payload)
       });
 
@@ -218,7 +220,7 @@ function fetchCheques() {
   return feCore.graphql(payload, 'CMS_CS_CHECKLIST');
 }
 function fetchChequesImport() {
-  var payload = feCore.formatPageQueryWithCount("healthFacilities", null, ["id", "code", "name"]);
+  var payload = feCore.formatPageQueryWithCount("chequeimport", null, ["idChequeImport", "importDate", "storedFile"]);
   return feCore.graphql(payload, 'CMS_CS_CHECKIMPORT');
 }
 
@@ -448,13 +450,13 @@ var ChequeImportPage = /*#__PURE__*/function (_Component) {
           _this$props.fetchedMyChequesImport;
           var myChequesImport = _this$props.myChequesImport,
           myChequesImportPageInfo = _this$props.myChequesImportPageInfo;
-      var headers = ["cmr_cs.importId", "cmr_cs.importDate", "cmr_cs.importUser"];
+      var headers = ["cmr_cs.importId", "cmr_cs.importDate", "cmr_cs.storedFile"];
       var itemFormatters = [function (e) {
-        return e.id;
+        return e.idChequeImport;
       }, function (e) {
-        return e.code;
+        return e.importDate;
       }, function (e) {
-        return e.name;
+        return e.storedFile;
       }];
       return /*#__PURE__*/React__default["default"].createElement("div", {
         className: classes.page

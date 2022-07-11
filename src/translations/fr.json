@@ -10,6 +10,7 @@
     "cmr_cs.tableImport": "Table Import Check ({count})",
     "cmr_cs.importId": "Import Id",
     "cmr_cs.importDate": "Import Date",
+    "cmr_cs.storedFile": "Fichier Importé",
     "cmr_cs.importUser": "Import User",
     "cmr_cs.uploadFile": "Envoyer fichier",
     "cmr_cs.importChecks": "Importer les cheques",

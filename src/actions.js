@@ -13,9 +13,9 @@ export function fetchCheques() {
 
 export function fetchChequesImport() {
     const payload = formatPageQueryWithCount(
-        "healthFacilities",
+        "chequeimport",
         null,
-        ["id","code", "name"]
+        ["idChequeImport","importDate", "storedFile"]
     );
     return graphql(payload, 'CMS_CS_CHECKIMPORT');
 }

@@ -107,13 +107,13 @@ class ChequeImportPage extends Component {
         let headers = [
             "cmr_cs.importId",
             "cmr_cs.importDate",
-            "cmr_cs.importUser",
+            "cmr_cs.storedFile",
         ]
 
         let itemFormatters = [
-            e => e.id,
-            e => e.code,
-            e => e.name,
+            e => e.idChequeImport,
+            e => e.importDate,
+            e => e.storedFile,
         ]
         return (
             <div className={classes.page}>

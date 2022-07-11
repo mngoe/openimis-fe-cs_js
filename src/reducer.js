@@ -61,8 +61,8 @@ function reducer(
                 ...state,
                 fetchingChequesImport: false,
                 fetchedMyChequesImport: true,
-                myChequesImport: parseData(action.payload.data.healthFacilities),
-                myChequesImportPageInfo: pageInfo(action.payload.data.healthFacilities),
+                myChequesImport: parseData(action.payload.data.chequeimport),
+                myChequesImportPageInfo: pageInfo(action.payload.data.chequeimport),
                 errorChequesImport: formatGraphQLError(action.payload)
             };
         case 'CMS_CS_CHECKIMPORT_ERR':
