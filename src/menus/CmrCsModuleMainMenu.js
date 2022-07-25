@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { injectIntl } from "react-intl";
 import { connect } from "react-redux";
-import { Keyboard, ScreenShare, Assignment } from "@material-ui/icons";
+import { ListAlt, ScreenShare, ImportExport } from "@material-ui/icons";
 import { formatMessage, MainMenuContribution, withModulesManager } from "@openimis/fe-core";
 import { RIGHT_ADD, RIGHT_SUBMIT } from "../constants";
 
@@ -13,9 +13,15 @@ class CmrCseMainMenu extends Component {
         // RIGHT_SEARCH is shared by HF & HQ staff)
         entries.push({
           text: formatMessage(this.props.intl, "cheque", "menu.chequeImport"),
-          icon: <Keyboard />,
-          route: "/cheque",
+          icon: <ImportExport />,
+          route: "/cheque/import",
         });
+
+        entries.push({
+            text: formatMessage(this.props.intl, "cheque", "menu.chequeList"),
+            icon: <ListAlt />,
+            route: "/cheque/list",
+          });
       }
       if (!entries.length) return null;
       return (

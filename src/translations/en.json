@@ -1,5 +1,20 @@
 {
     "currency": "Fcfa",
     "cheque.mainMenu": "Check",
-    "menu.chequeImport": "Import Check"
+    "menu.chequeImport": "Import Check",
+    "menu.chequeList": "Check List",
+    "Cheque.List.Header": "Check List",
+    "cmr_cs.table": "Table Check ({count})",
+    "cmr_cs.checknum": "Check Number",
+    "cmr_cs.checkstate": "Check Status",
+    "cmr_cs.tableImport": "Table Import Check ({count})",
+    "cmr_cs.importId": "Import Id",
+    "cmr_cs.importDate": "Import Date",
+    "cmr_cs.importUser": "Import User",
+    "cmr_cs.storedFile": "Import File",
+    "cmr_cs.uploadFile": "Upload File",
+    "cmr_cs.importChecks": "Import Checks",
+    "cmr_cs.importCheckFile": "Import Check File",
+    "cmr_cs.currentlyImporting": "Currently Importing",
+    "cmr_cs.checkImported": "Checks present in your file has been inserted in the database"
 }
