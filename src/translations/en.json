@@ -14,5 +14,7 @@
     "cmr_cs.storedFile": "Import File",
     "cmr_cs.uploadFile": "Upload File",
     "cmr_cs.importChecks": "Import Checks",
-    "cmr_cs.importCheckFile": "Import Check File"
+    "cmr_cs.importCheckFile": "Import Check File",
+    "cmr_cs.currentlyImporting": "Currently Importing",
+    "cmr_cs.checkImported": "Checks present in your file has been inserted in the database"
 }
