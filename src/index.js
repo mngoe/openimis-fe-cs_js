@@ -6,6 +6,7 @@ import CmrCsModuleMainMenu from "./menus/CmrCsModuleMainMenu";
 import ChequeListPage from "./pages/ChequeListPage";
 import ChequeImportPage from "./pages/ChequeImportPage";
 
+import UserActivitiesReport from "./reports/UserActivitiesReport";
 
 const ROUTE_CMR_CS_LIST = "cheque/list"
 const ROUTE_CMR_CS_IMPORT = "cheque/import"
@@ -18,8 +19,9 @@ const DEFAULT_CONFIG = {
   "reducers": [{ key: 'cmr_cs', reducer }],
   "reports":[{
      key: "user_log_report",
-     //component: UserActivitiesReport, #composant pour le rapport a creer 
-     isValid: (values)=> values.dateFrom && values.dateTo && values.usrAction,
+     component: UserActivitiesReport,
+     isValid: (values)=> values.dateFrom && values.dateTo,
+     //isValid: (values)=> true,
      getParams: (values) =>({
       dateFrom: values.dateFrom,
       dateTo: values.dateTo,

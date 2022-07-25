@@ -1,5 +1,5 @@
 import _defineProperty from '@babel/runtime/helpers/defineProperty';
-import { formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, Table, formatMessageWithValues, apiHeaders, baseApiUrl } from '@openimis/fe-core';
+import { formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, Table, formatMessageWithValues, apiHeaders, baseApiUrl, PublishedComponent } from '@openimis/fe-core';
 import _extends from '@babel/runtime/helpers/extends';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
 import _createClass from '@babel/runtime/helpers/createClass';
@@ -62,9 +62,9 @@ var messages_fr = {
 	"cmr_cs.checkImported": "Les cheques present dans le fichier ont été importés"
 };
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$2(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
@@ -89,7 +89,7 @@ function reducer() {
 
   switch (action.type) {
     case 'CMS_CS_CHECKLIST_REQ':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchingCheques: true,
         fetchedMyCheques: false,
         myCheques: [],
@@ -100,7 +100,7 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKLIST_RESP':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchingCheques: false,
         fetchedMyCheques: true,
         myCheques: parseData(action.payload.data.chequeimportline),
@@ -109,13 +109,13 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKLIST_ERR':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchedMyCheques: false,
         errorCheques: formatServerError(action.payload)
       });
 
     case 'CMS_CS_CHECKIMPORT_REQ':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchingChequesImport: true,
         fetchedMyChequesImport: false,
         myChequesImport: [],
@@ -126,7 +126,7 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKIMPORT_RESP':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchingChequesImport: false,
         fetchedMyChequesImport: true,
         myChequesImport: parseData(action.payload.data.chequeimport),
@@ -135,7 +135,7 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKIMPORT_ERR':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchedMyChequesImport: false,
         errorChequesImport: formatServerError(action.payload)
       });
@@ -577,6 +577,46 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 var ChequeImportPage$1 = injectIntl(withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ChequeImportPage))));
 
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+var UserActivitiesReport = function UserActivitiesReport(props) {
+  var values = props.values,
+      setValues = props.setValues;
+  return /*#__PURE__*/React.createElement(Grid, {
+    container: true,
+    direction: "column",
+    spacing: 1
+  }, /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "core.DatePicker",
+    value: values.dateFrom,
+    module: "CmrCs",
+    required: true,
+    label: "UserActivitiesReport.dateFrom",
+    onChange: function onChange(dateFrom) {
+      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        dateFrom: dateFrom
+      }));
+    }
+  })), /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "core.DatePicker",
+    value: values.dateTo,
+    module: "CmrCs",
+    required: true,
+    label: "UserActivitiesReport.dateTo",
+    onChange: function onChange(dateTo) {
+      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        dateTo: dateTo
+      }));
+    }
+  })));
+};
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -593,6 +633,21 @@ var DEFAULT_CONFIG = {
   "reducers": [{
     key: 'cmr_cs',
     reducer: reducer
+  }],
+  "reports": [{
+    key: "user_log_report",
+    component: UserActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
   }],
   "core.MainMenu": [CmrCsModuleMainMenu],
   "core.Router": [{
