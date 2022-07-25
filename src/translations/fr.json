@@ -14,5 +14,7 @@
     "cmr_cs.importUser": "Import User",
     "cmr_cs.uploadFile": "Envoyer fichier",
     "cmr_cs.importChecks": "Importer les cheques",
-    "cmr_cs.importCheckFile": "Importer les fichiers de cheques"
+    "cmr_cs.importCheckFile": "Importer les fichiers de cheques",
+    "cmr_cs.currentlyImporting": "Importation en cours",
+    "cmr_cs.checkImported": "Les cheques present dans le fichier ont été importés"
 }
