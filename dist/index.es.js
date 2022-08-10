@@ -1,5 +1,5 @@
 import _defineProperty from '@babel/runtime/helpers/defineProperty';
-import { formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, Table, formatMessageWithValues, apiHeaders, baseApiUrl } from '@openimis/fe-core';
+import { formatServerError, parseData, pageInfo, formatGraphQLError, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, ProgressOrError, Table, formatMessageWithValues, apiHeaders, baseApiUrl, PublishedComponent } from '@openimis/fe-core';
 import _extends from '@babel/runtime/helpers/extends';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
 import _createClass from '@babel/runtime/helpers/createClass';
@@ -37,7 +37,9 @@ var messages_en = {
 	"cmr_cs.importChecks": "Import Checks",
 	"cmr_cs.importCheckFile": "Import Check File",
 	"cmr_cs.currentlyImporting": "Currently Importing",
-	"cmr_cs.checkImported": "Checks present in your file has been inserted in the database"
+	"cmr_cs.checkImported": "Checks present in your file has been inserted in the database",
+	"cmr_cs.dateFrom": "From",
+	"cmr_cs.dateTo": "To"
 };
 
 var currency = "Fcfa";
@@ -59,12 +61,14 @@ var messages_fr = {
 	"cmr_cs.importChecks": "Importer les cheques",
 	"cmr_cs.importCheckFile": "Importer les fichiers de cheques",
 	"cmr_cs.currentlyImporting": "Importation en cours",
-	"cmr_cs.checkImported": "Les cheques present dans le fichier ont été importés"
+	"cmr_cs.checkImported": "Les cheques present dans le fichier ont été importés",
+	"cmr_cs.dateFrom": "De",
+	"cmr_cs.dateTo": "A"
 };
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$2(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
@@ -89,7 +93,7 @@ function reducer() {
 
   switch (action.type) {
     case 'CMS_CS_CHECKLIST_REQ':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchingCheques: true,
         fetchedMyCheques: false,
         myCheques: [],
@@ -100,7 +104,7 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKLIST_RESP':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchingCheques: false,
         fetchedMyCheques: true,
         myCheques: parseData(action.payload.data.chequeimportline),
@@ -109,13 +113,13 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKLIST_ERR':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchedMyCheques: false,
         errorCheques: formatServerError(action.payload)
       });
 
     case 'CMS_CS_CHECKIMPORT_REQ':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchingChequesImport: true,
         fetchedMyChequesImport: false,
         myChequesImport: [],
@@ -126,7 +130,7 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKIMPORT_RESP':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchingChequesImport: false,
         fetchedMyChequesImport: true,
         myChequesImport: parseData(action.payload.data.chequeimport),
@@ -135,7 +139,7 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKIMPORT_ERR':
-      return _objectSpread$1(_objectSpread$1({}, state), {}, {
+      return _objectSpread$2(_objectSpread$2({}, state), {}, {
         fetchedMyChequesImport: false,
         errorChequesImport: formatServerError(action.payload)
       });
@@ -577,6 +581,46 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 var ChequeImportPage$1 = injectIntl(withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ChequeImportPage))));
 
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
+  var values = props.values,
+      setValues = props.setValues;
+  return /*#__PURE__*/React.createElement(Grid, {
+    container: true,
+    direction: "column",
+    spacing: 1
+  }, /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "core.DatePicker",
+    value: values.dateFrom,
+    module: "CmrCs",
+    required: true,
+    label: "cmr_cs.dateFrom",
+    onChange: function onChange(dateFrom) {
+      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        dateFrom: dateFrom
+      }));
+    }
+  })), /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "core.DatePicker",
+    value: values.dateTo,
+    module: "CmrCs",
+    required: true,
+    label: "cmr_cs.dateTo",
+    onChange: function onChange(dateTo) {
+      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        dateTo: dateTo
+      }));
+    }
+  })));
+};
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -593,6 +637,201 @@ var DEFAULT_CONFIG = {
   "reducers": [{
     key: 'cmr_cs',
     reducer: reducer
+  }],
+  "reports": [{
+    key: "cpn1_under_cs",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo
+      };
+    }
+  }, {
+    key: "cpn4_under_cs",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "assisted_birth_under_cs",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "CPON_under_check_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "newborn_CPoN_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "complicated_birth_with_cs",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "cesarian_cs_rate",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "pregnant_woman_reference_rate",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "invoice_per_period_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "paid_invoice_per_period_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "rejected_invoice_per_period_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "check_in_use_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "closed_check_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "severe_malaria_cost_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
   }],
   "core.MainMenu": [CmrCsModuleMainMenu],
   "core.Router": [{
