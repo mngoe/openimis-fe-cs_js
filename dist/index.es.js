@@ -37,7 +37,9 @@ var messages_en = {
 	"cmr_cs.importChecks": "Import Checks",
 	"cmr_cs.importCheckFile": "Import Check File",
 	"cmr_cs.currentlyImporting": "Currently Importing",
-	"cmr_cs.checkImported": "Checks present in your file has been inserted in the database"
+	"cmr_cs.checkImported": "Checks present in your file has been inserted in the database",
+	"cmr_cs.dateFrom": "From",
+	"cmr_cs.dateTo": "To"
 };
 
 var currency = "Fcfa";
@@ -59,7 +61,9 @@ var messages_fr = {
 	"cmr_cs.importChecks": "Importer les cheques",
 	"cmr_cs.importCheckFile": "Importer les fichiers de cheques",
 	"cmr_cs.currentlyImporting": "Importation en cours",
-	"cmr_cs.checkImported": "Les cheques present dans le fichier ont été importés"
+	"cmr_cs.checkImported": "Les cheques present dans le fichier ont été importés",
+	"cmr_cs.dateFrom": "De",
+	"cmr_cs.dateTo": "A"
 };
 
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -581,7 +585,7 @@ function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if 
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
-var UserActivitiesReport = function UserActivitiesReport(props) {
+var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
   var values = props.values,
       setValues = props.setValues;
   return /*#__PURE__*/React.createElement(Grid, {
@@ -595,7 +599,7 @@ var UserActivitiesReport = function UserActivitiesReport(props) {
     value: values.dateFrom,
     module: "CmrCs",
     required: true,
-    label: "UserActivitiesReport.dateFrom",
+    label: "cmr_cs.dateFrom",
     onChange: function onChange(dateFrom) {
       return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
         dateFrom: dateFrom
@@ -608,7 +612,7 @@ var UserActivitiesReport = function UserActivitiesReport(props) {
     value: values.dateTo,
     module: "CmrCs",
     required: true,
-    label: "UserActivitiesReport.dateTo",
+    label: "cmr_cs.dateTo",
     onChange: function onChange(dateTo) {
       return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
         dateTo: dateTo
@@ -635,8 +639,188 @@ var DEFAULT_CONFIG = {
     reducer: reducer
   }],
   "reports": [{
-    key: "user_log_report",
-    component: UserActivitiesReport,
+    key: "cpn1_under_cs",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo
+      };
+    }
+  }, {
+    key: "cpn4_under_cs",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "assisted_birth_under_cs",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "CPON_under_check_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "newborn_CPoN_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "complicated_birth_with_cs",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "cesarian_cs_rate",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "pregnant_woman_reference_rate",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "invoice_per_period_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "paid_invoice_per_period_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "rejected_invoice_per_period_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "check_in_use_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "closed_check_report",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo;
+    },
+    //isValid: (values)=> true,
+    getParams: function getParams(values) {
+      return {
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+        usrAction: values.usrAction
+      };
+    }
+  }, {
+    key: "severe_malaria_cost_report",
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },

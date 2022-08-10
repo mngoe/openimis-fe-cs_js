@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import { PublishedComponent } from "@openimis/fe-core";
 import React from "react";
 
-const UserActivitiesReport = (props) => {
+const ChequeSanteActivitiesReport = (props) => {
   const { values, setValues } = props;
 
   return (
@@ -13,7 +13,7 @@ const UserActivitiesReport = (props) => {
           value={values.dateFrom}
           module="CmrCs"
           required
-          label="UserActivitiesReport.dateFrom"
+          label="cmr_cs.dateFrom"
           onChange={(dateFrom) => setValues({ ...values, dateFrom })}
         />
       </Grid>
@@ -23,7 +23,7 @@ const UserActivitiesReport = (props) => {
           value={values.dateTo}
           module="CmrCs"
           required
-          label="UserActivitiesReport.dateTo"
+          label="cmr_cs.dateTo"
           onChange={(dateTo) => setValues({ ...values, dateTo })}
         />
       </Grid>
@@ -31,4 +31,4 @@ const UserActivitiesReport = (props) => {
   );
 };
 
-export default UserActivitiesReport;
+export default ChequeSanteActivitiesReport;
