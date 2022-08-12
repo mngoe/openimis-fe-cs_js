@@ -651,6 +651,9 @@ var DEFAULT_CONFIG = {
   }, {
     key: "fr",
     messages: messages_fr
+  }, {
+    key: "fr_cs",
+    messages: messages_fr
   }],
   "reducers": [{
     key: 'cmr_cs',
