@@ -20,7 +20,6 @@ const ChequeSanteActivitiesReport = (props) => {
             console.log(values);
           }
           }
-          required
           value={values.location0}
           locationLevel={0}
         />

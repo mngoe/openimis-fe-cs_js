@@ -621,7 +621,6 @@ var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
       console.log(location0);
       console.log(values);
     },
-    required: true,
     value: values.location0,
     locationLevel: 0
   })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
