@@ -7,6 +7,62 @@ const ChequeSanteActivitiesReport = (props) => {
 
   return (
     <Grid container direction="column" spacing={1}>
+       <Grid item>
+        <PublishedComponent
+          pubRef="location.LocationPicker"
+          onChange={(location0) => 
+            {
+            setValues({
+              ...values,
+              location0,
+            });
+            console.log(location0);
+            console.log(values);
+          }
+          }
+          required
+          value={values.location0}
+          locationLevel={0}
+        />
+      </Grid>
+      <Grid item>
+        <PublishedComponent
+          pubRef="location.LocationPicker"
+          onChange={(location1) =>
+            setValues({
+              ...values,
+              location1,
+            })
+          }
+          value={values.location1}
+          locationLevel={1}
+        />
+      </Grid>
+      <Grid item>
+        <PublishedComponent
+          pubRef="location.LocationPicker"
+          onChange={(location2) =>
+            setValues({
+              ...values,
+              location2,
+            })
+          }
+          value={values.location2}
+          locationLevel={2}
+        />
+      </Grid>
+      <Grid item>
+        <PublishedComponent
+          pubRef="location.HealthFacilityPicker"
+          onChange={(hflocation) =>
+            setValues({
+              ...values,
+              hflocation,
+            })
+          }
+          value={values.hflocation}
+        />
+      </Grid>
       <Grid item>
         <PublishedComponent
           pubRef="core.DatePicker"

@@ -20,12 +20,26 @@ const DEFAULT_CONFIG = {
   "reducers": [{ key: 'cmr_cs', reducer }],
   "reports":[
     {
+      key: "invoice_fosa_cs",
+      component: ChequeSanteActivitiesReport,
+      isValid: (values)=> values.dateFrom && values.dateTo && values.location0.code,
+      getParams: (values) =>({
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        hflocation: values.hflocation.code,
+        })
+    },
+    {
       key: "cpn1_under_cs",
       component: ChequeSanteActivitiesReport,
-      isValid: (values)=> values.dateFrom && values.dateTo,
+      isValid: (values)=> values.dateFrom && values.dateTo && values.location0.code,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0.code,
+        location1: values.location1.code,
+        location2: values.location2.code,
+        hflocation: values.hflocation.code,
         })
     },
     {
@@ -34,9 +48,12 @@ const DEFAULT_CONFIG = {
       isValid: (values)=> values.dateFrom && values.dateTo,
       //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0.code,
+        location1: values.location1.code,
+        location2: values.location2.code,
+        hflocation: values.hflocation.code,
         })
     },
     {

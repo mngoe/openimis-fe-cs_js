@@ -613,6 +613,52 @@ var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
   }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
     item: true
   }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
+    pubRef: "location.LocationPicker",
+    onChange: function onChange(location0) {
+      setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        location0: location0
+      }));
+      console.log(location0);
+      console.log(values);
+    },
+    required: true,
+    value: values.location0,
+    locationLevel: 0
+  })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+    item: true
+  }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
+    pubRef: "location.LocationPicker",
+    onChange: function onChange(location1) {
+      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        location1: location1
+      }));
+    },
+    value: values.location1,
+    locationLevel: 1
+  })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+    item: true
+  }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
+    pubRef: "location.LocationPicker",
+    onChange: function onChange(location2) {
+      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        location2: location2
+      }));
+    },
+    value: values.location2,
+    locationLevel: 2
+  })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+    item: true
+  }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
+    pubRef: "location.HealthFacilityPicker",
+    onChange: function onChange(hflocation) {
+      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        hflocation: hflocation
+      }));
+    },
+    value: values.hflocation
+  })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+    item: true
+  }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
     pubRef: "core.DatePicker",
     value: values.dateFrom,
     module: "CmrCs",
@@ -660,15 +706,32 @@ var DEFAULT_CONFIG = {
     reducer: reducer
   }],
   "reports": [{
-    key: "cpn1_under_cs",
+    key: "invoice_fosa_cs",
     component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
-      return values.dateFrom && values.dateTo;
+      return values.dateFrom && values.dateTo && values.location0.code;
     },
     getParams: function getParams(values) {
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        hflocation: values.hflocation.code
+      };
+    }
+  }, {
+    key: "cpn1_under_cs",
+    component: ChequeSanteActivitiesReport,
+    isValid: function isValid(values) {
+      return values.dateFrom && values.dateTo && values.location0.code;
+    },
+    getParams: function getParams(values) {
+      return {
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0.code,
+        location1: values.location1.code,
+        location2: values.location2.code,
+        hflocation: values.hflocation.code
       };
     }
   }, {
@@ -680,9 +743,12 @@ var DEFAULT_CONFIG = {
     //isValid: (values)=> true,
     getParams: function getParams(values) {
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0.code,
+        location1: values.location1.code,
+        location2: values.location2.code,
+        hflocation: values.hflocation.code
       };
     }
   }, {
