@@ -708,13 +708,12 @@ var DEFAULT_CONFIG = {
     key: "invoice_fosa_cs",
     component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
-      return values.dateFrom && values.dateTo && values.location0.code;
+      return values.dateFrom && values.dateTo;
     },
     getParams: function getParams(values) {
       return {
         date_from: values.dateFrom,
-        date_to: values.dateTo,
-        hflocation: values.hflocation.code
+        date_to: values.dateTo
       };
     }
   }, {

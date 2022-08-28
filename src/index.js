@@ -22,11 +22,10 @@ const DEFAULT_CONFIG = {
     {
       key: "invoice_fosa_cs",
       component: ChequeSanteActivitiesReport,
-      isValid: (values)=> values.dateFrom && values.dateTo && values.location0.code,
+      isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
-        date_to: values.dateTo,
-        hflocation: values.hflocation.code,
+        date_to: values.dateTo
         })
     },
     {
