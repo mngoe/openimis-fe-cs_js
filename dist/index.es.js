@@ -658,10 +658,12 @@ var DEFAULT_CONFIG = {
       return values.dateFrom && values.dateTo;
     },
     getParams: function getParams(values) {
+      var _values$hflocation;
+
       return {
         date_from: values.dateFrom,
         date_to: values.dateTo,
-        hflocation: values.hflocation.code
+        hflocation: (_values$hflocation = values.hflocation) !== null && _values$hflocation !== void 0 && _values$hflocation.code ? values.hflocation.code : 0
       };
     }
   }, {

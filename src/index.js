@@ -26,7 +26,7 @@ const DEFAULT_CONFIG = {
       getParams: (values) =>({
         date_from: values.dateFrom,
         date_to: values.dateTo,
-        hflocation: values.hflocation.code,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0
         })
     },
     {
