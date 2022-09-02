@@ -25,7 +25,8 @@ const DEFAULT_CONFIG = {
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
-        date_to: values.dateTo
+        date_to: values.dateTo,
+        hflocation: values.hflocation.code,
         })
     },
     {

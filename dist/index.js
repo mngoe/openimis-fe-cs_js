@@ -613,41 +613,6 @@ var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
   }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
     item: true
   }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
-    pubRef: "location.LocationPicker",
-    onChange: function onChange(location0) {
-      setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
-        location0: location0
-      }));
-      console.log(location0);
-      console.log(values);
-    },
-    value: values.location0,
-    locationLevel: 0
-  })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-    item: true
-  }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
-    pubRef: "location.LocationPicker",
-    onChange: function onChange(location1) {
-      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
-        location1: location1
-      }));
-    },
-    value: values.location1,
-    locationLevel: 1
-  })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-    item: true
-  }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
-    pubRef: "location.LocationPicker",
-    onChange: function onChange(location2) {
-      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
-        location2: location2
-      }));
-    },
-    value: values.location2,
-    locationLevel: 2
-  })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-    item: true
-  }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
     pubRef: "location.HealthFacilityPicker",
     onChange: function onChange(hflocation) {
       return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
@@ -713,7 +678,8 @@ var DEFAULT_CONFIG = {
     getParams: function getParams(values) {
       return {
         date_from: values.dateFrom,
-        date_to: values.dateTo
+        date_to: values.dateTo,
+        hflocation: values.hflocation.code
       };
     }
   }, {
