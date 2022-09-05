@@ -9,8 +9,7 @@ class CmrCseMainMenu extends Component {
     render() {
       const { rights } = this.props;
       let entries = [];
-      if (!!rights.filter((r) => r >= RIGHT_ADD && r <= RIGHT_SUBMIT).length) {
-        // RIGHT_SEARCH is shared by HF & HQ staff)
+      if (!!rights.filter((r) => r == RIGHT_ADD).length) {
         entries.push({
           text: formatMessage(this.props.intl, "cheque", "menu.chequeImport"),
           icon: <ImportExport />,

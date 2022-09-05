@@ -149,8 +149,7 @@ function reducer() {
   }
 }
 
-var RIGHT_ADD = 111002;
-var RIGHT_SUBMIT = 111007;
+var RIGHT_ADD = 131301;
 
 function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -174,9 +173,8 @@ var CmrCseMainMenu = /*#__PURE__*/function (_Component) {
       var entries = [];
 
       if (!!rights.filter(function (r) {
-        return r >= RIGHT_ADD && r <= RIGHT_SUBMIT;
+        return r == RIGHT_ADD;
       }).length) {
-        // RIGHT_SEARCH is shared by HF & HQ staff)
         entries.push({
           text: formatMessage(this.props.intl, "cheque", "menu.chequeImport"),
           icon: /*#__PURE__*/React.createElement(ImportExport, null),
