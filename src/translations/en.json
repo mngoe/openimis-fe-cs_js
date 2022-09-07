@@ -3,10 +3,18 @@
     "cheque.mainMenu": "Check",
     "menu.chequeImport": "Import Check",
     "menu.chequeList": "Check List",
-    "Cheque.List.Header": "Check List",
+    "cmr_cs.ChequeListHeader": "Check List",
     "cmr_cs.table": "Table Check ({count})",
+    "cmr_cs-list.null": "All",
+    "cmr_cs-list.New": "New",
+    "cmr_cs-list.Used": "Used",
+    "cmr_cs-list.Cancel": "Cancel",
+    "cmr_cs.New": "New",
+    "cmr_cs.Used": "Used",
+    "cmr_cs.Cancel": "Cancel",
     "cmr_cs.checknum": "Check Number",
     "cmr_cs.checkstate": "Check Status",
+    "cmr_cs.checkdate": "Check Creation Date",
     "cmr_cs.tableImport": "Table Import Check ({count})",
     "cmr_cs.importId": "Import Id",
     "cmr_cs.importDate": "Import Date",
@@ -18,5 +26,6 @@
     "cmr_cs.currentlyImporting": "Currently Importing",
     "cmr_cs.checkImported": "Checks present in your file has been inserted in the database",
     "cmr_cs.dateFrom":"From",
-    "cmr_cs.dateTo":"To"
+    "cmr_cs.dateTo":"To",
+    "cmr_cs.chequeNo":"Voucher Number"
 }

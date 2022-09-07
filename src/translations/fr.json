@@ -3,10 +3,11 @@
     "cheque.mainMenu": "Chèque",
     "menu.chequeImport": "Import Cheque",
     "menu.chequeList": "Liste Cheque",
-    "Cheque.List.Header": "Liste des cheques",
+    "cmr_cs.ChequeListHeader": "Liste des cheques",
     "cmr_cs.table": "Table Chèque ({count})",
     "cmr_cs.checknum": "Numéro Cheque",
     "cmr_cs.checkstate": "Statut Cheque",
+    "cmr_cs.checkdate": "Date Creation Cheque",
     "cmr_cs.tableImport": "Table cheque Importé ({count})",
     "cmr_cs.importId": "Import Id",
     "cmr_cs.importDate": "Import Date",
@@ -18,5 +19,14 @@
     "cmr_cs.currentlyImporting": "Importation en cours",
     "cmr_cs.checkImported": "Les cheques present dans le fichier ont été importés",
     "cmr_cs.dateFrom":"De",
-    "cmr_cs.dateTo":"A"
+    "cmr_cs.dateTo":"A",
+    "cmr_cs.New": "Nouveau",
+    "cmr_cs.Used": "Utilisé",
+    "cmr_cs.Cancel": "Annulé",
+    "cmr_cs-list": "Statut cheque",
+    "cmr_cs-list.New": "Nouveau",
+    "cmr_cs-list.Used": "Utilisé",
+    "cmr_cs-list.Cancel": "Annulé",
+    "cmr_cs-list.null": "Tous",
+    "cmr_cs.chequeNo":"Numéro Cheque"
 }

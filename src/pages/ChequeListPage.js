@@ -3,23 +3,36 @@ import { withTheme, withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { injectIntl } from 'react-intl';
-import { formatMessageWithValues, FormattedMessage } from "@openimis/fe-core";
-import { fetchCheques } from "../actions"
-import { ProgressOrError, Table } from "@openimis/fe-core";
+import { fetchCheques } from "../actions";
+import ChequeSearcher from "../components/ChequeSearcher";
+import { 
+    ProgressOrError, 
+    Table, 
+    PagedDataHandler, 
+    Helmet,
+    formatMessage,
+    formatMessageWithValues, 
+    FormattedMessage } from "@openimis/fe-core";
 
-const styles = theme => ({
+const CHEQUE_FILTER_KEY = "cheque.Filter";
+
+const styles = (theme) => ({
     page: theme.page,
-});
+  });
 
 class ChequeListPage extends Component {
 
-    state = {
-        page: 0,
-        pageSize: 20,
-        afterCursor: null,
-        beforeCursor: null,
-    }
-
+    constructor(props) {
+        super(props);
+        this.state = {
+          defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
+            "chequeStatus": {
+              "value": "New",
+              "filter": "chequeImportLineStatus: \"New\"",
+            },
+          }),
+        };
+      }
     componentDidMount() {
         this.query();
     }
@@ -33,7 +46,6 @@ class ChequeListPage extends Component {
         if (!!this.state.beforeCursor) {
             prms.push(`before: "${this.state.beforeCursor}"`)
         }
-        prms.push(`orderBy: ["chequeImportLineCode"]`);
         this.props.fetchCheques(prms);
     }
 
@@ -49,35 +61,15 @@ class ChequeListPage extends Component {
             myChequesPageInfo 
         } = this.props;
 
-        let headers = [
-            "cmr_cs.checknum",
-            "cmr_cs.checkstate",
-        ]
-
-        let itemFormatters = [
-            e => e.chequeImportLineCode,
-            e => e.chequeImportLineStatus,
-        ]
-
-        return (
+               return (
             <div className={classes.page}>
-                <ProgressOrError progress={fetchingCheques} error={errorCheques} /> 
-                <Table
-                    module="cmr_cs"
-                    header={formatMessageWithValues(intl, "CmrCS", "cmr_cs.table", 
-                    {count: myChequesPageInfo.totalCount})}
-                    headers={headers}
-                    itemFormatters={itemFormatters}
-                    items={myCheques}
-                    withPagination={true}
-                    page={this.state.page}
-                    pageSize={this.state.pageSize}
-                    count={myChequesPageInfo.totalCount}
-                    onChangePage={this.onChangePage}
-                    onChangeRowsPerPage={this.onChangeRowsPerPage}
-                    rowsPerPageOptions={this.rowsPerPageOptions}
+                <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
+                <ChequeSearcher
+                defaultFilters={this.state.defaultFilters}
+                cacheFiltersKey="claimReviewsPageFiltersCache"
+                filterPaneContributionsKey={CHEQUE_FILTER_KEY}
                 />
-                </div>
+            </div>
         )
     }
 }

@@ -3,7 +3,7 @@ import { injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { ListAlt, ScreenShare, ImportExport } from "@material-ui/icons";
 import { formatMessage, MainMenuContribution, withModulesManager } from "@openimis/fe-core";
-import { RIGHT_ADD, RIGHT_SUBMIT } from "../constants";
+import { RIGHT_ADD } from "../constants";
 
 class CmrCseMainMenu extends Component {
     render() {

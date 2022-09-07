@@ -6,6 +6,7 @@ import CmrCsModuleMainMenu from "./menus/CmrCsModuleMainMenu";
 import ChequeListPage from "./pages/ChequeListPage";
 import ChequeImportPage from "./pages/ChequeImportPage";
 
+import ChequeStatusPicker from "./pickers/ChequeStatusPicker";
 import ChequeSanteActivitiesReport from "./reports/ChequeSanteActivitiesReport";
 
 const ROUTE_CMR_CS_LIST = "cheque/list"
@@ -18,6 +19,9 @@ const DEFAULT_CONFIG = {
     { key: "fr_cs", messages: messages_fr },
   ],
   "reducers": [{ key: 'cmr_cs', reducer }],
+  "refs": [
+    { key: "cmr_cs.ChequeStatusPicker", ref: ChequeStatusPicker }
+  ],
   "reports":[
     {
       key: "invoice_fosa_cs",
