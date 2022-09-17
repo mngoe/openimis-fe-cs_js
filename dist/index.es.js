@@ -88,9 +88,9 @@ var messages_fr = {
 	"cmr_cs.chequeNo": "Numéro Cheque"
 };
 
-function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$2(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$3(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
@@ -115,7 +115,7 @@ function reducer() {
 
   switch (action.type) {
     case 'CMS_CS_CHECKLIST_REQ':
-      return _objectSpread$2(_objectSpread$2({}, state), {}, {
+      return _objectSpread$3(_objectSpread$3({}, state), {}, {
         fetchingCheques: true,
         fetchedMyCheques: false,
         myCheques: [],
@@ -126,7 +126,7 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKLIST_RESP':
-      return _objectSpread$2(_objectSpread$2({}, state), {}, {
+      return _objectSpread$3(_objectSpread$3({}, state), {}, {
         fetchingCheques: false,
         fetchedMyCheques: true,
         myCheques: parseData(action.payload.data.chequeimportline),
@@ -135,13 +135,13 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKLIST_ERR':
-      return _objectSpread$2(_objectSpread$2({}, state), {}, {
+      return _objectSpread$3(_objectSpread$3({}, state), {}, {
         fetchedMyCheques: false,
         errorCheques: formatServerError(action.payload)
       });
 
     case 'CMS_CS_CHECKIMPORT_REQ':
-      return _objectSpread$2(_objectSpread$2({}, state), {}, {
+      return _objectSpread$3(_objectSpread$3({}, state), {}, {
         fetchingChequesImport: true,
         fetchedMyChequesImport: false,
         myChequesImport: [],
@@ -152,7 +152,7 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKIMPORT_RESP':
-      return _objectSpread$2(_objectSpread$2({}, state), {}, {
+      return _objectSpread$3(_objectSpread$3({}, state), {}, {
         fetchingChequesImport: false,
         fetchedMyChequesImport: true,
         myChequesImport: parseData(action.payload.data.chequeimport),
@@ -161,7 +161,7 @@ function reducer() {
       });
 
     case 'CMS_CS_CHECKIMPORT_ERR':
-      return _objectSpread$2(_objectSpread$2({}, state), {}, {
+      return _objectSpread$3(_objectSpread$3({}, state), {}, {
         fetchedMyChequesImport: false,
         errorChequesImport: formatServerError(action.payload)
       });
@@ -944,7 +944,6 @@ var ChequeStatusPicker = /*#__PURE__*/function (_Component) {
   _createClass(ChequeStatusPicker, [{
     key: "render",
     value: function render() {
-      console.log("Status Picker");
       return /*#__PURE__*/React.createElement(ConstantBasedPicker, _extends({
         module: "cmr_cs",
         label: "cmr_cs-list",
@@ -956,9 +955,9 @@ var ChequeStatusPicker = /*#__PURE__*/function (_Component) {
   return ChequeStatusPicker;
 }(Component);
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$2(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
   var values = props.values,
@@ -968,6 +967,89 @@ var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
     direction: "column",
     spacing: 1
   }, /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "location.HealthFacilityPicker",
+    onChange: function onChange(hflocation) {
+      return setValues(_objectSpread$2(_objectSpread$2({}, values), {}, {
+        hflocation: hflocation
+      }));
+    },
+    value: values.hflocation
+  })), /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "core.DatePicker",
+    value: values.dateFrom,
+    module: "CmrCs",
+    required: true,
+    label: "cmr_cs.dateFrom",
+    onChange: function onChange(dateFrom) {
+      return setValues(_objectSpread$2(_objectSpread$2({}, values), {}, {
+        dateFrom: dateFrom
+      }));
+    }
+  })), /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "core.DatePicker",
+    value: values.dateTo,
+    module: "CmrCs",
+    required: true,
+    label: "cmr_cs.dateTo",
+    onChange: function onChange(dateTo) {
+      return setValues(_objectSpread$2(_objectSpread$2({}, values), {}, {
+        dateTo: dateTo
+      }));
+    }
+  })));
+};
+
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+var ChequeSanteActivitiesFullLocationReport = function ChequeSanteActivitiesFullLocationReport(props) {
+  var values = props.values,
+      setValues = props.setValues;
+  return /*#__PURE__*/React.createElement(Grid, {
+    container: true,
+    direction: "column",
+    spacing: 1
+  }, /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "location.LocationPicker",
+    onChange: function onChange(location0) {
+      setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        location0: location0
+      }));
+    },
+    value: values.location0,
+    locationLevel: 0
+  })), /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "location.LocationPicker",
+    onChange: function onChange(location1) {
+      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        location1: location1
+      }));
+    },
+    value: values.location1,
+    locationLevel: 1
+  })), /*#__PURE__*/React.createElement(Grid, {
+    item: true
+  }, /*#__PURE__*/React.createElement(PublishedComponent, {
+    pubRef: "location.LocationPicker",
+    onChange: function onChange(location2) {
+      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+        location2: location2
+      }));
+    },
+    value: values.location2,
+    locationLevel: 2
+  })), /*#__PURE__*/React.createElement(Grid, {
     item: true
   }, /*#__PURE__*/React.createElement(PublishedComponent, {
     pubRef: "location.HealthFacilityPicker",
@@ -1049,201 +1131,252 @@ var DEFAULT_CONFIG = {
     key: "cpn1_under_cs",
     component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
-      return values.dateFrom && values.dateTo && values.location0.code;
+      return values.dateFrom && values.dateTo;
     },
     getParams: function getParams(values) {
+      var _values$location, _values$location2, _values$location3, _values$hflocation2;
+
       return {
         date_from: values.dateFrom,
         date_to: values.dateTo,
-        location0: values.location0.code,
-        location1: values.location1.code,
-        location2: values.location2.code,
-        hflocation: values.hflocation.code
+        location0: (_values$location = values.location0) !== null && _values$location !== void 0 && _values$location.code ? values.location0.code : 0,
+        location1: (_values$location2 = values.location1) !== null && _values$location2 !== void 0 && _values$location2.code ? values.location1.code : 0,
+        location2: (_values$location3 = values.location2) !== null && _values$location3 !== void 0 && _values$location3.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation2 = values.hflocation) !== null && _values$hflocation2 !== void 0 && _values$hflocation2.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "cpn4_under_cs",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location4, _values$location5, _values$location6, _values$hflocation3;
+
       return {
         date_from: values.dateFrom,
         date_to: values.dateTo,
-        location0: values.location0.code,
-        location1: values.location1.code,
-        location2: values.location2.code,
-        hflocation: values.hflocation.code
+        location0: (_values$location4 = values.location0) !== null && _values$location4 !== void 0 && _values$location4.code ? values.location0.code : 0,
+        location1: (_values$location5 = values.location1) !== null && _values$location5 !== void 0 && _values$location5.code ? values.location1.code : 0,
+        location2: (_values$location6 = values.location2) !== null && _values$location6 !== void 0 && _values$location6.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation3 = values.hflocation) !== null && _values$hflocation3 !== void 0 && _values$hflocation3.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "assisted_birth_under_cs",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location7, _values$location8, _values$location9, _values$hflocation4;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location7 = values.location0) !== null && _values$location7 !== void 0 && _values$location7.code ? values.location0.code : 0,
+        location1: (_values$location8 = values.location1) !== null && _values$location8 !== void 0 && _values$location8.code ? values.location1.code : 0,
+        location2: (_values$location9 = values.location2) !== null && _values$location9 !== void 0 && _values$location9.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation4 = values.hflocation) !== null && _values$hflocation4 !== void 0 && _values$hflocation4.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "CPON_under_check_report",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location10, _values$location11, _values$location12, _values$hflocation5;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location10 = values.location0) !== null && _values$location10 !== void 0 && _values$location10.code ? values.location0.code : 0,
+        location1: (_values$location11 = values.location1) !== null && _values$location11 !== void 0 && _values$location11.code ? values.location1.code : 0,
+        location2: (_values$location12 = values.location2) !== null && _values$location12 !== void 0 && _values$location12.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation5 = values.hflocation) !== null && _values$hflocation5 !== void 0 && _values$hflocation5.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "newborn_CPoN_report",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location13, _values$location14, _values$location15, _values$hflocation6;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location13 = values.location0) !== null && _values$location13 !== void 0 && _values$location13.code ? values.location0.code : 0,
+        location1: (_values$location14 = values.location1) !== null && _values$location14 !== void 0 && _values$location14.code ? values.location1.code : 0,
+        location2: (_values$location15 = values.location2) !== null && _values$location15 !== void 0 && _values$location15.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation6 = values.hflocation) !== null && _values$hflocation6 !== void 0 && _values$hflocation6.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "complicated_birth_with_cs",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location16, _values$location17, _values$location18, _values$hflocation7;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location16 = values.location0) !== null && _values$location16 !== void 0 && _values$location16.code ? values.location0.code : 0,
+        location1: (_values$location17 = values.location1) !== null && _values$location17 !== void 0 && _values$location17.code ? values.location1.code : 0,
+        location2: (_values$location18 = values.location2) !== null && _values$location18 !== void 0 && _values$location18.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation7 = values.hflocation) !== null && _values$hflocation7 !== void 0 && _values$hflocation7.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "cesarian_cs_rate",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location19, _values$location20, _values$location21, _values$hflocation8;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location19 = values.location0) !== null && _values$location19 !== void 0 && _values$location19.code ? values.location0.code : 0,
+        location1: (_values$location20 = values.location1) !== null && _values$location20 !== void 0 && _values$location20.code ? values.location1.code : 0,
+        location2: (_values$location21 = values.location2) !== null && _values$location21 !== void 0 && _values$location21.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation8 = values.hflocation) !== null && _values$hflocation8 !== void 0 && _values$hflocation8.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "pregnant_woman_reference_rate",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location22, _values$location23, _values$location24, _values$hflocation9;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location22 = values.location0) !== null && _values$location22 !== void 0 && _values$location22.code ? values.location0.code : 0,
+        location1: (_values$location23 = values.location1) !== null && _values$location23 !== void 0 && _values$location23.code ? values.location1.code : 0,
+        location2: (_values$location24 = values.location2) !== null && _values$location24 !== void 0 && _values$location24.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation9 = values.hflocation) !== null && _values$hflocation9 !== void 0 && _values$hflocation9.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "invoice_per_period_report",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location25, _values$location26, _values$location27, _values$hflocation10;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location25 = values.location0) !== null && _values$location25 !== void 0 && _values$location25.code ? values.location0.code : 0,
+        location1: (_values$location26 = values.location1) !== null && _values$location26 !== void 0 && _values$location26.code ? values.location1.code : 0,
+        location2: (_values$location27 = values.location2) !== null && _values$location27 !== void 0 && _values$location27.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation10 = values.hflocation) !== null && _values$hflocation10 !== void 0 && _values$hflocation10.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "paid_invoice_per_period_report",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location28, _values$location29, _values$location30, _values$hflocation11;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location28 = values.location0) !== null && _values$location28 !== void 0 && _values$location28.code ? values.location0.code : 0,
+        location1: (_values$location29 = values.location1) !== null && _values$location29 !== void 0 && _values$location29.code ? values.location1.code : 0,
+        location2: (_values$location30 = values.location2) !== null && _values$location30 !== void 0 && _values$location30.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation11 = values.hflocation) !== null && _values$hflocation11 !== void 0 && _values$hflocation11.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "rejected_invoice_per_period_report",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location31, _values$location32, _values$location33, _values$hflocation12;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location31 = values.location0) !== null && _values$location31 !== void 0 && _values$location31.code ? values.location0.code : 0,
+        location1: (_values$location32 = values.location1) !== null && _values$location32 !== void 0 && _values$location32.code ? values.location1.code : 0,
+        location2: (_values$location33 = values.location2) !== null && _values$location33 !== void 0 && _values$location33.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation12 = values.hflocation) !== null && _values$hflocation12 !== void 0 && _values$hflocation12.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "check_in_use_report",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location34, _values$location35, _values$location36, _values$hflocation13;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location34 = values.location0) !== null && _values$location34 !== void 0 && _values$location34.code ? values.location0.code : 0,
+        location1: (_values$location35 = values.location1) !== null && _values$location35 !== void 0 && _values$location35.code ? values.location1.code : 0,
+        location2: (_values$location36 = values.location2) !== null && _values$location36 !== void 0 && _values$location36.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation13 = values.hflocation) !== null && _values$hflocation13 !== void 0 && _values$hflocation13.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "closed_check_report",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location37, _values$location38, _values$location39, _values$hflocation14;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location37 = values.location0) !== null && _values$location37 !== void 0 && _values$location37.code ? values.location0.code : 0,
+        location1: (_values$location38 = values.location1) !== null && _values$location38 !== void 0 && _values$location38.code ? values.location1.code : 0,
+        location2: (_values$location39 = values.location2) !== null && _values$location39 !== void 0 && _values$location39.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation14 = values.hflocation) !== null && _values$hflocation14 !== void 0 && _values$hflocation14.code ? values.hflocation.code : 0
       };
     }
   }, {
     key: "severe_malaria_cost_report",
-    component: ChequeSanteActivitiesReport,
+    component: ChequeSanteActivitiesFullLocationReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
-    //isValid: (values)=> true,
     getParams: function getParams(values) {
+      var _values$location40, _values$location41, _values$location42, _values$hflocation15;
+
       return {
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: (_values$location40 = values.location0) !== null && _values$location40 !== void 0 && _values$location40.code ? values.location0.code : 0,
+        location1: (_values$location41 = values.location1) !== null && _values$location41 !== void 0 && _values$location41.code ? values.location1.code : 0,
+        location2: (_values$location42 = values.location2) !== null && _values$location42 !== void 0 && _values$location42.code ? values.location2.code : 0,
+        hflocation: (_values$hflocation15 = values.hflocation) !== null && _values$hflocation15 !== void 0 && _values$hflocation15.code ? values.hflocation.code : 0
       };
     }
   }],

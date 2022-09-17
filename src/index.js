@@ -8,6 +8,7 @@ import ChequeImportPage from "./pages/ChequeImportPage";
 
 import ChequeStatusPicker from "./pickers/ChequeStatusPicker";
 import ChequeSanteActivitiesReport from "./reports/ChequeSanteActivitiesReport";
+import ChequeSanteActivitiesFullLocationReport from "./reports/ChequeSanteActivitiesFullLocationReport";
 
 const ROUTE_CMR_CS_LIST = "cheque/list"
 const ROUTE_CMR_CS_IMPORT = "cheque/import"
@@ -48,7 +49,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "cpn4_under_cs",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -61,7 +62,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "assisted_birth_under_cs",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -74,7 +75,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "CPON_under_check_report",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -87,7 +88,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "newborn_CPoN_report",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -100,7 +101,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "complicated_birth_with_cs",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -113,7 +114,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "cesarian_cs_rate",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -126,7 +127,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "pregnant_woman_reference_rate",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -139,7 +140,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "invoice_per_period_report",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -152,7 +153,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "paid_invoice_per_period_report",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -165,7 +166,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "rejected_invoice_per_period_report",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -178,7 +179,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "check_in_use_report",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -191,7 +192,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "closed_check_report",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
@@ -204,7 +205,7 @@ const DEFAULT_CONFIG = {
     },
     {
       key: "severe_malaria_cost_report",
-      component: ChequeSanteActivitiesReport,
+      component: ChequeSanteActivitiesFullLocationReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
