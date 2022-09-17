@@ -36,160 +36,183 @@ const DEFAULT_CONFIG = {
     {
       key: "cpn1_under_cs",
       component: ChequeSanteActivitiesReport,
-      isValid: (values)=> values.dateFrom && values.dateTo && values.location0.code,
+      isValid: (values)=> values.dateFrom && values.dateTo,
       getParams: (values) =>({
         date_from: values.dateFrom,
         date_to: values.dateTo,
-        location0: values.location0.code,
-        location1: values.location1.code,
-        location2: values.location2.code,
-        hflocation: values.hflocation.code,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "cpn4_under_cs",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
         date_from: values.dateFrom,
         date_to: values.dateTo,
-        location0: values.location0.code,
-        location1: values.location1.code,
-        location2: values.location2.code,
-        hflocation: values.hflocation.code,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "assisted_birth_under_cs",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "CPON_under_check_report",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "newborn_CPoN_report",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "complicated_birth_with_cs",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "cesarian_cs_rate",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "pregnant_woman_reference_rate",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "invoice_per_period_report",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "paid_invoice_per_period_report",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "rejected_invoice_per_period_report",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "check_in_use_report",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "closed_check_report",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     },
     {
       key: "severe_malaria_cost_report",
       component: ChequeSanteActivitiesReport,
       isValid: (values)=> values.dateFrom && values.dateTo,
-      //isValid: (values)=> true,
       getParams: (values) =>({
-        dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
-        usrAction: values.usrAction
+        date_from: values.dateFrom,
+        date_to: values.dateTo,
+        location0: values.location0?.code ? values.location0.code : 0,
+        location1: values.location1?.code ? values.location1.code : 0,
+        location2: values.location2?.code ? values.location2.code : 0,
+        hflocation: values.hflocation?.code ? values.hflocation.code : 0,
         })
     }
   ],
