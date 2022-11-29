@@ -1168,7 +1168,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "cpn4_under_cs",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1186,7 +1186,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "assisted_birth_under_cs",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1204,7 +1204,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "CPON_under_check_report",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1222,7 +1222,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "newborn_CPoN_report",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1240,7 +1240,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "complicated_birth_with_cs",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1258,7 +1258,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "cesarian_cs_rate",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1276,7 +1276,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "pregnant_woman_reference_rate",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1294,7 +1294,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "invoice_per_period_report",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1312,7 +1312,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "paid_invoice_per_period_report",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1330,7 +1330,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "rejected_invoice_per_period_report",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1366,7 +1366,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "closed_check_report",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
@@ -1384,7 +1384,7 @@ var DEFAULT_CONFIG = {
     }
   }, {
     key: "severe_malaria_cost_report",
-    component: ChequeSanteActivitiesFullLocationReport,
+    component: ChequeSanteActivitiesReport,
     isValid: function isValid(values) {
       return values.dateFrom && values.dateTo;
     },
