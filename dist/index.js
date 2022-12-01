@@ -983,6 +983,14 @@ function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { 
 var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
   var values = props.values,
       setValues = props.setValues;
+  var userHealthFacility = reactRedux.useSelector(function (state) {
+    return state.loc.userHealthFacilityFullPath;
+  });
+
+  if (userHealthFacility !== null && userHealthFacility !== void 0 && userHealthFacility.code) {
+    values.hflocation = userHealthFacility;
+  }
+  console.log(values);
   return /*#__PURE__*/React__default["default"].createElement(core.Grid, {
     container: true,
     direction: "column",
@@ -996,7 +1004,7 @@ var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
         hflocation: hflocation
       }));
     },
-    value: values.hflocation
+    value: userHealthFacility !== null && userHealthFacility !== void 0 && userHealthFacility.code ? userHealthFacility.code : values.hflocation
   })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
     item: true
   }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {

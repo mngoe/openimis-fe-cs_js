@@ -8,7 +8,7 @@ import _possibleConstructorReturn from '@babel/runtime/helpers/possibleConstruct
 import _getPrototypeOf from '@babel/runtime/helpers/getPrototypeOf';
 import React, { Component, Fragment } from 'react';
 import { injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { ImportExport, ListAlt, ScreenShare } from '@material-ui/icons';
 import _ from 'lodash';
 import _assertThisInitialized from '@babel/runtime/helpers/assertThisInitialized';
@@ -962,6 +962,14 @@ function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { 
 var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
   var values = props.values,
       setValues = props.setValues;
+  var userHealthFacility = useSelector(function (state) {
+    return state.loc.userHealthFacilityFullPath;
+  });
+
+  if (userHealthFacility !== null && userHealthFacility !== void 0 && userHealthFacility.code) {
+    values.hflocation = userHealthFacility;
+  }
+  console.log(values);
   return /*#__PURE__*/React.createElement(Grid, {
     container: true,
     direction: "column",
@@ -975,7 +983,7 @@ var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
         hflocation: hflocation
       }));
     },
-    value: values.hflocation
+    value: userHealthFacility !== null && userHealthFacility !== void 0 && userHealthFacility.code ? userHealthFacility.code : values.hflocation
   })), /*#__PURE__*/React.createElement(Grid, {
     item: true
   }, /*#__PURE__*/React.createElement(PublishedComponent, {
