@@ -113,6 +113,7 @@ class ChequeSearcher extends Component {
     !selection.includes(claim);
 
   render() {
+    console.log(this.props.myCheques[0],'aaaaaaaaaaaaaaaaaaaaaa')
     const {
       intl,
       myCheques,
@@ -128,7 +129,6 @@ class ChequeSearcher extends Component {
       onDoubleClick,
       actionsContributionKey,
     } = this.props;
-
     let count = !!this.state.random && this.state.random.value;
     if (!count) {
       count = myChequesPageInfo.totalCount;
@@ -161,6 +161,7 @@ class ChequeSearcher extends Component {
           itemFormatters={this.itemFormatters}
           actions={actions}
           sorts={this.sorts}
+          onDoubleClick={onDoubleClick}
         />
       </Fragment>
     );

@@ -11,6 +11,7 @@ import {
     PagedDataHandler, 
     Helmet,
     formatMessage,
+    historyPush,
     formatMessageWithValues, 
     FormattedMessage } from "@openimis/fe-core";
 
@@ -49,6 +50,11 @@ class ChequeListPage extends Component {
         this.props.fetchCheques(prms);
     }
 
+    onDoubleClick = (i, newTab = false) => {
+        console.log('valeur de i ', i)
+        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeStatus",[i.chequeImportLineCode],false);
+    };
+
 
     render() {
         const { 
@@ -58,9 +64,8 @@ class ChequeListPage extends Component {
             errorCheques,
             fetchedMyCheques,
             myCheques,
-            myChequesPageInfo 
+            myChequesPageInfo
         } = this.props;
-
                return (
             <div className={classes.page}>
                 <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
@@ -68,13 +73,14 @@ class ChequeListPage extends Component {
                 defaultFilters={this.state.defaultFilters}
                 cacheFiltersKey="claimReviewsPageFiltersCache"
                 filterPaneContributionsKey={CHEQUE_FILTER_KEY}
+                onDoubleClick={this.onDoubleClick}
                 />
             </div>
         )
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
     fetchingCheques: state.cmr_cs.fetchingCheques,
     errorCheques: state.cmr_cs.errorCheques,
     fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
