@@ -45,24 +45,10 @@ import { fetchChequeSummaries } from "../actions";
   
     back = (e) => {
       const { modulesManager, history } = this.props;
-      console.log("tryuyutryuyty",this.props);
+      console.log("Navigating back", modulesManager, history);
       historyPush(modulesManager, history, "cmr_cs.ChequeList");
-      console.log("qqqqqqqqqqqqqqqqqqqqqqqqqq",this.props);
     };
   
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //   if (prevProps.fetchedChequeStatus !== this.props.fetchedChequeStatus && !!this.props.fetchedChequeStatus) {
-    //     var chequeStatus = this.props.chequeStatus || {};
-    //     chequeStatus.ext = !!chequeStatus.jsonExt ? JSON.parse(chequeStatus.jsonExt) : {};
-    //     this.setState({ chequeStatus, chequeImportLineCode: chequeStatus.chequeImportLineCode, lockNew: false, newChequeStatus: false });
-    //   } else if (prevProps.chequeImportLineCode && !this.props.chequeImportLineCode) {
-    //     this.setState({ chequeStatus: this._newChequeStatus(), newChequeStatus: true, lockNew: false, chequeImportLineCode: null });
-    //   } else if (prevProps.submittingMutation && !this.props.submittingMutation) {
-    //     this.props.journalize(this.props.mutation);
-    //     this.setState({ reset: this.state.reset + 1 });
-    //   }
-    // }
-
     componentDidUpdate(prevProps) {
       if (prevProps.fetchedChequeStatus !== this.props.fetchedChequeStatus && this.props.fetchedChequeStatus) {
         let chequeStatus = this.props.chequeStatus || {};
@@ -115,15 +101,8 @@ import { fetchChequeSummaries } from "../actions";
       if (!this.state.chequeStatus.chequeImportLineDate) return false;
       return true;
     };
-  
-    // _save = (chequeStatus) => {
-    //   this.setState(
-    //     { lockNew: !chequeStatus.chequeImportLineCode },
-    //     (e) => this.props.save(chequeStatus),
-    //   );
-    // }; 
+
     _save = (chequeStatus) => {
-      console.log("cheqqqqqqq",this.state.chequeStatus)
       this.setState({ lockNew: !chequeStatus.chequeImportLineCode }, () => {
         if (this.canSave()) {
           this.props.save(this.state.chequeStatus);
@@ -147,8 +126,6 @@ import { fetchChequeSummaries } from "../actions";
         myCheques,
         chequeImportLineCode
       } = this.props;
-      console.log(this.state);
-      // console.log('props of cheque ',this.props)
       const { chequeStatus } = this.state;
       var actions = [];
       if (!!chequeImportLineCode) {

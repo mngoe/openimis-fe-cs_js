@@ -47,13 +47,9 @@ export function updateChequeStatus(mm, chequeStatus, clientMutationLabel,idChequ
   }
   
   export function formatChequeStatusGQL(mm, chequeStatus) {
-    // let id = chequeStatus.chequeImportLineCode
     console.log("mon idChequeImportLine",chequeStatus)
     return `
       ${!!chequeStatus.chequeImportLineStatus ? `chequeImportLineStatus: "${chequeStatus.chequeImportLineStatus}"` : ""}
       ${!!chequeStatus.idChequeImportLine ? `idChequeImportLine: ${chequeStatus.idChequeImportLine}` : ""}
     `;
   }
-//   ${!!chequeStatus.chequeImportLineCode ? `chequeImportLineCode: "${chequeStatus.chequeImportLineCode}"` : ""}
-//   ${!!chequeStatus.chequeImportLineDate ? `chequeImportLineDate: "${chequeStatus.chequeImportLineDate}"` : ""}
-  

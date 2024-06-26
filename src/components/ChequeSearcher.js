@@ -113,7 +113,6 @@ class ChequeSearcher extends Component {
     !selection.includes(claim);
 
   render() {
-    console.log(this.props.myCheques[0],'aaaaaaaaaaaaaaaaaaaaaa')
     const {
       intl,
       myCheques,

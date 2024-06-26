@@ -26,17 +26,12 @@ const chequeStatuses = [
   { value: "New", label: "New" },
   { value: "Cancel", label: "Cancel" },
   { value: "Used", label: "Used" },
-  // Add more statuses as required
 ];
 
 
 class ChequeStatusMasterPanel extends FormPanel {
 
   updateAttribute = (attr, v) => {
-    console.log("edited", edited)
-    console.log("edited", attr)
-    console.log("edited", v)
-    
     let edited = { ...this.props.edited };
     console.log("edited", edited)
     edited[attr] = v;
@@ -55,9 +50,6 @@ class ChequeStatusMasterPanel extends FormPanel {
       onEditedChanged,
       chequeStatus
     } = this.props;
-    // let readOnly = !!edited.cheque_code ? false : false;
-    // console.log("cheque",edited.chequeImportLineCode)
-
 
     return (
       <Grid container>
@@ -95,29 +87,6 @@ class ChequeStatusMasterPanel extends FormPanel {
                 </Select>
               </FormControl>
             </Grid>
-            {/* <Grid className={classes.item}>
-
-            <PublishedComponent
-                pubRef="ChequeStatusPicker"
-                value={edited?.chequeImportLineStatus}
-                module="cmr_cs"
-                label="cmr_cs.checkstate"
-                readOnly={false}
-                onChange={(value) => onEditedChanged({ ...edited, chequeImportLineStatus })}
-              />
-          </Grid> */}
-
-            {/* <Grid className={classes.item}>
-              <TextInput
-                module="cmr_cs"
-                label=""
-                required={true}
-                readOnly={false}
-                
-                value={!!edited && !!edited.chequeImportLineStatus ? edited.chequeImportLineStatus : ""}
-                onChange={(v) => this.updateAttribute("chequeImportLineStatus", v)}
-              />
-            </Grid> */}
           </Grid>
           <Grid item xs={4} className={classes.item}>
             <Grid className={classes.item}>
@@ -139,6 +108,5 @@ class ChequeStatusMasterPanel extends FormPanel {
     );
   }
 }
-// console.log(chequeImportLineStatus,"cheque",idChequeImportLine)
 
 export default withModulesManager(withTheme(withStyles(styles)(ChequeStatusMasterPanel)));

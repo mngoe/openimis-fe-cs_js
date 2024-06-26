@@ -10,10 +10,13 @@ import ChequeStatusPicker from "./pickers/ChequeStatusPicker";
 import ChequeSanteActivitiesReport from "./reports/ChequeSanteActivitiesReport";
 import ChequeSanteActivitiesFullLocationReport from "./reports/ChequeSanteActivitiesFullLocationReport";
 import ChequeStatusPage from "./pages/ChequeStatusPage";
+import ChequeDoublePage from "./pages/ChequeDoublePage";
 
 const ROUTE_CMR_CS_LIST = "cheque/list"
 const ROUTE_CMR_CS_IMPORT = "cheque/import"
 const ROUTE_CMR_STATUS = "cheque/status";
+const ROUTE_CMR_DOUBLE = "cheque/double";
+// const ROUTE_CMR_DOUBLES = "cheque/double";
 
 const DEFAULT_CONFIG = {
   "translations": [
@@ -24,8 +27,10 @@ const DEFAULT_CONFIG = {
   "reducers": [{ key: 'cmr_cs', reducer }],
   "refs": [
     { key: "cmr_cs.ChequeStatusPicker", ref: ChequeStatusPicker,
+    key: "cmr_cs.ChequeDouble", ref: ROUTE_CMR_DOUBLE,
     key: "cmr_cs.ChequeList", ref: ROUTE_CMR_CS_LIST,
-    key: "cmr_cs.ChequeStatus", ref: ROUTE_CMR_STATUS
+    key: "cmr_cs.ChequeStatus", ref: ROUTE_CMR_STATUS,
+    // key: "cmr_cs.ChequeDoubles", ref: ROUTE_CMR_DOUBLES
      }
   ],
   "reports":[
@@ -227,6 +232,7 @@ const DEFAULT_CONFIG = {
     { path: ROUTE_CMR_CS_LIST, component: ChequeListPage },
     { path: ROUTE_CMR_CS_IMPORT, component: ChequeImportPage },
     { path: ROUTE_CMR_STATUS + '/:cheque_code', component: ChequeStatusPage },
+    { path: ROUTE_CMR_DOUBLE, component: ChequeDoublePage },
   ],
 }
 

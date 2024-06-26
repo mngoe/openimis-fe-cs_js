@@ -39,7 +39,6 @@ class ChequeStatusPage extends Component {
 
     render() {
         const { intl, classes, modulesManager, history, cheque_code } = this.props; 
-        console.log(this.props,"qqqqqqqqqqqqqqqqqqqqqqqqqq")
         return (
             <div className={classes.page}>
                 <ChequeForm
@@ -56,7 +55,6 @@ class ChequeStatusPage extends Component {
 
 const mapStateToProps = (state, props) => ({
     cheque_code: props.match.params.cheque_code,
-    // chequeImportLineCode: props.match.params.chequeImportLineCode,
 });
 
 const mapDispatchToProps = (dispatch) => {

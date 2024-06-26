@@ -14,7 +14,7 @@ import {
     historyPush,
     formatMessageWithValues, 
     FormattedMessage } from "@openimis/fe-core";
-
+import { Button } from "@material-ui/core"
 const CHEQUE_FILTER_KEY = "cheque.Filter";
 
 const styles = (theme) => ({
@@ -27,10 +27,10 @@ class ChequeListPage extends Component {
         super(props);
         this.state = {
           defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
-            "chequeStatus": {
-              "value": "New",
-              "filter": "chequeImportLineStatus: \"New\"",
-            },
+            // "chequeStatus": {
+            //   "value": "New",
+            //    "filter": "chequeImportLineStatus: \"New\"",
+            // },
           }),
         };
       }
@@ -51,11 +51,12 @@ class ChequeListPage extends Component {
     }
 
     onDoubleClick = (i, newTab = false) => {
-        console.log('valeur de i ', i)
         historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeStatus",[i.chequeImportLineCode],false);
     };
 
-
+    double = () => {
+        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeDoubles");
+    };
     render() {
         const { 
             intl,
@@ -68,6 +69,14 @@ class ChequeListPage extends Component {
         } = this.props;
                return (
             <div className={classes.page}>
+                <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            onClick={this.double}
+                          >
+                            {formatMessageWithValues(intl, "CmrCS", "LISTE DES DOUBLONS")}
+                          </Button>
                 <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
                 <ChequeSearcher
                 defaultFilters={this.state.defaultFilters}
