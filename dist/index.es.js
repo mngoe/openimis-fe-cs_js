@@ -846,6 +846,7 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
         defaultFilters = _this$props.defaultFilters,
         cacheFiltersKey = _this$props.cacheFiltersKey,
         onDoubleClick = _this$props.onDoubleClick;
+        _this$props.cheques;
         _this$props.actionsContributionKey;
       var count = !!this.state.random && this.state.random.value;
       if (!count) {
@@ -1364,20 +1365,26 @@ var ChequeDoublePage = /*#__PURE__*/function (_Component) {
       });
     });
     _defineProperty(_this, "removeDuplicates", function (cheques) {
-      var seen = new Set();
+      var seen = new Map();
+      var duplicates = new Set();
+      cheques.forEach(function (cheque) {
+        if (seen.has(cheque.number)) {
+          duplicates.add(cheque.number);
+        } else {
+          seen.set(cheque.number, cheque);
+        }
+      });
       return cheques.filter(function (cheque) {
-        var duplicate = seen.has(cheque.number);
-        seen.add(cheque.number);
-        return !duplicate;
+        return duplicates.has(cheque.number);
       });
     });
     _this.state = {
       defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
         "chequeStatus": {
           "value": "New"
-          //   "filter": "chequeImportLineStatus: \"New\"",
         }
-      })
+      }),
+      uniqueCheques: []
     };
     return _this;
   }
@@ -1396,12 +1403,9 @@ var ChequeDoublePage = /*#__PURE__*/function (_Component) {
         _this$props.fetchingCheques;
         _this$props.errorCheques;
         _this$props.fetchedMyCheques;
-        _this$props.myCheques;
         _this$props.myChequesPageInfo;
         _this$props.onDoubleClick;
-        _this$props.onDoubleClick1;
-      var cheques = this.state.uniqueCheques || this.props.myCheques;
-      console.log(cheques, "biennnnnnnnnnnnnn");
+      var cheques = this.state.uniqueCheques || [];
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Helmet, {
         title: formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")
       }), /*#__PURE__*/React.createElement(ChequeSearcher$1, {
@@ -1409,7 +1413,7 @@ var ChequeDoublePage = /*#__PURE__*/function (_Component) {
         cacheFiltersKey: "claimReviewsPageFiltersCache",
         filterPaneContributionsKey: CHEQUE_FILTER_KEY,
         onDoubleClick: this.onDoubleClick,
-        cheques: cheques // Passez les chèques filtrés ici
+        cheques: cheques
       }));
     }
   }]);

@@ -126,6 +126,7 @@ class ChequeSearcher extends Component {
       defaultFilters,
       cacheFiltersKey,
       onDoubleClick,
+      cheques,
       actionsContributionKey,
     } = this.props;
     let count = !!this.state.random && this.state.random.value;
