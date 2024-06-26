@@ -28,7 +28,7 @@ class ChequeDoublePage extends Component {
           defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
             "chequeStatus": {
               "value": "New",
-              "filter": "chequeImportLineStatus: \"New\"",
+            //   "filter": "chequeImportLineStatus: \"New\"",
             },
           }),
         };
@@ -56,7 +56,7 @@ class ChequeDoublePage extends Component {
     removeDuplicates = (cheques) => {
         const seen = new Set();
         return cheques.filter(cheque => {
-            const duplicate = seen.has(cheque.number); // Assurez-vous que `number` est la clé correcte
+            const duplicate = seen.has(cheque.number); 
             seen.add(cheque.number);
             return !duplicate;
         });
@@ -75,7 +75,6 @@ class ChequeDoublePage extends Component {
         onDoubleClick,onDoubleClick1
     } = this.props;
     const cheques = this.state.uniqueCheques || this.props.myCheques;
-    console.log(cheques,"biennnnnnnnnnnnnn")
     return (
         <div>
             <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
@@ -84,7 +83,7 @@ class ChequeDoublePage extends Component {
                 cacheFiltersKey="claimReviewsPageFiltersCache"
                 filterPaneContributionsKey={CHEQUE_FILTER_KEY}
                 onDoubleClick={this.onDoubleClick}
-                cheques={cheques} // Passez les chèques filtrés ici
+                cheques={cheques} 
             />
         </div>
     );

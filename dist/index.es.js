@@ -928,7 +928,7 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
       historyPush(_this.props.modulesManager, _this.props.history, "cmr_cs.ChequeStatus", [i.chequeImportLineCode], false);
     });
     _defineProperty(_this, "double", function () {
-      historyPush(_this.props.modulesManager, _this.props.history, "cmr_cs.ChequeDoubles");
+      historyPush(_this.props.modulesManager, _this.props.history, "cmr_cs.ChequeDouble");
     });
     _this.state = {
       defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
@@ -1366,7 +1366,7 @@ var ChequeDoublePage = /*#__PURE__*/function (_Component) {
     _defineProperty(_this, "removeDuplicates", function (cheques) {
       var seen = new Set();
       return cheques.filter(function (cheque) {
-        var duplicate = seen.has(cheque.number); // Assurez-vous que `number` est la clé correcte
+        var duplicate = seen.has(cheque.number);
         seen.add(cheque.number);
         return !duplicate;
       });
@@ -1374,8 +1374,8 @@ var ChequeDoublePage = /*#__PURE__*/function (_Component) {
     _this.state = {
       defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
         "chequeStatus": {
-          "value": "New",
-          "filter": "chequeImportLineStatus: \"New\""
+          "value": "New"
+          //   "filter": "chequeImportLineStatus: \"New\"",
         }
       })
     };
@@ -1453,10 +1453,21 @@ var DEFAULT_CONFIG = {
     key: 'cmr_cs',
     reducer: reducer
   }],
-  "refs": [_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
+  "refs": [{
     key: "cmr_cs.ChequeStatusPicker",
     ref: ChequeStatusPicker
-  }, "key", "cmr_cs.ChequeDouble"), "ref", ROUTE_CMR_DOUBLE), "key", "cmr_cs.ChequeList"), "ref", ROUTE_CMR_CS_LIST), "key", "cmr_cs.ChequeStatus"), "ref", ROUTE_CMR_STATUS)],
+  }, {
+    key: "cmr_cs.ChequeDouble",
+    ref: ROUTE_CMR_DOUBLE
+  }, {
+    key: "cmr_cs.ChequeList",
+    ref: ROUTE_CMR_CS_LIST
+  }, {
+    key: "cmr_cs.ChequeStatus",
+    ref: ROUTE_CMR_STATUS
+  }
+  // key: "cmr_cs.ChequeDoubles", ref: ROUTE_CMR_DOUBLES
+  ],
   "reports": [{
     key: "invoice_fosa_cs",
     component: ChequeSanteActivitiesReport,

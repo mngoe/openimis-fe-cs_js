@@ -55,7 +55,7 @@ class ChequeListPage extends Component {
     };
 
     double = () => {
-        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeDoubles");
+        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeDouble");
     };
     render() {
         const { 
