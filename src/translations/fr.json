@@ -28,5 +28,14 @@
     "cmr_cs-list.Used": "Utilisé",
     "cmr_cs-list.Cancel": "Annulé",
     "cmr_cs-list.null": "Tous",
-    "cmr_cs.chequeNo":"Numéro Cheque"
+    "cmr_cs.chequeNo":"Numéro Cheque",
+    "chequeStatus.checknum":"Numéro de chèque",
+    "chequeStatus.checkdate":"date",
+    "password": "Mots de passe",
+    "cmr_cs.passwordCheck":"Veillez entrer votre mot de passe ",
+    "cmr_cs.authchequedialog.login.button": "Vérification",
+    "incorrectPassword":"Mot de passe incorrect",
+    "edit.title": "Modification du chèque"
+
+
 }

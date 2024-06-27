@@ -10,7 +10,6 @@ import ChequeStatusPicker from "./pickers/ChequeStatusPicker";
 import ChequeSanteActivitiesReport from "./reports/ChequeSanteActivitiesReport";
 import ChequeSanteActivitiesFullLocationReport from "./reports/ChequeSanteActivitiesFullLocationReport";
 import ChequeStatusPage from "./pages/ChequeStatusPage";
-import ChequeDoublePage from "./pages/ChequeDoublePage";
 
 const ROUTE_CMR_CS_LIST = "cheque/list"
 const ROUTE_CMR_CS_IMPORT = "cheque/import"
@@ -231,7 +230,6 @@ const DEFAULT_CONFIG = {
     { path: ROUTE_CMR_CS_LIST, component: ChequeListPage },
     { path: ROUTE_CMR_CS_IMPORT, component: ChequeImportPage },
     { path: ROUTE_CMR_STATUS + '/:cheque_code', component: ChequeStatusPage },
-    { path: ROUTE_CMR_DOUBLE, component: ChequeDoublePage },
   ],
 }
 

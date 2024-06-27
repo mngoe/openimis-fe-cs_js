@@ -16,6 +16,9 @@ import ChequeForm from "../components/ChequeForm";
 
 const styles = theme => ({
     page: theme.page,
+    fullHeight: {
+        height: "100%",
+      },
 });
 
 class ChequeStatusPage extends Component {
@@ -41,7 +44,7 @@ class ChequeStatusPage extends Component {
         const { intl, classes, modulesManager, history, cheque_code } = this.props; 
         return (
             <div className={classes.page}>
-                <ChequeForm
+                <ChequeForm             
                     cheque_code={cheque_code}
                     save={this.save}
                     add={this.add}

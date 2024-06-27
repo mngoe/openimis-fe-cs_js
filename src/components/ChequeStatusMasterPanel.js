@@ -33,7 +33,6 @@ class ChequeStatusMasterPanel extends FormPanel {
 
   updateAttribute = (attr, v) => {
     let edited = { ...this.props.edited };
-    console.log("edited", edited)
     edited[attr] = v;
     this.props.onEditedChanged(edited);
 
@@ -48,60 +47,50 @@ class ChequeStatusMasterPanel extends FormPanel {
       titleParams = { label: "" },
       actions,
       onEditedChanged,
-      chequeStatus
+      chequeStatus,
+      readOnly,
     } = this.props;
-
+    console.log("edited", readOnly)
     return (
-      <Grid container>
+      <Grid container direction="row">
         <Grid container className={classes.item}>
+
           <Grid item xs={4} className={classes.item}>
-            <Grid className={classes.item}>
-              {formatMessage(intl, "cmr_cs", "chequeStatus.checknum")}
-            </Grid>
-            <Grid className={classes.item}>
-              <NumberInput
-                module="cmr_cs"
-                label=""
-                required={true}
-                readOnly={true}
-                value={!!edited && !!edited.chequeImportLineCode ? edited.chequeImportLineCode  : ""}
-                onChange={(v) => this.updateAttribute("checknum", v)}
-              />
-            </Grid>
+            <NumberInput
+              module="cmr_cs"
+              label={formatMessage(intl, "cmr_cs", "chequeStatus.checknum")}
+              required={true}
+              readOnly={true}
+              value={!!edited && !!edited.chequeImportLineCode ? edited.chequeImportLineCode : ""}
+              onChange={(v) => this.updateAttribute("checknum", v)}
+            />
+
           </Grid>
           <Grid item xs={4} className={classes.item}>
-            <Grid className={classes.item}>
-              {formatMessage(intl, "cmr_cs","checkstate")}
-            </Grid>
-            <Grid className={classes.item}>
-              <FormControl className={classes.formControl}>
-                <Select
-                  value={edited?.checkstate || ""}
-                  onChange={(e) => this.updateAttribute("chequeImportLineStatus", e.target.value)}
-                >
-                  {chequeStatuses.map((status) => (
-                    <MenuItem key={status.value} value={status.value}>
-                      {status.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
+
+            <PublishedComponent
+              pubRef="cmr_cs.ChequeStatusPicker"
+              value={!!edited && !!edited.chequeImportLineStatus ? edited.chequeImportLineStatus : ""}
+              readOnly={readOnly}
+              required={true}
+              onChange={(v) => this.updateAttribute("chequeImportLineStatus", v)}
+
+            />
+
           </Grid>
           <Grid item xs={4} className={classes.item}>
-            <Grid className={classes.item}>
-              {formatMessage(intl, "cmr_cs", "chequeStatus.checkdate")}
-            </Grid>
-            <Grid className={classes.item}>
-              <NumberInput
-                module="cmr_cs"
-                label=""
-                required={true}
-                readOnly={true}
+          
+              <PublishedComponent
+                pubRef="core.DatePicker"
                 value={!!edited && !!edited.chequeImportLineDate ? edited.chequeImportLineDate : ""}
+                module="cmr_cs"
+                label={formatMessage(intl, "cmr_cs", "cmr_cs.checkdate")}
                 onChange={(v) => this.updateAttribute("checkdate", v)}
+                readOnly={true}
+                required={true}
+                // maxDate={edited.dateTo < edited.dateClaimed ? edited.dateTo : edited.dateClaimed}
               />
-            </Grid>
+              
           </Grid>
         </Grid>
       </Grid>

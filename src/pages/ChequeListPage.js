@@ -53,10 +53,6 @@ class ChequeListPage extends Component {
     onDoubleClick = (i, newTab = false) => {
         historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeStatus",[i.chequeImportLineCode],false);
     };
-
-    double = () => {
-        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeDouble");
-    };
     render() {
         const { 
             intl,
@@ -69,14 +65,6 @@ class ChequeListPage extends Component {
         } = this.props;
                return (
             <div className={classes.page}>
-                <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            onClick={this.double}
-                          >
-                            {formatMessageWithValues(intl, "CmrCS", "LISTE DES DOUBLONS")}
-                          </Button>
                 <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
                 <ChequeSearcher
                 defaultFilters={this.state.defaultFilters}
