@@ -148,7 +148,7 @@ class ChequeSearcher extends Component {
           fetchingItems={fetchingCheques}
           fetchedItems={fetchedMyCheques}
           errorItems={errorCheques}
-          tableTitle={formatMessageWithValues(intl, "cmr_cs", "table", { count })}
+          tableTitle={!!duplicate? formatMessageWithValues(intl, "cmr_cs", "duplicateTableList", { count }): formatMessageWithValues(intl, "cmr_cs", "table", { count })}
           rowsPerPageOptions={this.rowsPerPageOptions}
           defaultPageSize={this.defaultPageSize}
           fetch={this.fetch}
