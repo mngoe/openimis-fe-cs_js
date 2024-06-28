@@ -28,6 +28,13 @@
     "cmr_cs.checkImported": "Checks present in your file has been inserted in the database",
     "cmr_cs.dateFrom":"From",
     "cmr_cs.dateTo":"To",
-    "cmr_cs.chequeNo":"Voucher Number",
+    "cmr_cs.chequeNo":"Cheque Number",
+    "chequeStatus.checknum":"Cheque number",
+    "password": "Password",
+    "chequeStatus.checkdate":"date",
+    "cmr_cs.passwordCheck":"Please enter your password",
+    "cmr_cs.authchequedialog.login.button": "Checking",
+    "incorrectPassword":"Invalid Password",
+    "edit.title": "Edit cheque",
     "duplicateTable": "Duplicate List"
 }

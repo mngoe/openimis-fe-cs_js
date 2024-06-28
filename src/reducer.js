@@ -10,13 +10,14 @@ function reducer(
         fetchedMyCheque: false,
         myCheques: [],
         myChequesPageInfo: { totalCount: 0 },
+        authError: null,
         fetchingChequesImport: false,
         errorChequesImport: null,
         fetchedMyChequeImport: false,
         myChequesImport: [],
         myChequesImportPageInfo: { totalCount: 0 },
         submittingMutation: false,
-        mutation: {},    
+        mutation: {},
         duplicatesCheque: [],
     },
     action,
@@ -69,7 +70,31 @@ function reducer(
                 ...state,
                 fetchedMyChequesImport: false,
                 errorChequesImport: formatServerError(action.payload)
-            };  
+            };
+        // AUTH
+        case "CORE_AUTH_LOGIN_RESP": {
+            console.log(' core auth resp ', action.payload)
+            if (action.payload?.errors) {
+                return {
+                    ...state,
+                    authError: formatGraphQLError(action.payload),
+                };
+            }
+            return {
+                ...state,
+                authError: null,
+            };
+        }
+        case "CORE_AUTH_ERR": {
+            action.payload = {...action.payload, sources:"AuthChequeDialog"}
+            console.log('core called', action)
+
+            return {
+                ...state,
+                user: null,
+                authError: formatServerError(action.payload),
+            };
+        }
         case 'DUPLICATED_CHEQUE':
             return{
                 ...state,

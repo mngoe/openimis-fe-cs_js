@@ -125,6 +125,8 @@ class ChequeSearcher extends Component {
       actions,
       defaultFilters,
       cacheFiltersKey,
+      onDoubleClick,
+      cheques,
       duplicatesCheque, 
       duplicate,
       actionsContributionKey,
@@ -161,6 +163,7 @@ class ChequeSearcher extends Component {
           itemFormatters={this.itemFormatters}
           actions={actions}
           sorts={this.sorts}
+          onDoubleClick={onDoubleClick}
         />
       </Fragment>
     );
