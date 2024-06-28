@@ -14,7 +14,7 @@ import {
     historyPush,
     formatMessageWithValues, 
     FormattedMessage } from "@openimis/fe-core";
-
+import { Button } from "@material-ui/core"
 const CHEQUE_FILTER_KEY = "cheque.Filter";
 
 const styles = (theme) => ({
@@ -27,10 +27,10 @@ class ChequeListPage extends Component {
         super(props);
         this.state = {
           defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
-            "chequeStatus": {
-              "value": "New",
-              "filter": "chequeImportLineStatus: \"New\"",
-            },
+            // "chequeStatus": {
+            //   "value": "New",
+            //    "filter": "chequeImportLineStatus: \"New\"",
+            // },
           }),
         };
       }
@@ -56,6 +56,10 @@ class ChequeListPage extends Component {
         }
         this.props.fetchCheques(prms);
     }
+
+    onDoubleClick = (i, newTab = false) => {
+        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeStatus",[i.chequeImportLineCode],false);
+    };
     canSubmitAll = () => true;
     handleDuplicateNavigation = () => {
         historyPush(this.props.modulesManager, this.props.history, "cmr_cs.DuplicateChequeListPage",[], null)
@@ -69,7 +73,7 @@ class ChequeListPage extends Component {
             errorCheques,
             fetchedMyCheques,
             myCheques,
-            myChequesPageInfo 
+            myChequesPageInfo
         } = this.props;
         const actions = [
             {
@@ -87,13 +91,14 @@ class ChequeListPage extends Component {
                 actions={actions}
                 cacheFiltersKey="claimReviewsPageFiltersCache"
                 filterPaneContributionsKey={CHEQUE_FILTER_KEY}
+                onDoubleClick={this.onDoubleClick}
                 />
             </div>
         )
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
     fetchingCheques: state.cmr_cs.fetchingCheques,
     errorCheques: state.cmr_cs.errorCheques,
     fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
