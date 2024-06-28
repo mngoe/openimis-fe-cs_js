@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withTheme, withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
+import { connect,useDispatch, useSelector  } from "react-redux";
 import { bindActionCreators } from "redux";
 import { injectIntl } from 'react-intl';
 import {
@@ -17,7 +17,7 @@ import {
     FormControlLabel,
   } from "@material-ui/core";
 import { formatMessageWithValues, FormattedMessage, baseApiUrl, apiHeaders } from "@openimis/fe-core";
-import { fetchChequesImport } from "../actions"
+import { fetchChequesImport, fetchDuplicatesCheque } from "../actions"
 import { ProgressOrError, Table } from "@openimis/fe-core";
 
 const CREATECHEQUE_URL = `${baseApiUrl}/cs/importfile`;
@@ -52,7 +52,12 @@ class ChequeImportPage extends Component {
     }
    
     componentDidMount() {
-        this.query();
+      this.query();
+      const storedData = localStorage.getItem('duplicatesCheque');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        this.props.fetchDuplicatesCheque(parsedData);
+      }
     }
 
     query = () => {
@@ -85,7 +90,6 @@ class ChequeImportPage extends Component {
       try {
         this.setState({showModal:true});
         this.setState({contentModal:"cmr_cs.currentlyImporting"});
-
         const reponseUpload = async () => { 
           fetch(`${CREATECHEQUE_URL}/upload`, {
             headers: apiHeaders,
@@ -100,6 +104,8 @@ class ChequeImportPage extends Component {
               this.setState({
                 uploadState: reponseJson
               });
+              this.props.fetchDuplicatesCheque(reponseJson)
+              localStorage.setItem('duplicatesCheque', JSON.stringify(reponseJson)); 
               if(reponseJson.success==true){
                 this.setState({showModal:true});
                 this.setState({contentModal:"cmr_cs.checkImported"});
@@ -138,7 +144,6 @@ class ChequeImportPage extends Component {
             e => e.importDate,
             e => e.storedFile,
         ]
-
 
         return (
             <div className={classes.page}>
@@ -212,12 +217,13 @@ const mapStateToProps = state => ({
     fetchedMyChequesImport: state.cmr_cs.fetchedMyChequesImport,
     myChequesImport: state.cmr_cs.myChequesImport,
     myChequesImportPageInfo: state.cmr_cs.myChequesImportPageInfo,
+    duplicatesCheque: state.cmr_cs.duplicatesCheque
 });
 
 
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ fetchChequesImport }, dispatch);
+    return bindActionCreators({ fetchChequesImport, fetchDuplicatesCheque }, dispatch);
 };
 
 export default injectIntl(withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ChequeImportPage))));
