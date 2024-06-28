@@ -10,15 +10,14 @@ function reducer(
         fetchedMyCheque: false,
         myCheques: [],
         myChequesPageInfo: { totalCount: 0 },
-
         fetchingChequesImport: false,
         errorChequesImport: null,
         fetchedMyChequeImport: false,
         myChequesImport: [],
         myChequesImportPageInfo: { totalCount: 0 },
-
         submittingMutation: false,
         mutation: {},    
+        duplicatesCheque: [],
     },
     action,
 ) {
@@ -71,6 +70,11 @@ function reducer(
                 fetchedMyChequesImport: false,
                 errorChequesImport: formatServerError(action.payload)
             };  
+        case 'DUPLICATED_CHEQUE':
+            return{
+                ...state,
+                duplicatesCheque: action.payload
+            }
         default:
             return state;
     }

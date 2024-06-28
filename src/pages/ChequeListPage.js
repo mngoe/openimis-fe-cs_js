@@ -3,7 +3,7 @@ import { withTheme, withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { injectIntl } from 'react-intl';
-import { fetchCheques } from "../actions";
+import { fetchCheques,fetchDuplicatesCheque } from "../actions";
 import ChequeSearcher from "../components/ChequeSearcher";
 import { 
     ProgressOrError, 
@@ -11,6 +11,7 @@ import {
     PagedDataHandler, 
     Helmet,
     formatMessage,
+    historyPush,
     formatMessageWithValues, 
     FormattedMessage } from "@openimis/fe-core";
 
@@ -35,7 +36,14 @@ class ChequeListPage extends Component {
       }
     componentDidMount() {
         this.query();
+        const storedData = localStorage.getItem('duplicatesCheque');
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          this.props.fetchDuplicatesCheque(parsedData);
+        }
     }
+
+
 
     query = () => {
         let prms = [];
@@ -48,7 +56,10 @@ class ChequeListPage extends Component {
         }
         this.props.fetchCheques(prms);
     }
-
+    canSubmitAll = () => true;
+    handleDuplicateNavigation = () => {
+        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.DuplicateChequeListPage",[], null)
+    }
 
     render() {
         const { 
@@ -60,12 +71,20 @@ class ChequeListPage extends Component {
             myCheques,
             myChequesPageInfo 
         } = this.props;
-
+        const actions = [
+            {
+              action: this.handleDuplicateNavigation,
+              label: formatMessage(this.props.intl, "cmr_cs", "duplicateTable"),
+              enabled: this.canSubmitAll
+            },
+          ];
+      
                return (
             <div className={classes.page}>
                 <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
                 <ChequeSearcher
                 defaultFilters={this.state.defaultFilters}
+                actions={actions}
                 cacheFiltersKey="claimReviewsPageFiltersCache"
                 filterPaneContributionsKey={CHEQUE_FILTER_KEY}
                 />
@@ -80,12 +99,13 @@ const mapStateToProps = state => ({
     fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
     myCheques: state.cmr_cs.myCheques,
     myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
+    duplicatesCheque: state.cmr_cs.duplicatesCheque
 });
 
 
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ fetchCheques }, dispatch);
+    return bindActionCreators({ fetchCheques, fetchDuplicatesCheque }, dispatch);
 };
 
 export default injectIntl(withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ChequeListPage))));

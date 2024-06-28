@@ -125,10 +125,10 @@ class ChequeSearcher extends Component {
       actions,
       defaultFilters,
       cacheFiltersKey,
-      onDoubleClick,
+      duplicatesCheque, 
+      duplicate,
       actionsContributionKey,
     } = this.props;
-
     let count = !!this.state.random && this.state.random.value;
     if (!count) {
       count = myChequesPageInfo.totalCount;
@@ -139,10 +139,10 @@ class ChequeSearcher extends Component {
           module="claim"
           defaultFilters={defaultFilters}
           cacheFiltersKey={cacheFiltersKey}
-          FilterPane={ChequeFilter}
+          FilterPane={defaultFilters=="none" ?null: ChequeFilter}
           FilterExt={FilterExt}
           filterPaneContributionsKey={filterPaneContributionsKey}
-          items={myCheques}
+          items={!!duplicate ? duplicatesCheque : myCheques}
           defaultOrderBy="-chequeImportLineDate"
           itemsPageInfo={myChequesPageInfo}
           fetchingItems={fetchingCheques}
@@ -168,11 +168,12 @@ class ChequeSearcher extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    fetchingCheques: state.cmr_cs.fetchingCheques,
-    errorCheques: state.cmr_cs.errorCheques,
-    fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
-    myCheques: state.cmr_cs.myCheques,
-    myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
+  fetchingCheques: state.cmr_cs.fetchingCheques,
+  errorCheques: state.cmr_cs.errorCheques,
+  fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
+  myCheques: state.cmr_cs.myCheques,
+  duplicatesCheque: state.cmr_cs.duplicatesCheque,
+  myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -28,5 +28,7 @@
     "cmr_cs-list.Used": "Utilisé",
     "cmr_cs-list.Cancel": "Annulé",
     "cmr_cs-list.null": "Tous",
-    "cmr_cs.chequeNo":"Numéro Cheque"
+    "cmr_cs.chequeNo":"Numéro Cheque",
+    "duplicateTable": "Liste des Doublons"
+
 }
