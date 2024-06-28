@@ -127,6 +127,8 @@ class ChequeSearcher extends Component {
       cacheFiltersKey,
       onDoubleClick,
       cheques,
+      duplicatesCheque, 
+      duplicate,
       actionsContributionKey,
     } = this.props;
     let count = !!this.state.random && this.state.random.value;
@@ -139,16 +141,16 @@ class ChequeSearcher extends Component {
           module="claim"
           defaultFilters={defaultFilters}
           cacheFiltersKey={cacheFiltersKey}
-          FilterPane={ChequeFilter}
+          FilterPane={defaultFilters=="none" ?null: ChequeFilter}
           FilterExt={FilterExt}
           filterPaneContributionsKey={filterPaneContributionsKey}
-          items={myCheques}
+          items={!!duplicate ? duplicatesCheque : myCheques}
           defaultOrderBy="-chequeImportLineDate"
           itemsPageInfo={myChequesPageInfo}
           fetchingItems={fetchingCheques}
           fetchedItems={fetchedMyCheques}
           errorItems={errorCheques}
-          tableTitle={formatMessageWithValues(intl, "cmr_cs", "table", { count })}
+          tableTitle={!!duplicate? formatMessageWithValues(intl, "cmr_cs", "duplicateTableList", { count }): formatMessageWithValues(intl, "cmr_cs", "table", { count })}
           rowsPerPageOptions={this.rowsPerPageOptions}
           defaultPageSize={this.defaultPageSize}
           fetch={this.fetch}
@@ -169,11 +171,12 @@ class ChequeSearcher extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    fetchingCheques: state.cmr_cs.fetchingCheques,
-    errorCheques: state.cmr_cs.errorCheques,
-    fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
-    myCheques: state.cmr_cs.myCheques,
-    myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
+  fetchingCheques: state.cmr_cs.fetchingCheques,
+  errorCheques: state.cmr_cs.errorCheques,
+  fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
+  myCheques: state.cmr_cs.myCheques,
+  duplicatesCheque: state.cmr_cs.duplicatesCheque,
+  myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
 });
 
 const mapDispatchToProps = (dispatch) => {

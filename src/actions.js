@@ -142,3 +142,16 @@ export function authError(error, source = null) {
 }
 
   
+function transformChequeData(data) {
+    return data.map(item => {
+      return {
+        chequeImportLineCode: item[1],
+        chequeImportLineDate: item[3],
+        chequeImportLineStatus: item[2],
+      };
+    });
+  }
+export const fetchDuplicatesCheque = (duplicatesCheque) => ({
+    type: 'DUPLICATED_CHEQUE',
+    payload: transformChequeData(duplicatesCheque.updatedCheques)
+});

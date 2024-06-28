@@ -5,6 +5,7 @@
     "menu.chequeList": "Check List",
     "cmr_cs.ChequeListHeader": "Check List",
     "cmr_cs.table": "Table Check ({count})",
+    "cmr_cs.duplicateTableList": "Duplicate Table Check ({count})",
     "cmr_cs-list.null": "All",
     "cmr_cs-list.New": "New",
     "cmr_cs-list.Used": "Used",
@@ -34,5 +35,6 @@
     "cmr_cs.passwordCheck":"Please enter your password",
     "cmr_cs.authchequedialog.login.button": "Checking",
     "incorrectPassword":"Invalid Password",
-    "edit.title": "Edit cheque"
+    "edit.title": "Edit cheque",
+    "duplicateTable": "Duplicate List"
 }

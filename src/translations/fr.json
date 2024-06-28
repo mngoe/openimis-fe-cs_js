@@ -5,6 +5,7 @@
     "menu.chequeList": "Liste Cheque",
     "cmr_cs.ChequeListHeader": "Liste des cheques",
     "cmr_cs.table": "Table Chèque ({count})",
+    "cmr_cs.duplicateTableList": "Table Doublons  Chèque({count})",
     "cmr_cs.checknum": "Numéro Cheque",
     "cmr_cs.checkstate": "Statut Cheque",
     "cmr_cs.checkdate": "Date Creation Cheque",
@@ -35,7 +36,7 @@
     "cmr_cs.passwordCheck":"Veillez entrer votre mot de passe ",
     "cmr_cs.authchequedialog.login.button": "Vérification",
     "incorrectPassword":"Mot de passe incorrect",
-    "edit.title": "Modification du chèque"
-
+    "edit.title": "Modification du chèque",
+    "duplicateTable": "Liste des Doublons"
 
 }

@@ -15,8 +15,8 @@ const ROUTE_CMR_CS_LIST = "cheque/list"
 const ROUTE_CMR_CS_IMPORT = "cheque/import"
 const ROUTE_CMR_STATUS = "cheque/status";
 const ROUTE_CMR_DOUBLE = "cheque/double";
-// const ROUTE_CMR_DOUBLES = "cheque/double";
-
+import DuplicateChequeListPage from "./pages/DuplicateChequeListPage";
+const ROUTE_CMR_CS_DUPLICATE_LIST = "cheque/list/duplicate"
 const DEFAULT_CONFIG = {
   "translations": [
     { key: "en", messages: messages_en },
@@ -30,6 +30,7 @@ const DEFAULT_CONFIG = {
     {key: "cmr_cs.ChequeList", ref: ROUTE_CMR_CS_LIST},
     {key: "cmr_cs.ChequeStatus", ref: ROUTE_CMR_STATUS},
     // key: "cmr_cs.ChequeDoubles", ref: ROUTE_CMR_DOUBLES
+    { key: "cmr_cs.DuplicateChequeListPage", ref: ROUTE_CMR_CS_DUPLICATE_LIST }
   ],
   "reports":[
     {
@@ -230,6 +231,8 @@ const DEFAULT_CONFIG = {
     { path: ROUTE_CMR_CS_LIST, component: ChequeListPage },
     { path: ROUTE_CMR_CS_IMPORT, component: ChequeImportPage },
     { path: ROUTE_CMR_STATUS + '/:cheque_code', component: ChequeStatusPage },
+    { path: ROUTE_CMR_CS_DUPLICATE_LIST, component: DuplicateChequeListPage },
+
   ],
 }
 

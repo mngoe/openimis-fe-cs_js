@@ -7,23 +7,26 @@ var feCore = require('@openimis/fe-core');
 var _extends = require('@babel/runtime/helpers/extends');
 var _classCallCheck = require('@babel/runtime/helpers/classCallCheck');
 var _createClass = require('@babel/runtime/helpers/createClass');
+var _inherits = require('@babel/runtime/helpers/inherits');
 var _possibleConstructorReturn = require('@babel/runtime/helpers/possibleConstructorReturn');
 var _getPrototypeOf = require('@babel/runtime/helpers/getPrototypeOf');
-var _inherits = require('@babel/runtime/helpers/inherits');
 var React = require('react');
 var reactIntl = require('react-intl');
 var reactRedux = require('react-redux');
 var icons = require('@material-ui/icons');
 var _ = require('lodash');
-var styles$8 = require('@material-ui/core/styles');
+var _assertThisInitialized = require('@babel/runtime/helpers/assertThisInitialized');
+var styles$9 = require('@material-ui/core/styles');
 var redux = require('redux');
-var ReplayIcon = require('@material-ui/icons/Replay');
-var core = require('@material-ui/core');
-var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
-require('@material-ui/icons/Tab');
-var _debounce = require('lodash/debounce');
 var _asyncToGenerator = require('@babel/runtime/helpers/asyncToGenerator');
 var _regeneratorRuntime = require('@babel/runtime/regenerator');
+var reduxApiMiddleware = require('redux-api-middleware');
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
+var core = require('@material-ui/core');
+require('@material-ui/icons/Tab');
+var _debounce = require('lodash/debounce');
+var ReplayIcon = require('@material-ui/icons/Replay');
+var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -31,18 +34,23 @@ var _defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_definePropert
 var _extends__default = /*#__PURE__*/_interopDefaultLegacy(_extends);
 var _classCallCheck__default = /*#__PURE__*/_interopDefaultLegacy(_classCallCheck);
 var _createClass__default = /*#__PURE__*/_interopDefaultLegacy(_createClass);
+var _inherits__default = /*#__PURE__*/_interopDefaultLegacy(_inherits);
 var _possibleConstructorReturn__default = /*#__PURE__*/_interopDefaultLegacy(_possibleConstructorReturn);
 var _getPrototypeOf__default = /*#__PURE__*/_interopDefaultLegacy(_getPrototypeOf);
-var _inherits__default = /*#__PURE__*/_interopDefaultLegacy(_inherits);
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ___default = /*#__PURE__*/_interopDefaultLegacy(_);
-var ReplayIcon__default = /*#__PURE__*/_interopDefaultLegacy(ReplayIcon);
-var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
-var _debounce__default = /*#__PURE__*/_interopDefaultLegacy(_debounce);
+var _assertThisInitialized__default = /*#__PURE__*/_interopDefaultLegacy(_assertThisInitialized);
 var _asyncToGenerator__default = /*#__PURE__*/_interopDefaultLegacy(_asyncToGenerator);
 var _regeneratorRuntime__default = /*#__PURE__*/_interopDefaultLegacy(_regeneratorRuntime);
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
+var _debounce__default = /*#__PURE__*/_interopDefaultLegacy(_debounce);
+var ReplayIcon__default = /*#__PURE__*/_interopDefaultLegacy(ReplayIcon);
+var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
 
 var currency$1 = "Fcfa";
+var password$1 = "Password";
+var incorrectPassword$1 = "Invalid Password";
+var duplicateTable$1 = "Duplicate List";
 var messages_en = {
 	currency: currency$1,
 	"cheque.mainMenu": "Check",
@@ -50,6 +58,7 @@ var messages_en = {
 	"menu.chequeList": "Check List",
 	"cmr_cs.ChequeListHeader": "Check List",
 	"cmr_cs.table": "Table Check ({count})",
+	"cmr_cs.duplicateTableList": "Duplicate Table Check ({count})",
 	"cmr_cs-list.null": "All",
 	"cmr_cs-list.New": "New",
 	"cmr_cs-list.Used": "Used",
@@ -72,10 +81,21 @@ var messages_en = {
 	"cmr_cs.checkImported": "Checks present in your file has been inserted in the database",
 	"cmr_cs.dateFrom": "From",
 	"cmr_cs.dateTo": "To",
-	"cmr_cs.chequeNo": "Voucher Number"
+	"cmr_cs.chequeNo": "Cheque Number",
+	"chequeStatus.checknum": "Cheque number",
+	password: password$1,
+	"chequeStatus.checkdate": "date",
+	"cmr_cs.passwordCheck": "Please enter your password",
+	"cmr_cs.authchequedialog.login.button": "Checking",
+	incorrectPassword: incorrectPassword$1,
+	"edit.title": "Edit cheque",
+	duplicateTable: duplicateTable$1
 };
 
 var currency = "Fcfa";
+var password = "Mots de passe";
+var incorrectPassword = "Mot de passe incorrect";
+var duplicateTable = "Liste des Doublons";
 var messages_fr = {
 	currency: currency,
 	"cheque.mainMenu": "Chèque",
@@ -83,6 +103,7 @@ var messages_fr = {
 	"menu.chequeList": "Liste Cheque",
 	"cmr_cs.ChequeListHeader": "Liste des cheques",
 	"cmr_cs.table": "Table Chèque ({count})",
+	"cmr_cs.duplicateTableList": "Table Doublons  Chèque({count})",
 	"cmr_cs.checknum": "Numéro Cheque",
 	"cmr_cs.checkstate": "Statut Cheque",
 	"cmr_cs.checkdate": "Date Creation Cheque",
@@ -106,11 +127,19 @@ var messages_fr = {
 	"cmr_cs-list.Used": "Utilisé",
 	"cmr_cs-list.Cancel": "Annulé",
 	"cmr_cs-list.null": "Tous",
-	"cmr_cs.chequeNo": "Numéro Cheque"
+	"cmr_cs.chequeNo": "Numéro Cheque",
+	"chequeStatus.checknum": "Numéro de chèque",
+	"chequeStatus.checkdate": "date",
+	password: password,
+	"cmr_cs.passwordCheck": "Veillez entrer votre mot de passe ",
+	"cmr_cs.authchequedialog.login.button": "Vérification",
+	incorrectPassword: incorrectPassword,
+	"edit.title": "Modification du chèque",
+	duplicateTable: duplicateTable
 };
 
-function ownKeys$4(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$4(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$4(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$4(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$7(Object(source), !0).forEach(function (key) { _defineProperty__default["default"](target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     fetchingCheques: false,
@@ -120,6 +149,7 @@ function reducer() {
     myChequesPageInfo: {
       totalCount: 0
     },
+    authError: null,
     fetchingChequesImport: false,
     errorChequesImport: null,
     fetchedMyChequeImport: false,
@@ -128,12 +158,13 @@ function reducer() {
       totalCount: 0
     },
     submittingMutation: false,
-    mutation: {}
+    mutation: {},
+    duplicatesCheque: []
   };
   var action = arguments.length > 1 ? arguments[1] : undefined;
   switch (action.type) {
     case 'CMS_CS_CHECKLIST_REQ':
-      return _objectSpread$4(_objectSpread$4({}, state), {}, {
+      return _objectSpread$7(_objectSpread$7({}, state), {}, {
         fetchingCheques: true,
         fetchedMyCheques: false,
         myCheques: [],
@@ -143,7 +174,7 @@ function reducer() {
         errorCheques: null
       });
     case 'CMS_CS_CHECKLIST_RESP':
-      return _objectSpread$4(_objectSpread$4({}, state), {}, {
+      return _objectSpread$7(_objectSpread$7({}, state), {}, {
         fetchingCheques: false,
         fetchedMyCheques: true,
         myCheques: feCore.parseData(action.payload.data.chequeimportline),
@@ -151,12 +182,12 @@ function reducer() {
         errorCheques: feCore.formatGraphQLError(action.payload)
       });
     case 'CMS_CS_CHECKLIST_ERR':
-      return _objectSpread$4(_objectSpread$4({}, state), {}, {
+      return _objectSpread$7(_objectSpread$7({}, state), {}, {
         fetchedMyCheques: false,
         errorCheques: feCore.formatServerError(action.payload)
       });
     case 'CMS_CS_CHECKIMPORT_REQ':
-      return _objectSpread$4(_objectSpread$4({}, state), {}, {
+      return _objectSpread$7(_objectSpread$7({}, state), {}, {
         fetchingChequesImport: true,
         fetchedMyChequesImport: false,
         myChequesImport: [],
@@ -166,7 +197,7 @@ function reducer() {
         errorChequesImport: null
       });
     case 'CMS_CS_CHECKIMPORT_RESP':
-      return _objectSpread$4(_objectSpread$4({}, state), {}, {
+      return _objectSpread$7(_objectSpread$7({}, state), {}, {
         fetchingChequesImport: false,
         fetchedMyChequesImport: true,
         myChequesImport: feCore.parseData(action.payload.data.chequeimport),
@@ -174,9 +205,38 @@ function reducer() {
         errorChequesImport: feCore.formatGraphQLError(action.payload)
       });
     case 'CMS_CS_CHECKIMPORT_ERR':
-      return _objectSpread$4(_objectSpread$4({}, state), {}, {
+      return _objectSpread$7(_objectSpread$7({}, state), {}, {
         fetchedMyChequesImport: false,
         errorChequesImport: feCore.formatServerError(action.payload)
+      });
+    // AUTH
+    case "CORE_AUTH_LOGIN_RESP":
+      {
+        var _action$payload;
+        console.log(' core auth resp ', action.payload);
+        if ((_action$payload = action.payload) !== null && _action$payload !== void 0 && _action$payload.errors) {
+          return _objectSpread$7(_objectSpread$7({}, state), {}, {
+            authError: feCore.formatGraphQLError(action.payload)
+          });
+        }
+        return _objectSpread$7(_objectSpread$7({}, state), {}, {
+          authError: null
+        });
+      }
+    case "CORE_AUTH_ERR":
+      {
+        action.payload = _objectSpread$7(_objectSpread$7({}, action.payload), {}, {
+          sources: "AuthChequeDialog"
+        });
+        console.log('core called', action);
+        return _objectSpread$7(_objectSpread$7({}, state), {}, {
+          user: null,
+          authError: feCore.formatServerError(action.payload)
+        });
+      }
+    case 'DUPLICATED_CHEQUE':
+      return _objectSpread$7(_objectSpread$7({}, state), {}, {
+        duplicatesCheque: action.payload
       });
     default:
       return state;
@@ -186,15 +246,16 @@ function reducer() {
 var CHEQUE_STATUS = ['New', 'Used', 'Cancel'];
 var RIGHT_ADD = 131301;
 
-function _callSuper$9(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct$9() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct$9() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$9 = function _isNativeReflectConstruct() { return !!t; })(); }
+function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 var CmrCseMainMenu = /*#__PURE__*/function (_Component) {
+  _inherits__default["default"](CmrCseMainMenu, _Component);
+  var _super = _createSuper$9(CmrCseMainMenu);
   function CmrCseMainMenu() {
     _classCallCheck__default["default"](this, CmrCseMainMenu);
-    return _callSuper$9(this, CmrCseMainMenu, arguments);
+    return _super.apply(this, arguments);
   }
-  _inherits__default["default"](CmrCseMainMenu, _Component);
-  return _createClass__default["default"](CmrCseMainMenu, [{
+  _createClass__default["default"](CmrCseMainMenu, [{
     key: "render",
     value: function render() {
       var rights = this.props.rights;
@@ -221,6 +282,7 @@ var CmrCseMainMenu = /*#__PURE__*/function (_Component) {
       }));
     }
   }]);
+  return CmrCseMainMenu;
 }(React.Component);
 var mapStateToProps$6 = function mapStateToProps(state) {
   return {
@@ -229,386 +291,17 @@ var mapStateToProps$6 = function mapStateToProps(state) {
 };
 var CmrCsModuleMainMenu = feCore.withModulesManager(reactIntl.injectIntl(reactRedux.connect(mapStateToProps$6)(CmrCseMainMenu)));
 
-function _callSuper$8(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct$8() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct$8() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$8 = function _isNativeReflectConstruct() { return !!t; })(); }
-var ChequeStatusPicker = /*#__PURE__*/function (_Component) {
-  function ChequeStatusPicker() {
-    _classCallCheck__default["default"](this, ChequeStatusPicker);
-    return _callSuper$8(this, ChequeStatusPicker, arguments);
+function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$6(Object(source), !0).forEach(function (key) { _defineProperty__default["default"](target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function getApiUrl() {
+  var _process$env$REACT_AP;
+  var _baseApiUrl = (_process$env$REACT_AP = process.env.REACT_APP_API_URL) !== null && _process$env$REACT_AP !== void 0 ? _process$env$REACT_AP : "/api";
+  if (_baseApiUrl.indexOf("/") !== 0) {
+    _baseApiUrl = "/".concat(_baseApiUrl);
   }
-  _inherits__default["default"](ChequeStatusPicker, _Component);
-  return _createClass__default["default"](ChequeStatusPicker, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/React__default["default"].createElement(feCore.ConstantBasedPicker, _extends__default["default"]({
-        module: "cmr_cs",
-        label: "cmr_cs-list",
-        constants: CHEQUE_STATUS
-      }, this.props));
-    }
-  }]);
-}(React.Component);
-
-function ownKeys$3(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$3(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$3(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$3(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _callSuper$7(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct$7() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct$7() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$7 = function _isNativeReflectConstruct() { return !!t; })(); }
-var styles$7 = function styles(theme) {
-  return {
-    paper: theme.paper.paper,
-    tableTitle: theme.table.title,
-    item: theme.paper.item,
-    fullHeight: {
-      height: "100%"
-    }
-  };
-};
-var chequeStatuses = [{
-  value: "New",
-  label: "New"
-}, {
-  value: "Cancel",
-  label: "Cancel"
-}, {
-  value: "Used",
-  label: "Used"
-}];
-var ChequeStatusMasterPanel = /*#__PURE__*/function (_FormPanel) {
-  function ChequeStatusMasterPanel() {
-    var _this;
-    _classCallCheck__default["default"](this, ChequeStatusMasterPanel);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _callSuper$7(this, ChequeStatusMasterPanel, [].concat(args));
-    _defineProperty__default["default"](_this, "updateAttribute", function (attr, v) {
-      var edited = _objectSpread$3({}, _this.props.edited);
-      console.log("edited", edited);
-      edited[attr] = v;
-      _this.props.onEditedChanged(edited);
-    });
-    return _this;
-  }
-  _inherits__default["default"](ChequeStatusMasterPanel, _FormPanel);
-  return _createClass__default["default"](ChequeStatusMasterPanel, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-      var _this$props = this.props,
-        intl = _this$props.intl,
-        classes = _this$props.classes,
-        edited = _this$props.edited;
-        _this$props.title;
-        _this$props.titleParams;
-        _this$props.actions;
-        _this$props.onEditedChanged;
-        _this$props.chequeStatus;
-      return /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        container: true
-      }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        container: true,
-        className: classes.item
-      }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        item: true,
-        xs: 4,
-        className: classes.item
-      }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        className: classes.item
-      }, feCore.formatMessage(intl, "cmr_cs", "chequeStatus.checknum")), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        className: classes.item
-      }, /*#__PURE__*/React__default["default"].createElement(feCore.NumberInput, {
-        module: "cmr_cs",
-        label: "",
-        required: true,
-        readOnly: true,
-        value: !!edited && !!edited.chequeImportLineCode ? edited.chequeImportLineCode : "",
-        onChange: function onChange(v) {
-          return _this2.updateAttribute("checknum", v);
-        }
-      }))), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        item: true,
-        xs: 4,
-        className: classes.item
-      }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        className: classes.item
-      }, feCore.formatMessage(intl, "cmr_cs", "checkstate")), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        className: classes.item
-      }, /*#__PURE__*/React__default["default"].createElement(core.FormControl, {
-        className: classes.formControl
-      }, /*#__PURE__*/React__default["default"].createElement(core.Select, {
-        value: (edited === null || edited === void 0 ? void 0 : edited.checkstate) || "",
-        onChange: function onChange(e) {
-          return _this2.updateAttribute("chequeImportLineStatus", e.target.value);
-        }
-      }, chequeStatuses.map(function (status) {
-        return /*#__PURE__*/React__default["default"].createElement(core.MenuItem, {
-          key: status.value,
-          value: status.value
-        }, status.label);
-      }))))), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        item: true,
-        xs: 4,
-        className: classes.item
-      }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        className: classes.item
-      }, feCore.formatMessage(intl, "cmr_cs", "chequeStatus.checkdate")), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
-        className: classes.item
-      }, /*#__PURE__*/React__default["default"].createElement(feCore.NumberInput, {
-        module: "cmr_cs",
-        label: "",
-        required: true,
-        readOnly: true,
-        value: !!edited && !!edited.chequeImportLineDate ? edited.chequeImportLineDate : "",
-        onChange: function onChange(v) {
-          return _this2.updateAttribute("checkdate", v);
-        }
-      })))));
-    }
-  }]);
-}(feCore.FormPanel);
-var ChequeStatusMasterPanel$1 = feCore.withModulesManager(styles$8.withTheme(styles$8.withStyles(styles$7)(ChequeStatusMasterPanel)));
-
-function _callSuper$6(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct$6() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct$6() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$6 = function _isNativeReflectConstruct() { return !!t; })(); }
-var styles$6 = function styles(theme) {
-  return {
-    lockedPage: theme.page.locked
-  };
-};
-var ChequeForm = /*#__PURE__*/function (_Component) {
-  function ChequeForm() {
-    var _this;
-    _classCallCheck__default["default"](this, ChequeForm);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _callSuper$6(this, ChequeForm, [].concat(args));
-    _defineProperty__default["default"](_this, "state", {
-      lockNew: false,
-      reset: 0,
-      update: true,
-      chequeStatus: _this._newChequeStatus(),
-      newChequeStatus: true
-    });
-    _defineProperty__default["default"](_this, "back", function (e) {
-      var _this$props = _this.props,
-        modulesManager = _this$props.modulesManager,
-        history = _this$props.history;
-      console.log("Navigating back", modulesManager, history);
-      feCore.historyPush(modulesManager, history, "cmr_cs.ChequeList");
-    });
-    _defineProperty__default["default"](_this, "_add", function () {
-      _this.setState(function (state) {
-        return {
-          chequeStatus: _this._newChequeStatus(),
-          newChequeStatus: true,
-          lockNew: false,
-          reset: state.reset + 1
-        };
-      }, function (e) {
-        _this.props.add();
-        _this.forceUpdate();
-      });
-    });
-    _defineProperty__default["default"](_this, "reload", function () {
-      _this.props.fetchChequeStatus(_this.props.modulesManager, _this.state.chequeImportLineCode);
-    });
-    _defineProperty__default["default"](_this, "canSave", function () {
-      if (!_this.state.chequeStatus.chequeImportLineCode) return false;
-      if (!_this.state.chequeStatus.chequeImportLineStatus) return false;
-      if (!_this.state.chequeStatus.chequeImportLineDate) return false;
-      return true;
-    });
-    _defineProperty__default["default"](_this, "_save", function (chequeStatus) {
-      _this.setState({
-        lockNew: !chequeStatus.chequeImportLineCode
-      }, function () {
-        if (_this.canSave()) {
-          _this.props.save(_this.state.chequeStatus);
-        }
-      });
-    });
-    _defineProperty__default["default"](_this, "onEditedChanged", function (chequeStatus) {
-      _this.setState({
-        chequeStatus: chequeStatus,
-        newChequeStatus: false
-      });
-    });
-    return _this;
-  }
-  _inherits__default["default"](ChequeForm, _Component);
-  return _createClass__default["default"](ChequeForm, [{
-    key: "_newChequeStatus",
-    value: function _newChequeStatus() {
-      var chequeStatus = {};
-      chequeStatus.jsonExt = {};
-      return chequeStatus;
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-      if (!!this.props.cheque_code) {
-        this.setState(function (state, props) {
-          return {
-            cheque_code: _this2.props.cheque_code
-          };
-        }, function (e) {
-          return _this2.props.fetchChequeSummaries(_this2.props.modulesManager, ["chequeImportLineCode:\"".concat(_this2.props.cheque_code, "\"")]);
-        });
-      }
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (prevProps.fetchedChequeStatus !== this.props.fetchedChequeStatus && this.props.fetchedChequeStatus) {
-        var chequeStatus = this.props.chequeStatus || {};
-        chequeStatus.ext = chequeStatus.jsonExt ? JSON.parse(chequeStatus.jsonExt) : {};
-        this.setState({
-          chequeStatus: chequeStatus,
-          chequeImportLineCode: chequeStatus.chequeImportLineCode,
-          lockNew: false,
-          newChequeStatus: false
-        });
-      } else if (prevProps.chequeImportLineCode && !this.props.chequeImportLineCode) {
-        this.setState({
-          chequeStatus: this._newChequeStatus(),
-          newChequeStatus: true,
-          lockNew: false,
-          chequeImportLineCode: null
-        });
-      } else if (prevProps.submittingMutation && !this.props.submittingMutation) {
-        this.props.journalize(this.props.mutation);
-        this.setState({
-          reset: this.state.reset + 1
-        });
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this3 = this;
-      var _this$props2 = this.props;
-        _this$props2.intl;
-        var fetchingChequeStatus = _this$props2.fetchingChequeStatus,
-        fetchedChequeStatus = _this$props2.fetchedChequeStatus,
-        errorChequeStatus = _this$props2.errorChequeStatus,
-        _this$props2$readOnly = _this$props2.readOnly,
-        readOnly = _this$props2$readOnly === void 0 ? false : _this$props2$readOnly,
-        save = _this$props2.save,
-        add = _this$props2.add,
-        myCheques = _this$props2.myCheques,
-        chequeImportLineCode = _this$props2.chequeImportLineCode;
-      var chequeStatus = this.state.chequeStatus;
-      var actions = [];
-      if (!!chequeImportLineCode) {
-        actions.push({
-          doIt: function doIt(e) {
-            return _this3.reload(chequeImportLineCode);
-          },
-          icon: /*#__PURE__*/React__default["default"].createElement(ReplayIcon__default["default"], null),
-          onlyIfDirty: !readOnly
-        });
-      }
-      return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(feCore.ProgressOrError, {
-        progress: fetchingChequeStatus,
-        error: errorChequeStatus
-      }), (!!fetchedChequeStatus && !!chequeStatus && chequeStatus.chequeImportLineCode === chequeStatus || !chequeImportLineCode) && /*#__PURE__*/React__default["default"].createElement(feCore.Form, {
-        module: "cmr_cs",
-        title: "edit.title",
-        reset: this.state.reset,
-        update: this.state.update,
-        edited_id: chequeImportLineCode,
-        edited: myCheques[0],
-        HeadPanel: ChequeStatusMasterPanel$1,
-        ChequeStatus: chequeStatus,
-        onEditedChanged: this.onEditedChanged,
-        canSave: this.canSave,
-        back: this.back,
-        actions: actions,
-        reload: (chequeImportLineCode || readOnly) && this.reload,
-        save: !!save ? this._save : null,
-        add: !!add && !this.state.newChequeStatus ? this._add : null
-      }));
-    }
-  }]);
-}(React.Component);
-var mapStateToProps$5 = function mapStateToProps(state, props) {
-  return {
-    chequeStatus: state.cmr_cs.chequeStatus,
-    myCheques: state.cmr_cs.myCheques,
-    fetchingCheques: state.cmr_cs.fetchingCheques,
-    fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
-    errorCheques: state.cmr_cs.errorCheques,
-    submittingMutation: state.cmr_cs.submittingMutation,
-    mutation: state.cmr_cs.mutation
-  };
-};
-var ChequeForm$1 = feCore.withHistory(feCore.withModulesManager(reactRedux.connect(mapStateToProps$5, {
-  fetchChequeSummaries: fetchChequeSummaries,
-  journalize: feCore.journalize
-})(reactIntl.injectIntl(styles$8.withTheme(styles$8.withStyles(styles$6)(ChequeForm))))));
-
-function _callSuper$5(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct$5() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct$5() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$5 = function _isNativeReflectConstruct() { return !!t; })(); }
-var styles$5 = function styles(theme) {
-  return {
-    page: theme.page
-  };
-};
-var ChequeStatusPage = /*#__PURE__*/function (_Component) {
-  function ChequeStatusPage() {
-    var _this;
-    _classCallCheck__default["default"](this, ChequeStatusPage);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _callSuper$5(this, ChequeStatusPage, [].concat(args));
-    _defineProperty__default["default"](_this, "save", function (chequeStatus) {
-      if (!chequeStatus.chequeImportLineCode) {
-        _this.props.updateChequeStatus(_this.props.modulesManager, chequeStatus, feCore.formatMessageWithValues(_this.props.intl, "cmr_cs", "updateChequeStatus.mutationLabel"));
-      } else {
-        _this.props.updateChequeStatus(_this.props.modulesManager, chequeStatus, feCore.formatMessageWithValues(_this.props.intl, "cmr_cs", "updateChequeStatus.mutationLabel"));
-      }
-    });
-    return _this;
-  }
-  _inherits__default["default"](ChequeStatusPage, _Component);
-  return _createClass__default["default"](ChequeStatusPage, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props;
-        _this$props.intl;
-        var classes = _this$props.classes,
-        modulesManager = _this$props.modulesManager,
-        history = _this$props.history,
-        cheque_code = _this$props.cheque_code;
-      return /*#__PURE__*/React__default["default"].createElement("div", {
-        className: classes.page
-      }, /*#__PURE__*/React__default["default"].createElement(ChequeForm$1, {
-        cheque_code: cheque_code,
-        save: this.save,
-        add: this.add,
-        back: function back(e) {
-          return feCore.historyPush(modulesManager, history, "cmr_cs.ChequeStatus");
-        }
-      }));
-    }
-  }]);
-}(React.Component);
-var mapStateToProps$4 = function mapStateToProps(state, props) {
-  return {
-    cheque_code: props.match.params.cheque_code
-  };
-};
-var mapDispatchToProps$4 = function mapDispatchToProps(dispatch) {
-  return redux.bindActionCreators({
-    updateChequeStatus: updateChequeStatus,
-    journalize: feCore.journalize
-  }, dispatch);
-};
-var ChequeStatusPage$1 = feCore.withHistory(feCore.withModulesManager(reactRedux.connect(mapStateToProps$4, mapDispatchToProps$4)(reactIntl.injectIntl(styles$8.withTheme(styles$8.withStyles(styles$5)(ChequeStatusPage))))));
-
+  return _baseApiUrl;
+}
+var baseApiUrl = getApiUrl();
 function fetchCheques(mm, filters) {
   var payload = feCore.formatPageQueryWithCount("chequeimportline", filters, ["idChequeImportLine", "chequeImportLineCode", "chequeImportLineDate", "chequeImportLineStatus"]);
   return feCore.graphql(payload, 'CMS_CS_CHECKLIST');
@@ -626,7 +319,6 @@ function updateChequeStatus(mm, chequeStatus, clientMutationLabel, idChequeImpor
   var mutation = feCore.formatMutation("updateChequeStatus", formatChequeStatusGQL(mm, chequeStatus), clientMutationLabel, idChequeImportLine, chequeImportLineStatus);
   var requestedDateTime = new Date();
   chequeStatus.clientMutationId = mutation.clientMutationId;
-  console.log("mutation", mutation.payload);
   return feCore.graphql(mutation.payload, ["CMS_CS_CHECKIMPORT_REQ", "CMS_CS_UPDATE_CHECKIMPORT_RESP", "CMS_CS_CHECKIMPORT_ERR"], {
     clientMutationId: mutation.clientMutationId,
     clientMutationLabel: clientMutationLabel,
@@ -635,14 +327,167 @@ function updateChequeStatus(mm, chequeStatus, clientMutationLabel, idChequeImpor
   });
 }
 function formatChequeStatusGQL(mm, chequeStatus) {
-  console.log("mon idChequeImportLine", chequeStatus);
   return "\n      ".concat(!!chequeStatus.chequeImportLineStatus ? "chequeImportLineStatus: \"".concat(chequeStatus.chequeImportLineStatus, "\"") : "", "\n      ").concat(!!chequeStatus.idChequeImportLine ? "idChequeImportLine: ".concat(chequeStatus.idChequeImportLine) : "", "\n    ");
 }
+function getCsrfToken() {
+  var _csrfCookie$split$;
+  var CSRF_TOKEN_NAME = 'csrftoken';
+  var CSRF_NOT_FOUND = null;
+  var cookies = document.cookie;
+  var cookieArray = cookies.split('; ');
+  var csrfCookie = cookieArray.find(function (cookie) {
+    return cookie.startsWith(CSRF_TOKEN_NAME);
+  });
+  return (_csrfCookie$split$ = csrfCookie === null || csrfCookie === void 0 ? void 0 : csrfCookie.split('=')[1]) !== null && _csrfCookie$split$ !== void 0 ? _csrfCookie$split$ : CSRF_NOT_FOUND;
+}
+function fetch$1(config) {
+  return /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator__default["default"]( /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(dispatch) {
+      return _regeneratorRuntime__default["default"].wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            return _context.abrupt("return", dispatch(_defineProperty__default["default"]({}, reduxApiMiddleware.RSAA, _objectSpread$6(_objectSpread$6({}, config), {}, {
+              headers: _objectSpread$6({
+                "Content-Type": "application/json"
+              }, config.headers)
+            }))));
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee);
+    }));
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+}
+function initialize() {
+  return /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator__default["default"]( /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee2(dispatch) {
+      return _regeneratorRuntime__default["default"].wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return dispatch(login());
+          case 2:
+            return _context2.abrupt("return", dispatch({
+              type: "CORE_INITIALIZED"
+            }));
+          case 3:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2);
+    }));
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+}
+function loadUser() {
+  return fetch$1({
+    endpoint: "".concat(baseApiUrl, "/core/users/current_user/"),
+    method: "GET",
+    types: ["CORE_USERS_CURRENT_USER_REQ", "CORE_USERS_CURRENT_USER_RESP", "CORE_USERS_CURRENT_USER_ERR"]
+  });
+}
+function login(credentials) {
+  var source = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  return /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator__default["default"]( /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee3(dispatch) {
+      var mutation, csrfToken, _response$payload, _response$payload$err, _action$payload$respo, _action$payload, _action$payload$respo2, response, errorMessage, action;
+      return _regeneratorRuntime__default["default"].wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            if (!credentials) {
+              _context3.next = 21;
+              break;
+            }
+            mutation = "mutation authenticate($username: String!, $password: String!) {\n                tokenAuth(username: $username, password: $password) {\n                    refreshExpiresIn\n                }\n            }";
+            csrfToken = getCsrfToken();
+            _context3.prev = 3;
+            _context3.next = 6;
+            return dispatch(feCore.graphqlMutation(mutation, credentials, ["CORE_AUTH_LOGIN_REQ", "CORE_AUTH_LOGIN_RESP", "CORE_AUTH_ERR"], {}, false, {
+              "X-CSRFToken": csrfToken
+            }));
+          case 6:
+            response = _context3.sent;
+            if (!(((_response$payload = response.payload) === null || _response$payload === void 0 ? void 0 : (_response$payload$err = _response$payload.errors) === null || _response$payload$err === void 0 ? void 0 : _response$payload$err.length) > 0)) {
+              _context3.next = 11;
+              break;
+            }
+            errorMessage = response.payload.errors[0].message;
+            dispatch(authError({
+              message: errorMessage,
+              name: "ApiError",
+              status: 401
+            }, source));
+            return _context3.abrupt("return", {
+              loginStatus: "CORE_AUTH_ERR",
+              message: "Unauthorized"
+            });
+          case 11:
+            _context3.next = 13;
+            return dispatch(loadUser());
+          case 13:
+            action = _context3.sent;
+            return _context3.abrupt("return", {
+              loginStatus: action.type,
+              message: (_action$payload$respo = action === null || action === void 0 ? void 0 : (_action$payload = action.payload) === null || _action$payload === void 0 ? void 0 : (_action$payload$respo2 = _action$payload.response) === null || _action$payload$respo2 === void 0 ? void 0 : _action$payload$respo2.detail) !== null && _action$payload$respo !== void 0 ? _action$payload$respo : ""
+            });
+          case 17:
+            _context3.prev = 17;
+            _context3.t0 = _context3["catch"](3);
+            dispatch(authError({
+              message: _context3.t0.message,
+              name: "ApiError",
+              status: 401
+            }, source));
+            return _context3.abrupt("return", {
+              loginStatus: "CORE_AUTH_ERR",
+              message: "Unauthorized"
+            });
+          case 21:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee3, null, [[3, 17]]);
+    }));
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+}
+function authError(error) {
+  var source = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  return {
+    type: "CORE_AUTH_ERR",
+    payload: _objectSpread$6(_objectSpread$6({}, error), {}, {
+      source: source
+    })
+  };
+}
+function transformChequeData(data) {
+  return data.map(function (item) {
+    return {
+      chequeImportLineCode: item[1],
+      chequeImportLineDate: item[3],
+      chequeImportLineStatus: item[2]
+    };
+  });
+}
+var fetchDuplicatesCheque = function fetchDuplicatesCheque(duplicatesCheque) {
+  return {
+    type: 'DUPLICATED_CHEQUE',
+    payload: transformChequeData(duplicatesCheque.updatedCheques)
+  };
+};
 
-function _callSuper$4(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct$4() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct$4() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$4 = function _isNativeReflectConstruct() { return !!t; })(); }
+function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 var CHEQUE_FILTER_CONTRIBUTION_KEY = "cheque.Filter";
-var styles$4 = function styles(theme) {
+var styles$8 = function styles(theme) {
   return {
     dialogTitle: theme.dialog.title,
     dialogContent: theme.dialog.content,
@@ -656,18 +501,19 @@ var styles$4 = function styles(theme) {
   };
 };
 var Details = /*#__PURE__*/function (_Component) {
+  _inherits__default["default"](Details, _Component);
+  var _super = _createSuper$8(Details);
   function Details() {
     var _this;
     _classCallCheck__default["default"](this, Details);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
-    _this = _callSuper$4(this, Details, [].concat(args));
-    _defineProperty__default["default"](_this, "debouncedOnChangeFilter", _debounce__default["default"](_this.props.onChangeFilters, _this.props.modulesManager.getConf("fe-claim", "debounceTime", 800)));
+    _this = _super.call.apply(_super, [this].concat(args));
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "debouncedOnChangeFilter", _debounce__default["default"](_this.props.onChangeFilters, _this.props.modulesManager.getConf("fe-claim", "debounceTime", 800)));
     return _this;
   }
-  _inherits__default["default"](Details, _Component);
-  return _createClass__default["default"](Details, [{
+  _createClass__default["default"](Details, [{
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -733,14 +579,16 @@ var Details = /*#__PURE__*/function (_Component) {
       }))));
     }
   }]);
+  return Details;
 }(React.Component);
 var ChequeFilter = /*#__PURE__*/function (_Component2) {
+  _inherits__default["default"](ChequeFilter, _Component2);
+  var _super2 = _createSuper$8(ChequeFilter);
   function ChequeFilter() {
     _classCallCheck__default["default"](this, ChequeFilter);
-    return _callSuper$4(this, ChequeFilter, arguments);
+    return _super2.apply(this, arguments);
   }
-  _inherits__default["default"](ChequeFilter, _Component2);
-  return _createClass__default["default"](ChequeFilter, [{
+  _createClass__default["default"](ChequeFilter, [{
     key: "render",
     value: function render() {
       var classes = this.props.classes;
@@ -751,29 +599,32 @@ var ChequeFilter = /*#__PURE__*/function (_Component2) {
       }, /*#__PURE__*/React__default["default"].createElement(Details, this.props));
     }
   }]);
+  return ChequeFilter;
 }(React.Component);
-var ChequeFilter$1 = feCore.withModulesManager(reactIntl.injectIntl(styles$8.withTheme(styles$8.withStyles(styles$4)(ChequeFilter))));
+var ChequeFilter$1 = feCore.withModulesManager(reactIntl.injectIntl(styles$9.withTheme(styles$9.withStyles(styles$8)(ChequeFilter))));
 
-function _callSuper$3(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct$3() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct$3() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$3 = function _isNativeReflectConstruct() { return !!t; })(); }
-var styles$3 = function styles(theme) {
+function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var styles$7 = function styles(theme) {
   return {};
 };
 var ChequeSearcher = /*#__PURE__*/function (_Component) {
+  _inherits__default["default"](ChequeSearcher, _Component);
+  var _super = _createSuper$7(ChequeSearcher);
   function ChequeSearcher(props) {
     var _this;
     _classCallCheck__default["default"](this, ChequeSearcher);
-    _this = _callSuper$3(this, ChequeSearcher, [props]);
-    _defineProperty__default["default"](_this, "state", {
+    _this = _super.call(this, props);
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "state", {
       random: null
     });
-    _defineProperty__default["default"](_this, "fetch", function (prms) {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "fetch", function (prms) {
       _this.props.fetchChequeSummaries(_this.props.modulesManager, prms, !!_this.claimAttachments);
     });
-    _defineProperty__default["default"](_this, "rowIdentifier", function (r) {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "rowIdentifier", function (r) {
       return r.uuid;
     });
-    _defineProperty__default["default"](_this, "filtersToQueryParams", function (state) {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "filtersToQueryParams", function (state) {
       var prms = Object.keys(state.filters).filter(function (f) {
         return !!state.filters[f]["filter"];
       }).map(function (f) {
@@ -809,15 +660,15 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
       }
       return prms;
     });
-    _defineProperty__default["default"](_this, "headers", function () {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "headers", function () {
       var result = ["cmr_cs.checknum", "cmr_cs.checkstate", "cmr_cs.checkdate"];
       return result;
     });
-    _defineProperty__default["default"](_this, "sorts", function () {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "sorts", function () {
       var result = [["chequeImportLineCode", true], ["chequeImportLineStatus", true], ["chequeImportLineDate", false]];
       return result;
     });
-    _defineProperty__default["default"](_this, "itemFormatters", function () {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "itemFormatters", function () {
       var result = [function (c) {
         return c.chequeImportLineCode;
       }, function (c) {
@@ -827,13 +678,13 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
       }];
       return result;
     });
-    _defineProperty__default["default"](_this, "rowLocked", function (selection, claim) {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "rowLocked", function (selection, claim) {
       return !!claim.clientMutationId;
     });
-    _defineProperty__default["default"](_this, "rowHighlighted", function (selection, claim) {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "rowHighlighted", function (selection, claim) {
       return !!_this.highlightAmount && claim.claimed > _this.highlightAmount;
     });
-    _defineProperty__default["default"](_this, "rowHighlightedAlt", function (selection, claim) {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "rowHighlightedAlt", function (selection, claim) {
       return !!_this.highlightAltInsurees && selection.filter(function (c) {
         return ___default["default"].isEqual(c.insuree, claim.insuree);
       }).length && !selection.includes(claim);
@@ -843,8 +694,7 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
     _this.highlightAmount = parseInt(props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.highlightAmount", 0));
     return _this;
   }
-  _inherits__default["default"](ChequeSearcher, _Component);
-  return _createClass__default["default"](ChequeSearcher, [{
+  _createClass__default["default"](ChequeSearcher, [{
     key: "forcedFilters",
     value: function forcedFilters() {
       return !this.props.forcedFilters ? [] : _toConsumableArray__default["default"](this.props.forcedFilters.filter(function (f) {
@@ -868,6 +718,8 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
         cacheFiltersKey = _this$props.cacheFiltersKey,
         onDoubleClick = _this$props.onDoubleClick;
         _this$props.cheques;
+        var duplicatesCheque = _this$props.duplicatesCheque,
+        duplicate = _this$props.duplicate;
         _this$props.actionsContributionKey;
       var count = !!this.state.random && this.state.random.value;
       if (!count) {
@@ -877,16 +729,18 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
         module: "claim",
         defaultFilters: defaultFilters,
         cacheFiltersKey: cacheFiltersKey,
-        FilterPane: ChequeFilter$1,
+        FilterPane: defaultFilters == "none" ? null : ChequeFilter$1,
         FilterExt: FilterExt,
         filterPaneContributionsKey: filterPaneContributionsKey,
-        items: myCheques,
+        items: !!duplicate ? duplicatesCheque : myCheques,
         defaultOrderBy: "-chequeImportLineDate",
         itemsPageInfo: myChequesPageInfo,
         fetchingItems: fetchingCheques,
         fetchedItems: fetchedMyCheques,
         errorItems: errorCheques,
-        tableTitle: feCore.formatMessageWithValues(intl, "cmr_cs", "table", {
+        tableTitle: !!duplicate ? feCore.formatMessageWithValues(intl, "cmr_cs", "duplicateTableList", {
+          count: count
+        }) : feCore.formatMessageWithValues(intl, "cmr_cs", "table", {
           count: count
         }),
         rowsPerPageOptions: this.rowsPerPageOptions,
@@ -905,37 +759,41 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
       }));
     }
   }]);
+  return ChequeSearcher;
 }(React.Component);
-var mapStateToProps$3 = function mapStateToProps(state) {
+var mapStateToProps$5 = function mapStateToProps(state) {
   return {
     fetchingCheques: state.cmr_cs.fetchingCheques,
     errorCheques: state.cmr_cs.errorCheques,
     fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
     myCheques: state.cmr_cs.myCheques,
+    duplicatesCheque: state.cmr_cs.duplicatesCheque,
     myChequesPageInfo: state.cmr_cs.myChequesPageInfo
   };
 };
-var mapDispatchToProps$3 = function mapDispatchToProps(dispatch) {
+var mapDispatchToProps$5 = function mapDispatchToProps(dispatch) {
   return redux.bindActionCreators({
     fetchChequeSummaries: fetchChequeSummaries
   }, dispatch);
 };
-var ChequeSearcher$1 = feCore.withModulesManager(reactRedux.connect(mapStateToProps$3, mapDispatchToProps$3)(reactIntl.injectIntl(styles$8.withTheme(styles$8.withStyles(styles$3)(ChequeSearcher)))));
+var ChequeSearcher$1 = feCore.withModulesManager(reactRedux.connect(mapStateToProps$5, mapDispatchToProps$5)(reactIntl.injectIntl(styles$9.withTheme(styles$9.withStyles(styles$7)(ChequeSearcher)))));
 
-function _callSuper$2(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct$2() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct$2() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$2 = function _isNativeReflectConstruct() { return !!t; })(); }
-var CHEQUE_FILTER_KEY$1 = "cheque.Filter";
-var styles$2 = function styles(theme) {
+function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var CHEQUE_FILTER_KEY = "cheque.Filter";
+var styles$6 = function styles(theme) {
   return {
     page: theme.page
   };
 };
 var ChequeListPage = /*#__PURE__*/function (_Component) {
+  _inherits__default["default"](ChequeListPage, _Component);
+  var _super = _createSuper$6(ChequeListPage);
   function ChequeListPage(props) {
     var _this;
     _classCallCheck__default["default"](this, ChequeListPage);
-    _this = _callSuper$2(this, ChequeListPage, [props]);
-    _defineProperty__default["default"](_this, "query", function () {
+    _this = _super.call(this, props);
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "query", function () {
       var prms = [];
       prms.push("first: ".concat(_this.state.pageSize));
       if (!!_this.state.afterCursor) {
@@ -946,11 +804,14 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
       }
       _this.props.fetchCheques(prms);
     });
-    _defineProperty__default["default"](_this, "onDoubleClick", function (i) {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "onDoubleClick", function (i) {
       feCore.historyPush(_this.props.modulesManager, _this.props.history, "cmr_cs.ChequeStatus", [i.chequeImportLineCode], false);
     });
-    _defineProperty__default["default"](_this, "double", function () {
-      feCore.historyPush(_this.props.modulesManager, _this.props.history, "cmr_cs.ChequeDouble");
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "canSubmitAll", function () {
+      return true;
+    });
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "handleDuplicateNavigation", function () {
+      feCore.historyPush(_this.props.modulesManager, _this.props.history, "cmr_cs.DuplicateChequeListPage", [], null);
     });
     _this.state = {
       defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
@@ -962,61 +823,69 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
     };
     return _this;
   }
-  _inherits__default["default"](ChequeListPage, _Component);
-  return _createClass__default["default"](ChequeListPage, [{
+  _createClass__default["default"](ChequeListPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.query();
+      var storedData = localStorage.getItem('duplicatesCheque');
+      if (storedData) {
+        var parsedData = JSON.parse(storedData);
+        this.props.fetchDuplicatesCheque(parsedData);
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-        intl = _this$props.intl,
-        classes = _this$props.classes;
+      var _this$props = this.props;
+        _this$props.intl;
+        var classes = _this$props.classes;
         _this$props.fetchingCheques;
         _this$props.errorCheques;
         _this$props.fetchedMyCheques;
         _this$props.myCheques;
         _this$props.myChequesPageInfo;
+      var actions = [{
+        action: this.handleDuplicateNavigation,
+        label: feCore.formatMessage(this.props.intl, "cmr_cs", "duplicateTable"),
+        enabled: this.canSubmitAll
+      }];
       return /*#__PURE__*/React__default["default"].createElement("div", {
         className: classes.page
-      }, /*#__PURE__*/React__default["default"].createElement(core.Button, {
-        variant: "contained",
-        color: "primary",
-        type: "submit",
-        onClick: this["double"]
-      }, feCore.formatMessageWithValues(intl, "CmrCS", "LISTE DES DOUBLONS")), /*#__PURE__*/React__default["default"].createElement(feCore.Helmet, {
+      }, /*#__PURE__*/React__default["default"].createElement(feCore.Helmet, {
         title: feCore.formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")
       }), /*#__PURE__*/React__default["default"].createElement(ChequeSearcher$1, {
         defaultFilters: this.state.defaultFilters,
+        actions: actions,
         cacheFiltersKey: "claimReviewsPageFiltersCache",
-        filterPaneContributionsKey: CHEQUE_FILTER_KEY$1,
+        filterPaneContributionsKey: CHEQUE_FILTER_KEY,
         onDoubleClick: this.onDoubleClick
       }));
     }
   }]);
+  return ChequeListPage;
 }(React.Component);
-var mapStateToProps$2 = function mapStateToProps(state, props) {
+var mapStateToProps$4 = function mapStateToProps(state, props) {
   return {
     fetchingCheques: state.cmr_cs.fetchingCheques,
     errorCheques: state.cmr_cs.errorCheques,
     fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
     myCheques: state.cmr_cs.myCheques,
-    myChequesPageInfo: state.cmr_cs.myChequesPageInfo
+    myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
+    duplicatesCheque: state.cmr_cs.duplicatesCheque
   };
 };
-var mapDispatchToProps$2 = function mapDispatchToProps(dispatch) {
+var mapDispatchToProps$4 = function mapDispatchToProps(dispatch) {
   return redux.bindActionCreators({
-    fetchCheques: fetchCheques
+    fetchCheques: fetchCheques,
+    fetchDuplicatesCheque: fetchDuplicatesCheque
   }, dispatch);
 };
-var ChequeListPage$1 = reactIntl.injectIntl(styles$8.withTheme(styles$8.withStyles(styles$2)(reactRedux.connect(mapStateToProps$2, mapDispatchToProps$2)(ChequeListPage))));
+var ChequeListPage$1 = reactIntl.injectIntl(styles$9.withTheme(styles$9.withStyles(styles$6)(reactRedux.connect(mapStateToProps$4, mapDispatchToProps$4)(ChequeListPage))));
 
-function _callSuper$1(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct$1() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct$1() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$1 = function _isNativeReflectConstruct() { return !!t; })(); }
+function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 var CREATECHEQUE_URL = "".concat(feCore.baseApiUrl, "/cs/importfile");
-var styles$1 = function styles(theme) {
+var styles$5 = function styles(theme) {
   return {
     page: theme.page
   };
@@ -1026,11 +895,13 @@ function handleChange(event) {
   file = event.target.files[0];
 }
 var ChequeImportPage = /*#__PURE__*/function (_Component) {
+  _inherits__default["default"](ChequeImportPage, _Component);
+  var _super = _createSuper$5(ChequeImportPage);
   function ChequeImportPage(props) {
     var _this;
     _classCallCheck__default["default"](this, ChequeImportPage);
-    _this = _callSuper$1(this, ChequeImportPage, [props]);
-    _defineProperty__default["default"](_this, "query", function () {
+    _this = _super.call(this, props);
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "query", function () {
       var prms = [];
       prms.push("first: ".concat(_this.state.pageSize));
       if (!!_this.state.afterCursor) {
@@ -1042,12 +913,12 @@ var ChequeImportPage = /*#__PURE__*/function (_Component) {
       prms.push("orderBy: [\"code\"]");
       _this.props.fetchChequesImport(prms);
     });
-    _defineProperty__default["default"](_this, "handleClose", function () {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "handleClose", function () {
       _this.setState({
         showModal: false
       });
     });
-    _defineProperty__default["default"](_this, "handleSubmit", function (event) {
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "handleSubmit", function (event) {
       event.preventDefault();
       var formData = new FormData();
       formData.append('file', file);
@@ -1077,6 +948,8 @@ var ChequeImportPage = /*#__PURE__*/function (_Component) {
                       _this.setState({
                         uploadState: reponseJson
                       });
+                      _this.props.fetchDuplicatesCheque(reponseJson);
+                      localStorage.setItem('duplicatesCheque', JSON.stringify(reponseJson));
                       if (reponseJson.success == true) {
                         _this.setState({
                           showModal: true
@@ -1115,11 +988,15 @@ var ChequeImportPage = /*#__PURE__*/function (_Component) {
     };
     return _this;
   }
-  _inherits__default["default"](ChequeImportPage, _Component);
-  return _createClass__default["default"](ChequeImportPage, [{
+  _createClass__default["default"](ChequeImportPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.query();
+      var storedData = localStorage.getItem('duplicatesCheque');
+      if (storedData) {
+        var parsedData = JSON.parse(storedData);
+        this.props.fetchDuplicatesCheque(parsedData);
+      }
     }
   }, {
     key: "render",
@@ -1203,25 +1080,50 @@ var ChequeImportPage = /*#__PURE__*/function (_Component) {
       }));
     }
   }]);
+  return ChequeImportPage;
 }(React.Component);
-var mapStateToProps$1 = function mapStateToProps(state) {
+var mapStateToProps$3 = function mapStateToProps(state) {
   return {
     fetchingChequesImport: state.cmr_cs.fetchingChequesImport,
     errorChequesImport: state.cmr_cs.errorChequesImport,
     fetchedMyChequesImport: state.cmr_cs.fetchedMyChequesImport,
     myChequesImport: state.cmr_cs.myChequesImport,
-    myChequesImportPageInfo: state.cmr_cs.myChequesImportPageInfo
+    myChequesImportPageInfo: state.cmr_cs.myChequesImportPageInfo,
+    duplicatesCheque: state.cmr_cs.duplicatesCheque
   };
 };
-var mapDispatchToProps$1 = function mapDispatchToProps(dispatch) {
+var mapDispatchToProps$3 = function mapDispatchToProps(dispatch) {
   return redux.bindActionCreators({
-    fetchChequesImport: fetchChequesImport
+    fetchChequesImport: fetchChequesImport,
+    fetchDuplicatesCheque: fetchDuplicatesCheque
   }, dispatch);
 };
-var ChequeImportPage$1 = reactIntl.injectIntl(styles$8.withTheme(styles$8.withStyles(styles$1)(reactRedux.connect(mapStateToProps$1, mapDispatchToProps$1)(ChequeImportPage))));
+var ChequeImportPage$1 = reactIntl.injectIntl(styles$9.withTheme(styles$9.withStyles(styles$5)(reactRedux.connect(mapStateToProps$3, mapDispatchToProps$3)(ChequeImportPage))));
 
-function ownKeys$2(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$2(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$2(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var ChequeStatusPicker = /*#__PURE__*/function (_Component) {
+  _inherits__default["default"](ChequeStatusPicker, _Component);
+  var _super = _createSuper$4(ChequeStatusPicker);
+  function ChequeStatusPicker() {
+    _classCallCheck__default["default"](this, ChequeStatusPicker);
+    return _super.apply(this, arguments);
+  }
+  _createClass__default["default"](ChequeStatusPicker, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React__default["default"].createElement(feCore.ConstantBasedPicker, _extends__default["default"]({
+        module: "cmr_cs",
+        label: "cmr_cs-list",
+        constants: CHEQUE_STATUS
+      }, this.props));
+    }
+  }]);
+  return ChequeStatusPicker;
+}(React.Component);
+
+function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$5(Object(source), !0).forEach(function (key) { _defineProperty__default["default"](target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
   var values = props.values,
     setValues = props.setValues;
@@ -1241,7 +1143,7 @@ var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
   }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
     pubRef: "location.HealthFacilityPicker",
     onChange: function onChange(hflocation) {
-      return setValues(_objectSpread$2(_objectSpread$2({}, values), {}, {
+      return setValues(_objectSpread$5(_objectSpread$5({}, values), {}, {
         hflocation: hflocation
       }));
     },
@@ -1255,7 +1157,7 @@ var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
     required: true,
     label: "cmr_cs.dateFrom",
     onChange: function onChange(dateFrom) {
-      return setValues(_objectSpread$2(_objectSpread$2({}, values), {}, {
+      return setValues(_objectSpread$5(_objectSpread$5({}, values), {}, {
         dateFrom: dateFrom
       }));
     }
@@ -1268,15 +1170,15 @@ var ChequeSanteActivitiesReport = function ChequeSanteActivitiesReport(props) {
     required: true,
     label: "cmr_cs.dateTo",
     onChange: function onChange(dateTo) {
-      return setValues(_objectSpread$2(_objectSpread$2({}, values), {}, {
+      return setValues(_objectSpread$5(_objectSpread$5({}, values), {}, {
         dateTo: dateTo
       }));
     }
   })));
 };
 
-function ownKeys$1(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$1(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$1(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$4(Object(source), !0).forEach(function (key) { _defineProperty__default["default"](target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var ChequeSanteActivitiesFullLocationReport = function ChequeSanteActivitiesFullLocationReport(props) {
   var values = props.values,
     setValues = props.setValues;
@@ -1289,7 +1191,7 @@ var ChequeSanteActivitiesFullLocationReport = function ChequeSanteActivitiesFull
   }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
     pubRef: "location.LocationPicker",
     onChange: function onChange(location0) {
-      setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+      setValues(_objectSpread$4(_objectSpread$4({}, values), {}, {
         location0: location0
       }));
     },
@@ -1300,7 +1202,7 @@ var ChequeSanteActivitiesFullLocationReport = function ChequeSanteActivitiesFull
   }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
     pubRef: "location.LocationPicker",
     onChange: function onChange(location1) {
-      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+      return setValues(_objectSpread$4(_objectSpread$4({}, values), {}, {
         location1: location1
       }));
     },
@@ -1311,7 +1213,7 @@ var ChequeSanteActivitiesFullLocationReport = function ChequeSanteActivitiesFull
   }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
     pubRef: "location.LocationPicker",
     onChange: function onChange(location2) {
-      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+      return setValues(_objectSpread$4(_objectSpread$4({}, values), {}, {
         location2: location2
       }));
     },
@@ -1322,7 +1224,7 @@ var ChequeSanteActivitiesFullLocationReport = function ChequeSanteActivitiesFull
   }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
     pubRef: "location.HealthFacilityPicker",
     onChange: function onChange(hflocation) {
-      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+      return setValues(_objectSpread$4(_objectSpread$4({}, values), {}, {
         hflocation: hflocation
       }));
     },
@@ -1336,7 +1238,7 @@ var ChequeSanteActivitiesFullLocationReport = function ChequeSanteActivitiesFull
     required: true,
     label: "cmr_cs.dateFrom",
     onChange: function onChange(dateFrom) {
-      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+      return setValues(_objectSpread$4(_objectSpread$4({}, values), {}, {
         dateFrom: dateFrom
       }));
     }
@@ -1349,120 +1251,654 @@ var ChequeSanteActivitiesFullLocationReport = function ChequeSanteActivitiesFull
     required: true,
     label: "cmr_cs.dateTo",
     onChange: function onChange(dateTo) {
-      return setValues(_objectSpread$1(_objectSpread$1({}, values), {}, {
+      return setValues(_objectSpread$4(_objectSpread$4({}, values), {}, {
         dateTo: dateTo
       }));
     }
   })));
 };
 
-function _callSuper(t, o, e) { return o = _getPrototypeOf__default["default"](o), _possibleConstructorReturn__default["default"](t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf__default["default"](t).constructor) : o.apply(t, e)); }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-var CHEQUE_FILTER_KEY = "cheque.Filter";
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$3(Object(source), !0).forEach(function (key) { _defineProperty__default["default"](target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var styles$4 = function styles(theme) {
+  return {
+    paper: theme.paper.paper,
+    tableTitle: theme.table.title,
+    item: theme.paper.item,
+    fullHeight: {
+      height: "100%"
+    }
+  };
+};
+var ChequeStatusMasterPanel = /*#__PURE__*/function (_FormPanel) {
+  _inherits__default["default"](ChequeStatusMasterPanel, _FormPanel);
+  var _super = _createSuper$3(ChequeStatusMasterPanel);
+  function ChequeStatusMasterPanel() {
+    var _this;
+    _classCallCheck__default["default"](this, ChequeStatusMasterPanel);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "updateAttribute", function (attr, v) {
+      var edited = _objectSpread$3({}, _this.props.edited);
+      edited[attr] = v;
+      _this.props.onEditedChanged(edited);
+    });
+    return _this;
+  }
+  _createClass__default["default"](ChequeStatusMasterPanel, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+      var _this$props = this.props,
+        intl = _this$props.intl,
+        classes = _this$props.classes,
+        edited = _this$props.edited;
+        _this$props.title;
+        _this$props.titleParams;
+        _this$props.actions;
+        _this$props.onEditedChanged;
+        _this$props.chequeStatus;
+        var readOnly = _this$props.readOnly;
+      console.log("edited", readOnly);
+      return /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+        container: true,
+        direction: "row"
+      }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+        container: true,
+        className: classes.item
+      }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+        item: true,
+        xs: 4,
+        className: classes.item
+      }, /*#__PURE__*/React__default["default"].createElement(feCore.NumberInput, {
+        module: "cmr_cs",
+        label: feCore.formatMessage(intl, "cmr_cs", "chequeStatus.checknum"),
+        required: true,
+        readOnly: true,
+        value: !!edited && !!edited.chequeImportLineCode ? edited.chequeImportLineCode : "",
+        onChange: function onChange(v) {
+          return _this2.updateAttribute("checknum", v);
+        }
+      })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+        item: true,
+        xs: 4,
+        className: classes.item
+      }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
+        pubRef: "cmr_cs.ChequeStatusPicker",
+        value: !!edited && !!edited.chequeImportLineStatus ? edited.chequeImportLineStatus : "",
+        readOnly: readOnly,
+        required: true,
+        onChange: function onChange(v) {
+          return _this2.updateAttribute("chequeImportLineStatus", v);
+        }
+      })), /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+        item: true,
+        xs: 4,
+        className: classes.item
+      }, /*#__PURE__*/React__default["default"].createElement(feCore.PublishedComponent, {
+        pubRef: "core.DatePicker",
+        value: !!edited && !!edited.chequeImportLineDate ? edited.chequeImportLineDate : "",
+        module: "cmr_cs",
+        label: feCore.formatMessage(intl, "cmr_cs", "cmr_cs.checkdate"),
+        onChange: function onChange(v) {
+          return _this2.updateAttribute("checkdate", v);
+        },
+        readOnly: true,
+        required: true
+        // maxDate={edited.dateTo < edited.dateClaimed ? edited.dateTo : edited.dateClaimed}
+      }))));
+    }
+  }]);
+  return ChequeStatusMasterPanel;
+}(feCore.FormPanel);
+var ChequeStatusMasterPanel$1 = feCore.withModulesManager(styles$9.withTheme(styles$9.withStyles(styles$4)(ChequeStatusMasterPanel)));
+
+var useAuthentication = function useAuthentication() {
+  var dispatch = reactRedux.useDispatch();
+  var user = reactRedux.useSelector(function (state) {
+    return state.core.user;
+  });
+  var isInitialized = reactRedux.useSelector(function (state) {
+    return state.core.isInitialized;
+  });
+  return {
+    user: user,
+    isAuthenticated: Boolean(user),
+    initialize: function initialize$1() {
+      return dispatch(initialize());
+    },
+    isInitialized: isInitialized,
+    login: function login$1(credentials) {
+      return dispatch(login(credentials));
+    }
+  };
+};
+
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$2(Object(source), !0).forEach(function (key) { _defineProperty__default["default"](target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var styles$3 = function styles(theme) {
+  return {
+    primaryButton: theme.dialog.primaryButton,
+    secondaryButton: theme.dialog.secondaryButton
+  };
+};
+var AuthChequeDialog = function AuthChequeDialog(_ref) {
+  var classes = _ref.classes,
+    cheque = _ref.cheque,
+    onCancel = _ref.onCancel,
+    onConfirm = _ref.onConfirm,
+    intl = _ref.intl,
+    user = _ref.user;
+  var _useState = React.useState(false),
+    _useState2 = _slicedToArray__default["default"](_useState, 2),
+    isAuthenticating = _useState2[0],
+    setIsAuthenticating = _useState2[1];
+  var _useState3 = React.useState({
+      username: user === null || user === void 0 ? void 0 : user.username
+    }),
+    _useState4 = _slicedToArray__default["default"](_useState3, 2),
+    credentials = _useState4[0],
+    setCredentials = _useState4[1];
+  var _useState5 = React.useState({
+      loginStatus: "",
+      message: null
+    }),
+    _useState6 = _slicedToArray__default["default"](_useState5, 2),
+    serverResponse = _useState6[0],
+    setServerResponse = _useState6[1];
+  var requestSent = React.useRef(false);
+  var auth = useAuthentication();
+  var handleLoginError = function handleLoginError(errorMessage) {
+    setServerResponse({
+      loginStatus: "CORE_AUTH_ERR",
+      message: errorMessage
+    });
+    setIsAuthenticating(false);
+  };
+  var onSubmit = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator__default["default"]( /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(e) {
+      var _response$payload, _response$payload$err, response, loginStatus;
+      return _regeneratorRuntime__default["default"].wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            e.preventDefault();
+            setIsAuthenticating(true);
+            _context.prev = 2;
+            _context.next = 5;
+            return auth.login(credentials, "AuthChequeDialog");
+          case 5:
+            response = _context.sent;
+            if (!((_response$payload = response.payload) !== null && _response$payload !== void 0 && (_response$payload$err = _response$payload.errors) !== null && _response$payload$err !== void 0 && _response$payload$err.length)) {
+              _context.next = 9;
+              break;
+            }
+            handleLoginError(feCore.formatMessage(intl, "cmr_cs", "incorrectPassword"));
+            return _context.abrupt("return");
+          case 9:
+            loginStatus = response.loginStatus, response.message;
+            setServerResponse({
+              loginStatus: loginStatus,
+              message: ""
+            });
+            if (loginStatus === "CORE_AUTH_ERR") {
+              setIsAuthenticating(false);
+            } else {
+              onConfirm();
+            }
+            _context.next = 17;
+            break;
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](2);
+            handleLoginError(feCore.formatMessage(intl, "cmr_cs", "incorrectPassword"));
+          case 17:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[2, 14]]);
+    }));
+    return function onSubmit(_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  React.useEffect(function () {
+    requestSent.current = false;
+  }, [cheque]);
+  return /*#__PURE__*/React__default["default"].createElement(core.Dialog, {
+    open: !!cheque,
+    onClose: onCancel
+  }, /*#__PURE__*/React__default["default"].createElement(core.DialogTitle, null, /*#__PURE__*/React__default["default"].createElement(feCore.FormattedMessage, {
+    module: "cmr_cs",
+    id: "passwordCheck"
+  })), /*#__PURE__*/React__default["default"].createElement(core.DialogContent, null, /*#__PURE__*/React__default["default"].createElement("form", {
+    onSubmit: onSubmit
+  }, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+    item: true
+  }, /*#__PURE__*/React__default["default"].createElement(feCore.TextInput, {
+    required: true,
+    readOnly: isAuthenticating,
+    type: "password",
+    label: feCore.formatMessage(intl, "cmr_cs", "password"),
+    fullWidth: true,
+    inputProps: {
+      autoComplete: "new-password"
+    },
+    onChange: function onChange(password) {
+      return setCredentials(_objectSpread$2(_objectSpread$2({}, credentials), {}, {
+        password: password
+      }));
+    }
+  })), (serverResponse === null || serverResponse === void 0 ? void 0 : serverResponse.message) && /*#__PURE__*/React__default["default"].createElement(core.Grid, {
+    item: true
+  }, /*#__PURE__*/React__default["default"].createElement(core.Box, {
+    color: "error.main"
+  }, /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+    color: "error"
+  }, serverResponse.message))), /*#__PURE__*/React__default["default"].createElement(core.DialogActions, null, /*#__PURE__*/React__default["default"].createElement(core.Button, {
+    type: "submit",
+    disabled: isAuthenticating || !(credentials.username && credentials.password),
+    color: "primary",
+    variant: "contained"
+  }, /*#__PURE__*/React__default["default"].createElement(feCore.FormattedMessage, {
+    module: "cmr_cs",
+    id: "authchequedialog.login.button"
+  })), /*#__PURE__*/React__default["default"].createElement(core.Button, {
+    onClick: onCancel,
+    className: classes.secondaryButton,
+    disabled: isAuthenticating
+  }, /*#__PURE__*/React__default["default"].createElement(feCore.FormattedMessage, {
+    module: "core",
+    id: "cancel"
+  }))))));
+};
+var AuthChequeDialog$1 = reactIntl.injectIntl(styles$9.withTheme(styles$9.withStyles(styles$3)(AuthChequeDialog)));
+
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty__default["default"](target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var styles$2 = function styles(theme) {
+  return {
+    lockedPage: theme.page.locked,
+    fullHeight: {
+      height: "100%"
+    }
+  };
+};
+var ChequeForm = /*#__PURE__*/function (_Component) {
+  _inherits__default["default"](ChequeForm, _Component);
+  var _super = _createSuper$2(ChequeForm);
+  function ChequeForm() {
+    var _this;
+    _classCallCheck__default["default"](this, ChequeForm);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "state", {
+      lockNew: false,
+      chequeStatus: _this._newChequeStatus(),
+      newChequeStatus: true
+    });
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "back", function (e) {
+      var _this$props = _this.props,
+        modulesManager = _this$props.modulesManager,
+        history = _this$props.history;
+      feCore.historyPush(modulesManager, history, "cmr_cs.ChequeList");
+    });
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "_add", function () {
+      _this.setState(function (state) {
+        return {
+          chequeStatus: _this._newChequeStatus(),
+          newChequeStatus: true,
+          lockNew: false
+        };
+      }, function (e) {
+        _this.props.add();
+        _this.forceUpdate();
+      });
+    });
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "reload", function () {
+      _this.props.fetchChequeStatus(_this.props.modulesManager, _this.state.chequeImportLineCode);
+    });
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "canSave", function () {
+      if (!_this.state.chequeStatus.chequeImportLineCode) return false;
+      if (!_this.state.chequeStatus.chequeImportLineStatus) return false;
+      if (!_this.state.chequeStatus.chequeImportLineDate) return false;
+      if (_this.state.cheque == null) return true;
+      return true;
+    });
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "_Authvalidator", function () {
+      _this.setState({
+        cheque: true,
+        readOnlyState: true
+      });
+    });
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "_save", function (chequeStatus) {
+      _this.setState({
+        lockNew: !_this.state.chequeStatus.chequeImportLineCode
+      }, function () {
+        if (_this.canSave()) {
+          _this.props.save(_this.state.chequeStatus);
+        }
+      });
+      _this.setState({
+        cheque: null
+      });
+    });
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "onEditedChanged", function (chequeStatus) {
+      _this.setState({
+        chequeStatus: chequeStatus,
+        newChequeStatus: false
+      });
+    });
+    return _this;
+  }
+  _createClass__default["default"](ChequeForm, [{
+    key: "_newChequeStatus",
+    value: function _newChequeStatus() {
+      var chequeStatus = {};
+      chequeStatus.jsonExt = {};
+      return chequeStatus;
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+      if (!!this.props.cheque_code) {
+        this.setState(function (state, props) {
+          return {
+            cheque_code: _this2.props.cheque_code
+          };
+        }, function (e) {
+          return _this2.props.fetchChequeSummaries(_this2.props.modulesManager, ["chequeImportLineCode:\"".concat(_this2.props.cheque_code, "\"")]);
+        });
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.fetchedChequeStatus !== this.props.fetchedChequeStatus && this.props.fetchedChequeStatus) {
+        var chequeStatus = this.props.chequeStatus || {};
+        chequeStatus.ext = chequeStatus.jsonExt ? JSON.parse(chequeStatus.jsonExt) : {};
+        this.setState({
+          chequeStatus: chequeStatus,
+          chequeImportLineCode: chequeStatus.chequeImportLineCode,
+          lockNew: false,
+          newChequeStatus: false
+        });
+      } else if (prevProps.chequeImportLineCode && !this.props.chequeImportLineCode) {
+        this.setState({
+          chequeStatus: this._newChequeStatus(),
+          newChequeStatus: true,
+          lockNew: false,
+          chequeImportLineCode: null
+        });
+      } else if (prevProps.submittingMutation && !this.props.submittingMutation) {
+        this.props.journalize(this.props.mutation);
+        this.setState(function (state, props) {
+          return {
+            chequeStatus: _objectSpread$1(_objectSpread$1({}, state.chequeStatus), {}, {
+              clientMutationId: props.mutation.clientMutationId
+            })
+          };
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+      var _this$props2 = this.props,
+        intl = _this$props2.intl,
+        classes = _this$props2.classes,
+        fetchingCheques = _this$props2.fetchingCheques,
+        fetchedMyCheques = _this$props2.fetchedMyCheques,
+        errorCheques = _this$props2.errorCheques,
+        _this$props2$readOnly = _this$props2.readOnly,
+        readOnly = _this$props2$readOnly === void 0 ? false : _this$props2$readOnly,
+        save = _this$props2.save;
+        _this$props2.add;
+        var myCheques = _this$props2.myCheques,
+        chequeImportLineCode = _this$props2.chequeImportLineCode;
+      var _this$state = this.state,
+        chequeStatus = _this$state.chequeStatus;
+        _this$state.cheque;
+        var readOnlyState = _this$state.readOnlyState;
+      var runningMutation = !!chequeStatus && !!chequeStatus.clientMutationId;
+      var actions = [];
+      if (!!chequeImportLineCode) {
+        actions.push({
+          doIt: function doIt(e) {
+            return _this3.reload(chequeImportLineCode);
+          },
+          icon: /*#__PURE__*/React__default["default"].createElement(ReplayIcon__default["default"], null),
+          onlyIfDirty: !readOnly
+        });
+      }
+      return /*#__PURE__*/React__default["default"].createElement("div", {
+        className: !!runningMutation ? classes.lockedPage : null
+      }, /*#__PURE__*/React__default["default"].createElement(AuthChequeDialog$1, {
+        cheque: this.state.cheque,
+        user: this.props.user,
+        onConfirm: this._save,
+        onCancel: function onCancel(e) {
+          return _this3.setState({
+            cheque: null,
+            lockNew: false,
+            readOnlyState: null
+          });
+        }
+      }), /*#__PURE__*/React__default["default"].createElement(feCore.ProgressOrError, {
+        progress: fetchingCheques,
+        error: errorCheques
+      }), (!!fetchedMyCheques && !!chequeStatus && chequeStatus.chequeImportLineCode === chequeStatus || !chequeImportLineCode) && /*#__PURE__*/React__default["default"].createElement(feCore.Form, {
+        module: "cmr_cs",
+        title: feCore.formatMessage(intl, "cmr_cs", "edit.title"),
+        edited_id: chequeImportLineCode,
+        edited: myCheques[0],
+        HeadPanel: ChequeStatusMasterPanel$1,
+        chequeStatus: chequeStatus,
+        readOnly: readOnlyState,
+        onEditedChanged: this.onEditedChanged,
+        canSave: this.canSave,
+        back: this.back,
+        actions: actions,
+        reload: (chequeImportLineCode || readOnly) && this.reload,
+        save: !!save ? this._Authvalidator : null
+      }));
+    }
+  }]);
+  return ChequeForm;
+}(React.Component);
+var mapStateToProps$2 = function mapStateToProps(state, props) {
+  return {
+    chequeStatus: state.cmr_cs.chequeStatus,
+    user: !!state.core && !!state.core.user && !!state.core.user.i_user ? state.core.user : [],
+    myCheques: state.cmr_cs.myCheques,
+    fetchingCheques: state.cmr_cs.fetchingCheques,
+    fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
+    errorCheques: state.cmr_cs.errorCheques,
+    submittingMutation: state.cmr_cs.submittingMutation,
+    mutation: state.cmr_cs.mutation
+  };
+};
+var mapDispatchToProps$2 = function mapDispatchToProps(dispatch) {
+  return redux.bindActionCreators({
+    fetchChequeSummaries: fetchChequeSummaries,
+    journalize: feCore.journalize
+  }, dispatch);
+};
+var ChequeForm$1 = feCore.withHistory(feCore.withModulesManager(reactRedux.connect(mapStateToProps$2, mapDispatchToProps$2)(reactIntl.injectIntl(styles$9.withTheme(styles$9.withStyles(styles$2)(ChequeForm))))));
+
+function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var styles$1 = function styles(theme) {
+  return {
+    page: theme.page,
+    fullHeight: {
+      height: "100%"
+    }
+  };
+};
+var ChequeStatusPage = /*#__PURE__*/function (_Component) {
+  _inherits__default["default"](ChequeStatusPage, _Component);
+  var _super = _createSuper$1(ChequeStatusPage);
+  function ChequeStatusPage() {
+    var _this;
+    _classCallCheck__default["default"](this, ChequeStatusPage);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "save", function (chequeStatus) {
+      if (!chequeStatus.chequeImportLineCode) {
+        _this.props.updateChequeStatus(_this.props.modulesManager, chequeStatus, feCore.formatMessageWithValues(_this.props.intl, "cmr_cs", "updateChequeStatus.mutationLabel"));
+      } else {
+        _this.props.updateChequeStatus(_this.props.modulesManager, chequeStatus, feCore.formatMessageWithValues(_this.props.intl, "cmr_cs", "updateChequeStatus.mutationLabel"));
+      }
+    });
+    return _this;
+  }
+  _createClass__default["default"](ChequeStatusPage, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props;
+        _this$props.intl;
+        var classes = _this$props.classes,
+        modulesManager = _this$props.modulesManager,
+        history = _this$props.history,
+        cheque_code = _this$props.cheque_code;
+      return /*#__PURE__*/React__default["default"].createElement("div", {
+        className: classes.page
+      }, /*#__PURE__*/React__default["default"].createElement(ChequeForm$1, {
+        cheque_code: cheque_code,
+        save: this.save,
+        add: this.add,
+        back: function back(e) {
+          return feCore.historyPush(modulesManager, history, "cmr_cs.ChequeStatus");
+        }
+      }));
+    }
+  }]);
+  return ChequeStatusPage;
+}(React.Component);
+var mapStateToProps$1 = function mapStateToProps(state, props) {
+  return {
+    cheque_code: props.match.params.cheque_code
+  };
+};
+var mapDispatchToProps$1 = function mapDispatchToProps(dispatch) {
+  return redux.bindActionCreators({
+    updateChequeStatus: updateChequeStatus,
+    journalize: feCore.journalize
+  }, dispatch);
+};
+var ChequeStatusPage$1 = feCore.withHistory(feCore.withModulesManager(reactRedux.connect(mapStateToProps$1, mapDispatchToProps$1)(reactIntl.injectIntl(styles$9.withTheme(styles$9.withStyles(styles$1)(ChequeStatusPage))))));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf__default["default"](Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf__default["default"](this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn__default["default"](this, result); }; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 var styles = function styles(theme) {
   return {
     page: theme.page
   };
 };
-var ChequeDoublePage = /*#__PURE__*/function (_Component) {
-  function ChequeDoublePage(props) {
+var duplicatesChequeListPage = /*#__PURE__*/function (_Component) {
+  _inherits__default["default"](duplicatesChequeListPage, _Component);
+  var _super = _createSuper(duplicatesChequeListPage);
+  function duplicatesChequeListPage(props) {
     var _this;
-    _classCallCheck__default["default"](this, ChequeDoublePage);
-    _this = _callSuper(this, ChequeDoublePage, [props]);
-    _defineProperty__default["default"](_this, "query", function () {
-      var prms = [];
-      prms.push("first: ".concat(_this.state.pageSize));
-      if (!!_this.state.afterCursor) {
-        prms.push("after: \"".concat(_this.state.afterCursor, "\""));
-      }
-      if (!!_this.state.beforeCursor) {
-        prms.push("before: \"".concat(_this.state.beforeCursor, "\""));
-      }
-      _this.props.fetchCheques(prms).then(function () {
-        var uniqueCheques = _this.removeDuplicates(_this.props.myCheques);
-        _this.setState({
-          uniqueCheques: uniqueCheques
-        });
-      });
+    _classCallCheck__default["default"](this, duplicatesChequeListPage);
+    _this = _super.call(this, props);
+    // this.state = {
+    //     defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
+    //         "chequeStatus": {
+    //             "value": "New",
+    //             "filter": "chequeImportLineStatus: \"New\"",
+    //         },
+    //     }),
+    // };
+    // query = () => {
+    //     let prms = [];
+    //     prms.push(`first: ${this.state.pageSize}`);
+    //     if (!!this.state.afterCursor) {
+    //         prms.push(`after: "${this.state.afterCursor}"`)
+    //     }
+    //     if (!!this.state.beforeCursor) {
+    //         prms.push(`before: "${this.state.beforeCursor}"`)
+    //     }
+    //     this.props.fetchCheques(prms);
+    // }
+    _defineProperty__default["default"](_assertThisInitialized__default["default"](_this), "canSubmitAll", function () {
+      return true;
     });
-    _defineProperty__default["default"](_this, "removeDuplicates", function (cheques) {
-      var seen = new Map();
-      var duplicates = new Set();
-      cheques.forEach(function (cheque) {
-        if (seen.has(cheque.number)) {
-          duplicates.add(cheque.number);
-        } else {
-          seen.set(cheque.number, cheque);
-        }
-      });
-      return cheques.filter(function (cheque) {
-        return duplicates.has(cheque.number);
-      });
-    });
-    _this.state = {
-      defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
-        "chequeStatus": {
-          "value": "New"
-        }
-      }),
-      uniqueCheques: []
-    };
     return _this;
   }
-  _inherits__default["default"](ChequeDoublePage, _Component);
-  return _createClass__default["default"](ChequeDoublePage, [{
+  _createClass__default["default"](duplicatesChequeListPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.query();
+      // this.query();
+      var storedData = localStorage.getItem('duplicatesCheque');
+      if (storedData) {
+        var parsedData = JSON.parse(storedData);
+        this.props.fetchDuplicatesCheque(parsedData);
+      }
     }
   }, {
     key: "render",
     value: function render() {
       var _this$props = this.props;
         _this$props.intl;
-        _this$props.classes;
+        var classes = _this$props.classes;
         _this$props.fetchingCheques;
         _this$props.errorCheques;
         _this$props.fetchedMyCheques;
+        _this$props.myCheques;
         _this$props.myChequesPageInfo;
-        _this$props.onDoubleClick;
-      var cheques = this.state.uniqueCheques || [];
-      return /*#__PURE__*/React__default["default"].createElement("div", null, /*#__PURE__*/React__default["default"].createElement(feCore.Helmet, {
+      return /*#__PURE__*/React__default["default"].createElement("div", {
+        className: classes.page
+      }, /*#__PURE__*/React__default["default"].createElement(feCore.Helmet, {
         title: feCore.formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")
       }), /*#__PURE__*/React__default["default"].createElement(ChequeSearcher$1, {
-        defaultFilters: this.state.defaultFilters,
-        cacheFiltersKey: "claimReviewsPageFiltersCache",
-        filterPaneContributionsKey: CHEQUE_FILTER_KEY,
-        onDoubleClick: this.onDoubleClick,
-        cheques: cheques
+        defaultFilters: 'none',
+        cacheFiltersKey: "claimReviewsPageFiltersCache"
+        // filterPaneContributionsKey={CHEQUE_FILTER_KEY}
+        ,
+        duplicate: true
       }));
     }
   }]);
+  return duplicatesChequeListPage;
 }(React.Component);
-var mapStateToProps = function mapStateToProps(state, props) {
+var mapStateToProps = function mapStateToProps(state) {
   return {
     fetchingCheques: state.cmr_cs.fetchingCheques,
     errorCheques: state.cmr_cs.errorCheques,
     fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
     myCheques: state.cmr_cs.myCheques,
-    myChequesPageInfo: state.cmr_cs.myChequesPageInfo
+    myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
+    duplicatesCheque: state.cmr_cs.duplicatesCheque
   };
 };
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return redux.bindActionCreators({
-    fetchCheques: fetchCheques
+    fetchCheques: fetchCheques,
+    fetchDuplicatesCheque: fetchDuplicatesCheque
   }, dispatch);
 };
-var ChequeDoublePage$1 = reactIntl.injectIntl(styles$8.withTheme(styles$8.withStyles(styles)(reactRedux.connect(mapStateToProps, mapDispatchToProps)(ChequeDoublePage))));
+var DuplicateChequeListPage = reactIntl.injectIntl(styles$9.withTheme(styles$9.withStyles(styles)(reactRedux.connect(mapStateToProps, mapDispatchToProps)(duplicatesChequeListPage))));
 
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty__default["default"](target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var ROUTE_CMR_CS_LIST = "cheque/list";
 var ROUTE_CMR_CS_IMPORT = "cheque/import";
 var ROUTE_CMR_STATUS = "cheque/status";
 var ROUTE_CMR_DOUBLE = "cheque/double";
-// const ROUTE_CMR_DOUBLES = "cheque/double";
-
+var ROUTE_CMR_CS_DUPLICATE_LIST = "cheque/list/duplicate";
 var DEFAULT_CONFIG = {
   "translations": [{
     key: "en",
@@ -1490,9 +1926,12 @@ var DEFAULT_CONFIG = {
   }, {
     key: "cmr_cs.ChequeStatus",
     ref: ROUTE_CMR_STATUS
-  }
+  },
   // key: "cmr_cs.ChequeDoubles", ref: ROUTE_CMR_DOUBLES
-  ],
+  {
+    key: "cmr_cs.DuplicateChequeListPage",
+    ref: ROUTE_CMR_CS_DUPLICATE_LIST
+  }],
   "reports": [{
     key: "invoice_fosa_cs",
     component: ChequeSanteActivitiesReport,
@@ -1757,8 +2196,8 @@ var DEFAULT_CONFIG = {
     path: ROUTE_CMR_STATUS + '/:cheque_code',
     component: ChequeStatusPage$1
   }, {
-    path: ROUTE_CMR_DOUBLE,
-    component: ChequeDoublePage$1
+    path: ROUTE_CMR_CS_DUPLICATE_LIST,
+    component: DuplicateChequeListPage
   }]
 };
 var CmrCsModule = function CmrCsModule(cfg) {
