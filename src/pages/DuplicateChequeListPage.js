@@ -39,7 +39,7 @@ class duplicatesChequeListPage extends Component {
         const storedData = localStorage.getItem('duplicatesCheque');
         if (storedData) {
             const parsedData = JSON.parse(storedData);
-            this.props.fetchDuplicatesCheque(parsedData);
+            this.props.fetchDuplicatesCheque(parsedData, false);
         }
     }
 
@@ -73,9 +73,9 @@ class duplicatesChequeListPage extends Component {
             <div className={classes.page}>
                 <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
                 <ChequeSearcher
-                    defaultFilters={'none'}
+                    defaultFilters={"none"}
                     cacheFiltersKey="claimReviewsPageFiltersCache"
-                    // filterPaneContributionsKey={CHEQUE_FILTER_KEY}
+                    filterPaneContributionsKey={CHEQUE_FILTER_KEY}
                     duplicate={true}
                 />
             </div>

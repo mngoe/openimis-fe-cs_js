@@ -18,7 +18,8 @@ function reducer(
         submittingMutation: false,
         mutation: {},    
         duplicatesCheque: [],
-    },
+        duplicateChequePageInfo: {totalCount: 0}
+        },
     action,
 ) {
     switch (action.type) {
@@ -73,7 +74,8 @@ function reducer(
         case 'DUPLICATED_CHEQUE':
             return{
                 ...state,
-                duplicatesCheque: action.payload
+                duplicatesCheque: action.payload,
+                duplicateChequePageInfo: {totalCount: action.payload.length}
             }
         default:
             return state;

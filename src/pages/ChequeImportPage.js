@@ -53,11 +53,6 @@ class ChequeImportPage extends Component {
    
     componentDidMount() {
       this.query();
-      const storedData = localStorage.getItem('duplicatesCheque');
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        this.props.fetchDuplicatesCheque(parsedData);
-      }
     }
 
     query = () => {
@@ -82,6 +77,7 @@ class ChequeImportPage extends Component {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('fileName', file.name);
+      const {duplicatesCheque} = this.props
       const config = {
         headers: {
           'content-type': 'multipart/form-data',
@@ -104,11 +100,15 @@ class ChequeImportPage extends Component {
               this.setState({
                 uploadState: reponseJson
               });
-              this.props.fetchDuplicatesCheque(reponseJson)
-              localStorage.setItem('duplicatesCheque', JSON.stringify(reponseJson)); 
+              this.props.fetchDuplicatesCheque(reponseJson.updatedCheques, true) 
               if(reponseJson.success==true){
                 this.setState({showModal:true});
-                this.setState({contentModal:"cmr_cs.checkImported"});
+                if(!!reponseJson && reponseJson.updatedCheques.length > 0 ){
+                  this.setState({contentModal: "cmr_cs.DuplicateImport"});
+                }else{
+                  this.setState({contentModal:"cmr_cs.checkImported"});
+                }
+                
               }
             });
           });
