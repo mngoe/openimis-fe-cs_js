@@ -133,7 +133,9 @@ class ChequeSearcher extends Component {
       actions,
       defaultFilters,
       cacheFiltersKey,
-      duplicatesCheque,
+      onDoubleClick,
+      cheques,
+      duplicatesCheque, 
       duplicate,
       duplicateChequePageInfo,
       actionsContributionKey,
@@ -170,7 +172,8 @@ class ChequeSearcher extends Component {
           headers={this.headers}
           itemFormatters={this.itemFormatters}
           actions={actions}
-          // sorts={this.sorts}
+          sorts={this.sorts}
+          onDoubleClick={onDoubleClick}
         />
       </Fragment>
     );

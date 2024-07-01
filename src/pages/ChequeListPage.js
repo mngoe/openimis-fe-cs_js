@@ -5,17 +5,16 @@ import { bindActionCreators } from "redux";
 import { injectIntl } from 'react-intl';
 import { fetchCheques, fetchDuplicatesCheque } from "../actions";
 import ChequeSearcher from "../components/ChequeSearcher";
-import {
-  ProgressOrError,
-  Table,
-  PagedDataHandler,
-  Helmet,
-  formatMessage,
-  historyPush,
-  formatMessageWithValues,
-  FormattedMessage
-} from "@openimis/fe-core";
-
+import { 
+    ProgressOrError, 
+    Table, 
+    PagedDataHandler, 
+    Helmet,
+    formatMessage,
+    historyPush,
+    formatMessageWithValues, 
+    FormattedMessage } from "@openimis/fe-core";
+import { Button } from "@material-ui/core"
 const CHEQUE_FILTER_KEY = "cheque.Filter";
 
 const styles = (theme) => ({
@@ -46,61 +45,66 @@ class ChequeListPage extends Component {
 
 
 
-  query = () => {
-    let prms = [];
-    prms.push(`first: ${this.state.pageSize}`);
-    if (!!this.state.afterCursor) {
-      prms.push(`after: "${this.state.afterCursor}"`)
+    query = () => {
+        let prms = [];
+        prms.push(`first: ${this.state.pageSize}`);
+        if (!!this.state.afterCursor) {
+            prms.push(`after: "${this.state.afterCursor}"`)
+        }
+        if (!!this.state.beforeCursor) {
+            prms.push(`before: "${this.state.beforeCursor}"`)
+        }
+        this.props.fetchCheques(prms);
     }
-    if (!!this.state.beforeCursor) {
-      prms.push(`before: "${this.state.beforeCursor}"`)
+
+    onDoubleClick = (i, newTab = false) => {
+        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeStatus",[i.chequeImportLineCode],false);
+    };
+    canSubmitAll = () => true;
+    handleDuplicateNavigation = () => {
+        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.DuplicateChequeListPage",[], null)
     }
-    this.props.fetchCheques(prms);
-  }
-  canSubmitAll = () => true;
-  handleDuplicateNavigation = () => {
-    historyPush(this.props.modulesManager, this.props.history, "cmr_cs.DuplicateChequeListPage", [], null)
-  }
 
-  render() {
-    const {
-      intl,
-      classes,
-      fetchingCheques,
-      errorCheques,
-      fetchedMyCheques,
-      myCheques,
-      myChequesPageInfo
-    } = this.props;
-    const actions = [
-      {
-        action: this.handleDuplicateNavigation,
-        label: formatMessage(this.props.intl, "cmr_cs", "duplicateTable"),
-        enabled: this.canSubmitAll
-      },
-    ];
-
-    return (
-      <div className={classes.page}>
-        <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
-        <ChequeSearcher
-          defaultFilters={this.state.defaultFilters}
-          actions={actions}
-          cacheFiltersKey="claimReviewsPageFiltersCache"
-          filterPaneContributionsKey={CHEQUE_FILTER_KEY}
-        />
-      </div>
-    )
-  }
+    render() {
+        const { 
+            intl,
+            classes,
+            fetchingCheques,
+            errorCheques,
+            fetchedMyCheques,
+            myCheques,
+            myChequesPageInfo
+        } = this.props;
+        const actions = [
+            {
+              action: this.handleDuplicateNavigation,
+              label: formatMessage(this.props.intl, "cmr_cs", "duplicateTable"),
+              enabled: this.canSubmitAll
+            },
+          ];
+      
+               return (
+            <div className={classes.page}>
+                <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
+                <ChequeSearcher
+                defaultFilters={this.state.defaultFilters}
+                actions={actions}
+                cacheFiltersKey="claimReviewsPageFiltersCache"
+                filterPaneContributionsKey={CHEQUE_FILTER_KEY}
+                onDoubleClick={this.onDoubleClick}
+                />
+            </div>
+        )
+    }
 }
 
-const mapStateToProps = state => ({
-  fetchingCheques: state.cmr_cs.fetchingCheques,
-  errorCheques: state.cmr_cs.errorCheques,
-  fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
-  myCheques: state.cmr_cs.myCheques,
-  myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
-  duplicatesCheque: state.cmr_cs.duplicatesCheque
+const mapStateToProps = (state, props) => ({
+    fetchingCheques: state.cmr_cs.fetchingCheques,
+    errorCheques: state.cmr_cs.errorCheques,
+    fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
+    myCheques: state.cmr_cs.myCheques,
+    myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
+    duplicatesCheque: state.cmr_cs.duplicatesCheque
 });
 
 
