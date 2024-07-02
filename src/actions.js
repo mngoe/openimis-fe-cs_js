@@ -128,7 +128,7 @@ export function login(credentials, source = null) {
                 return { loginStatus: action.type, message: action?.payload?.response?.detail ?? "" };
             } catch (error) {
                 dispatch(authError({ message: error.message, name: "ApiError", status: 401 }, source));
-                    return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
+                return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
             }
         }
     };
@@ -141,16 +141,42 @@ export function authError(error, source = null) {
     };
 }
 
-  
+export function fetchCheckModificationHistory() {
+    const payload =
+        `query {
+        ChequeUpdatedHistories {
+        edges {
+        node {
+        id
+        idChequeUpdated
+        chequeImportLine{
+        id
+        idChequeImportLine
+        chequeImportLineCode
+        }
+        user{
+        loginName
+        }
+        updatedDate
+        description
+        }
+        }
+        }
+        }`
+
+    return graphql(payload, 'HISTORY_CHEQUE')
+}
+
+
 function transformChequeData(data) {
     return data.map(item => {
-      return {
-        chequeImportLineCode: item[1],
-        chequeImportLineDate: item[3],
-        chequeImportLineStatus: item[2],
-      };
+        return {
+            chequeImportLineCode: item[1],
+            chequeImportLineDate: item[3],
+            chequeImportLineStatus: item[2],
+        };
     });
-  }
+}
 export const fetchDuplicatesCheque = (duplicatesCheque) => ({
     type: 'DUPLICATED_CHEQUE',
     payload: transformChequeData(duplicatesCheque.updatedCheques)
