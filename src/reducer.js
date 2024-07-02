@@ -19,6 +19,12 @@ function reducer(
         submittingMutation: false,
         mutation: {},
         duplicatesCheque: [],
+        historyModification: {},
+        fetchingHistoryModification: false,
+        fetchedHistoryModification: false,
+        errorHistoryModification: null,
+        historyModificationInfo: {totalCount: 0}
+
     },
     action,
 ) {
@@ -73,7 +79,6 @@ function reducer(
             };
         // AUTH
         case "CORE_AUTH_LOGIN_RESP": {
-            console.log(' core auth resp ', action.payload)
             if (action.payload?.errors) {
                 return {
                     ...state,
@@ -86,8 +91,7 @@ function reducer(
             };
         }
         case "CORE_AUTH_ERR": {
-            action.payload = {...action.payload, sources:"AuthChequeDialog"}
-            console.log('core called', action)
+            action.payload = { ...action.payload, sources: "AuthChequeDialog" }
 
             return {
                 ...state,
@@ -95,11 +99,48 @@ function reducer(
                 authError: formatServerError(action.payload),
             };
         }
+        case 'HISTORY_CHEQUE_REQ': {
+            return {
+                ...state,
+                historyModification: {},
+                fetchingHistoryModification: true,
+                historyModificationInfo:{totalCount: 0}
+
+            }
+        }
+        case 'HISTORY_CHEQUE_RESP': {
+            const data = parseData(action.payload.data.ChequeUpdatedHistories);
+            const sortedData = data.sort((a, b) => new Date(b.updatedDate) - new Date(a.updatedDate));
+        
+            return {
+                ...state,
+                historyModification: sortedData, 
+                fetchingHistoryModification: false,
+                fetchedHistoryModification: true,
+                errorHistoryModification: formatGraphQLError(action.payload),
+                historyModificationInfo: { totalCount: sortedData.length }
+            };
+        }
+        
+        case 'HISTORY_CHEQUE_ERR': {
+            return {
+                ...state,
+                historyModification: {},
+                fetchingHistoryModification: false,
+                fetchedHistoryModification: false,
+                errorHistoryModification: formatServerError(action.payload),
+                historyModificationInfo:{totalCount: 0}
+
+
+            }
+        }
         case 'DUPLICATED_CHEQUE':
-            return{
+            return {
                 ...state,
                 duplicatesCheque: action.payload
             }
+
+
         default:
             return state;
     }

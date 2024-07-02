@@ -50,7 +50,6 @@ class ChequeStatusMasterPanel extends FormPanel {
       chequeStatus,
       readOnly,
     } = this.props;
-    console.log("edited", readOnly)
     return (
       <Grid container direction="row">
         <Grid container className={classes.item}>

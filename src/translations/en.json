@@ -36,5 +36,14 @@
     "cmr_cs.authchequedialog.login.button": "Checking",
     "incorrectPassword":"Invalid Password",
     "edit.title": "Edit cheque",
-    "duplicateTable": "Duplicate List"
+    "duplicateTable": "Duplicate List",
+    "cmr_cs.updateChequeStatus.mutationLabel":"Check status edited",
+    "cmr_cs-list": "Check status",
+    "history": "Modification History ",
+    "historyTitle": "Modification History ({count})",
+    "cmr_cs.description":"Description",
+    "cmr_cs.checkupdatedate":"Modification Date",
+    "cmr_cs.user":"User"
+
+
 }
