@@ -3,7 +3,7 @@ import { withTheme, withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { injectIntl } from 'react-intl';
-import { fetchDuplicatesCheque, fetchCheckModificationHistory } from "../actions";
+import { fetchCheckModificationHistory } from "../actions";
 import ChequeHistorySearcher from "../components/ChequeHistorySearcher";
 import { 
     ProgressOrError, 

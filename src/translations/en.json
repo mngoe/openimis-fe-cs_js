@@ -5,7 +5,7 @@
     "menu.chequeList": "Check List",
     "cmr_cs.ChequeListHeader": "Check List",
     "cmr_cs.table": "Table Check ({count})",
-    "cmr_cs.duplicateTableList": "Duplicate Table Check ({count})",
+    "cmr_cs.duplicateTableList": "Duplicate  ({count})",
     "cmr_cs-list.null": "All",
     "cmr_cs-list.New": "New",
     "cmr_cs-list.Used": "Used",
@@ -43,7 +43,9 @@
     "historyTitle": "Modification History ({count})",
     "cmr_cs.description":"Description",
     "cmr_cs.checkupdatedate":"Modification Date",
-    "cmr_cs.user":"User"
+    "cmr_cs.user":"User",
+    "cmr_cs.DuplicateImport":" The checks present in the file have been imported. Duplicates list detected : "
+
 
 
 }

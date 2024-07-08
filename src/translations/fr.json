@@ -19,6 +19,7 @@
     "cmr_cs.importCheckFile": "Importer les fichiers de cheques",
     "cmr_cs.currentlyImporting": "Importation en cours",
     "cmr_cs.checkImported": "Les cheques present dans le fichier ont été importés",
+    "cmr_cs.DuplicateImport":" Les cheques present dans le fichier ont été importés. Liste des doublons détecté :  ",
     "cmr_cs.dateFrom":"De",
     "cmr_cs.dateTo":"A",
     "cmr_cs.New": "Nouveau",
