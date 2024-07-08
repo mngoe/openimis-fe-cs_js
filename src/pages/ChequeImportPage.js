@@ -16,7 +16,7 @@ import {
   DialogTitle,
   FormControlLabel,
 } from "@material-ui/core";
-import { formatMessageWithValues, FormattedMessage, baseApiUrl, apiHeaders } from "@openimis/fe-core";
+import { formatMessageWithValues, FormattedMessage, formatDateFromISO, baseApiUrl, apiHeaders } from "@openimis/fe-core";
 import { fetchChequesImport } from "../actions"
 import { ProgressOrError, Table } from "@openimis/fe-core";
 
@@ -213,7 +213,7 @@ class ChequeImportPage extends Component {
                 </DialogContentText>
                 {this.state.uploadState.map((cheque, index) => (
                   <DialogContentText key={index}>
-                    Code: {cheque.chequeImportLineCode}, Date: {cheque.chequeImportLineDate}, Status: {cheque.chequeImportLineStatus}
+                    Code: {cheque.chequeImportLineCode}, Date: {formatDateFromISO( this.props.modulesManager, intl, cheque.chequeImportLineDate)}, Status: {cheque.chequeImportLineStatus}
                   </DialogContentText>
                 ))}
               </>
