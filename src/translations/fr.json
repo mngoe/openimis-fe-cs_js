@@ -38,6 +38,12 @@
     "cmr_cs.authchequedialog.login.button": "Vérification",
     "incorrectPassword":"Mot de passe incorrect",
     "edit.title": "Modification du chèque",
-    "duplicateTable": "Liste des Doublons"
+    "duplicateTable": "Liste des Doublons",
+    "updateChequeStatus.mutationLabel":"Status du chèque modifié",
+    "history": "Historique de Modification",
+    "historyTitle": "Historique de Modification ({count})",
+    "cmr_cs.description":"Description",
+    "cmr_cs.checkupdatedate":"Date de Modification",
+    "cmr_cs.user":"Utilisateur"
 
 }

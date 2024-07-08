@@ -24,20 +24,13 @@ const styles = theme => ({
 class ChequeStatusPage extends Component {
 
     save = (chequeStatus) => {
-        if (!chequeStatus.chequeImportLineCode) {
-            this.props.updateChequeStatus(
-                this.props.modulesManager,
-                chequeStatus,
-                formatMessageWithValues(this.props.intl, "cmr_cs", "updateChequeStatus.mutationLabel"),
-            );
 
-        } else {
             this.props.updateChequeStatus(
               this.props.modulesManager,
               chequeStatus,
-              formatMessageWithValues(this.props.intl, "cmr_cs", "updateChequeStatus.mutationLabel"),
+              formatMessageWithValues(this.props.intl, "cmr_cs", "updateChequeStatus.mutationLabel",chequeStatus.chequeImportLineCode),
             );
-          }
+          
     };
 
     render() {
