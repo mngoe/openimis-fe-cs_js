@@ -1,5 +1,5 @@
 import {
-  graphql, formatPageQueryWithCount, formatMutation, graphqlMutation,
+    graphql, formatPageQueryWithCount, formatMutation, graphqlMutation,
 } from "@openimis/fe-core";
 import { RSAA } from "redux-api-middleware";
 
@@ -36,12 +36,12 @@ export function fetchChequeSummaries(mm, filters) {
 }
 
 export function fetchChequesImport() {
-  const payload = formatPageQueryWithCount(
-    "chequeimport",
-    null,
-    ["idChequeImport",  "importDate", "storedFile"]
-  );
-  return graphql(payload, 'CMS_CS_CHECKIMPORT');
+    const payload = formatPageQueryWithCount(
+        "chequeimport",
+        null,
+        ["idChequeImport", "importDate", "storedFile"]
+    );
+    return graphql(payload, 'CMS_CS_CHECKIMPORT');
 }
 
 export function updateChequeStatus(mm, chequeStatus, clientMutationLabel, idChequeImportLine, chequeImportLineStatus) {
@@ -128,7 +128,7 @@ export function login(credentials, source = null) {
                 return { loginStatus: action.type, message: action?.payload?.response?.detail ?? "" };
             } catch (error) {
                 dispatch(authError({ message: error.message, name: "ApiError", status: 401 }, source));
-                    return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
+                return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
             }
         }
     };
@@ -141,40 +141,28 @@ export function authError(error, source = null) {
     };
 }
 
-  
-function transformChequeData(data) {
-  const storedData = localStorage.getItem('duplicatesCheque');
-  const parsedData = storedData ? JSON.parse(storedData) : [];
-  const newData = [];
-  if(!!data){
-   newData = data.map(item => {
-    return {
-      chequeImportLineCode: item[1],
-      chequeImportLineDate: item[3],
-      chequeImportLineStatus: item[2],
-    };
-    
-  });
+export function fetchCheckModificationHistory() {
+    const payload =
+        `query {
+        ChequeUpdatedHistories {
+        edges {
+        node {
+        id
+        idChequeUpdated
+        chequeImportLine{
+        id
+        idChequeImportLine
+        chequeImportLineCode
+        }
+        user{
+        loginName
+        }
+        updatedDate
+        description
+        }
+        }
+        }
+        }`
+
+    return graphql(payload, 'HISTORY_CHEQUE')
 }
-
-
-  const combinedData = parsedData.concat(newData);
-
-  const uniqueData = combinedData.reduce((acc, current) => {
-    const x = acc.find(item => item.chequeImportLineCode === current.chequeImportLineCode);
-    if (!x) {
-      return acc.concat([current]);
-    } else {
-      return acc;
-    }
-  }, []);
-
-  localStorage.setItem('duplicatesCheque', JSON.stringify(uniqueData));
-  return uniqueData;
-}
-
-
-export const fetchDuplicatesCheque = (duplicatesCheque, canParse) => ({
-  type: 'DUPLICATED_CHEQUE',
-  payload: (!!canParse && canParse == true) ? transformChequeData(duplicatesCheque) : duplicatesCheque
-});

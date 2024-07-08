@@ -7,7 +7,7 @@ import { withTheme, withStyles } from "@material-ui/core/styles";
 import { IconButton, Typography, Tooltip } from "@material-ui/core";
 import { Searcher } from "@openimis/fe-core";
 import TabIcon from "@material-ui/icons/Tab";
-import { fetchCheques, fetchChequeSummaries, fetchDuplicatesCheque } from "../actions"
+import { fetchCheques, fetchChequeSummaries } from "../actions"
 import ChequeFilter from "./ChequeFilter";
 import {
   withModulesManager,
@@ -41,15 +41,7 @@ class ChequeSearcher extends Component {
 
 
   fetch = (prms) => {
-    if (!!this.props.duplicate) {
-      const storedData = localStorage.getItem('duplicatesCheque');
-        if (storedData) {
-          const parsedData = JSON.parse(storedData);
-          this.props.fetchDuplicatesCheque(parsedData, false);
-        }
-    } else {
       this.props.fetchChequeSummaries(this.props.modulesManager, prms, !!this.claimAttachments);
-    }
   };
 
   rowIdentifier = (r) => r.uuid;
@@ -139,7 +131,6 @@ class ChequeSearcher extends Component {
       duplicate,
       duplicateChequePageInfo,
       actionsContributionKey,
-      fetchDuplicatesCheque
     } = this.props;
     let count = !!this.state.random && this.state.random.value;
     if (!count) {
@@ -191,7 +182,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ fetchChequeSummaries, fetchDuplicatesCheque }, dispatch);
+  return bindActionCreators({ fetchChequeSummaries }, dispatch);
 };
 
 export default withModulesManager(

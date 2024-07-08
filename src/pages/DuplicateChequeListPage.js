@@ -3,7 +3,7 @@ import { withTheme, withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { injectIntl } from 'react-intl';
-import { fetchCheques, fetchDuplicatesCheque } from "../actions";
+import { fetchCheques } from "../actions";
 import ChequeSearcher from "../components/ChequeSearcher";
 import {
     ProgressOrError,
@@ -37,10 +37,7 @@ class duplicatesChequeListPage extends Component {
     componentDidMount() {
         // this.query();
         const storedData = localStorage.getItem('duplicatesCheque');
-        if (storedData) {
-            const parsedData = JSON.parse(storedData);
-            this.props.fetchDuplicatesCheque(parsedData, false);
-        }
+
     }
 
 
@@ -95,7 +92,7 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ fetchCheques, fetchDuplicatesCheque }, dispatch);
+    return bindActionCreators({ fetchCheques }, dispatch);
 };
 
 export default injectIntl(withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(duplicatesChequeListPage))));
