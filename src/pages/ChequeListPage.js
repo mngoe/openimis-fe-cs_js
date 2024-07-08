@@ -3,7 +3,7 @@ import { withTheme, withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { injectIntl } from 'react-intl';
-import { fetchCheques,fetchDuplicatesCheque, fetchCheckModificationHistory } from "../actions";
+import { fetchCheques, fetchCheckModificationHistory } from "../actions";
 import ChequeSearcher from "../components/ChequeSearcher";
 import { 
     ProgressOrError, 
@@ -18,8 +18,8 @@ import { Button } from "@material-ui/core"
 const CHEQUE_FILTER_KEY = "cheque.Filter";
 
 const styles = (theme) => ({
-    page: theme.page,
-  });
+  page: theme.page,
+});
 
 class ChequeListPage extends Component {
 
@@ -81,11 +81,6 @@ class ChequeListPage extends Component {
         } = this.props;
         const actions = [
             {
-              action: this.handleDuplicateNavigation,
-              label: formatMessage(this.props.intl, "cmr_cs", "duplicateTable"),
-              enabled: this.canSubmitAll
-            },
-            {
                 action: this.handleHistoryNavigation,
                 label: formatMessage(this.props.intl, "cmr_cs", "history"),
                 enabled: this.canSubmitAll
@@ -121,7 +116,7 @@ const mapStateToProps = (state, props) => ({
 
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ fetchCheques, fetchDuplicatesCheque, fetchCheckModificationHistory }, dispatch);
+    return bindActionCreators({ fetchCheques, fetchCheckModificationHistory }, dispatch);
 };
 
 export default injectIntl(withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ChequeListPage))));

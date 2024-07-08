@@ -23,9 +23,10 @@ function reducer(
         fetchingHistoryModification: false,
         fetchedHistoryModification: false,
         errorHistoryModification: null,
-        historyModificationInfo: {totalCount: 0}
+        historyModificationInfo: {totalCount: 0},
 
-    },
+        duplicateChequePageInfo: {totalCount: 0}
+        },
     action,
 ) {
     switch (action.type) {
@@ -137,7 +138,8 @@ function reducer(
         case 'DUPLICATED_CHEQUE':
             return {
                 ...state,
-                duplicatesCheque: action.payload
+                duplicatesCheque: action.payload,
+                duplicateChequePageInfo: {totalCount: action.payload.length}
             }
 
 

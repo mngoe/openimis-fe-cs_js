@@ -41,7 +41,7 @@ class ChequeSearcher extends Component {
 
 
   fetch = (prms) => {
-    this.props.fetchChequeSummaries(this.props.modulesManager, prms, !!this.claimAttachments);
+      this.props.fetchChequeSummaries(this.props.modulesManager, prms, !!this.claimAttachments);
   };
 
   rowIdentifier = (r) => r.uuid;
@@ -129,11 +129,12 @@ class ChequeSearcher extends Component {
       cheques,
       duplicatesCheque, 
       duplicate,
+      duplicateChequePageInfo,
       actionsContributionKey,
     } = this.props;
     let count = !!this.state.random && this.state.random.value;
     if (!count) {
-      count = myChequesPageInfo.totalCount;
+      count = !!duplicate ? duplicatesCheque.length : myChequesPageInfo.totalCount;
     }
     return (
       <Fragment>
@@ -141,24 +142,24 @@ class ChequeSearcher extends Component {
           module="claim"
           defaultFilters={defaultFilters}
           cacheFiltersKey={cacheFiltersKey}
-          FilterPane={defaultFilters=="none" ?null: ChequeFilter}
+          FilterPane={defaultFilters == "none" ? null : ChequeFilter}
           FilterExt={FilterExt}
           filterPaneContributionsKey={filterPaneContributionsKey}
           items={!!duplicate ? duplicatesCheque : myCheques}
           defaultOrderBy="-chequeImportLineDate"
-          itemsPageInfo={myChequesPageInfo}
+          itemsPageInfo={!!duplicate ? duplicateChequePageInfo : myChequesPageInfo}
           fetchingItems={fetchingCheques}
           fetchedItems={fetchedMyCheques}
           errorItems={errorCheques}
-          tableTitle={!!duplicate? formatMessageWithValues(intl, "cmr_cs", "duplicateTableList", { count }): formatMessageWithValues(intl, "cmr_cs", "table", { count })}
-          rowsPerPageOptions={this.rowsPerPageOptions}
-          defaultPageSize={this.defaultPageSize}
+          tableTitle={!!duplicate ? formatMessageWithValues(intl, "cmr_cs", "duplicateTableList", { count }) : formatMessageWithValues(intl, "cmr_cs", "table", { count })}
+          // rowsPerPageOptions={this.rowsPerPageOptions}
+          // defaultPageSize={this.defaultPageSize}
           fetch={this.fetch}
-          rowIdentifier={this.rowIdentifier}
+          // rowIdentifier={this.rowIdentifier}
           filtersToQueryParams={this.filtersToQueryParams}
           rowLocked={this.rowLocked}
-          rowHighlighted={this.rowHighlighted}
-          rowHighlightedAlt={this.rowHighlightedAlt}
+          // rowHighlighted={this.rowHighlighted}
+          // rowHighlightedAlt={this.rowHighlightedAlt}
           headers={this.headers}
           itemFormatters={this.itemFormatters}
           actions={actions}
@@ -177,6 +178,7 @@ const mapStateToProps = (state) => ({
   myCheques: state.cmr_cs.myCheques,
   duplicatesCheque: state.cmr_cs.duplicatesCheque,
   myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
+  duplicateChequePageInfo: state.cmr_cs.duplicateChequePageInfo
 });
 
 const mapDispatchToProps = (dispatch) => {
