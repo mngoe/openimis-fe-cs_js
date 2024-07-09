@@ -236,29 +236,6 @@ function reducer() {
         fetchedMyChequesImport: false,
         errorChequesImport: feCore.formatServerError(action.payload)
       });
-    // AUTH
-    case "CORE_AUTH_LOGIN_RESP":
-      {
-        var _action$payload;
-        if ((_action$payload = action.payload) !== null && _action$payload !== void 0 && _action$payload.errors) {
-          return _objectSpread$6(_objectSpread$6({}, state), {}, {
-            authError: feCore.formatGraphQLError(action.payload)
-          });
-        }
-        return _objectSpread$6(_objectSpread$6({}, state), {}, {
-          authError: null
-        });
-      }
-    case "CORE_AUTH_ERR":
-      {
-        action.payload = _objectSpread$6(_objectSpread$6({}, action.payload), {}, {
-          sources: "AuthChequeDialog"
-        });
-        return _objectSpread$6(_objectSpread$6({}, state), {}, {
-          user: null,
-          authError: feCore.formatServerError(action.payload)
-        });
-      }
     case 'HISTORY_CHEQUE_REQ':
       {
         return _objectSpread$6(_objectSpread$6({}, state), {}, {
