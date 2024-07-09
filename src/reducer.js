@@ -78,28 +78,7 @@ function reducer(
                 fetchedMyChequesImport: false,
                 errorChequesImport: formatServerError(action.payload)
             };
-        // AUTH
-        case "CORE_AUTH_LOGIN_RESP": {
-            if (action.payload?.errors) {
-                return {
-                    ...state,
-                    authError: formatGraphQLError(action.payload),
-                };
-            }
-            return {
-                ...state,
-                authError: null,
-            };
-        }
-        case "CORE_AUTH_ERR": {
-            action.payload = { ...action.payload, sources: "AuthChequeDialog" }
-
-            return {
-                ...state,
-                user: null,
-                authError: formatServerError(action.payload),
-            };
-        }
+       
         case 'HISTORY_CHEQUE_REQ': {
             return {
                 ...state,
