@@ -100,7 +100,7 @@ class ChequeSearcher extends Component {
   itemFormatters = () => {
     var result = [
       (c) => c.chequeImportLineCode,
-      (c) => formatMessage(this.props.intl, "cmr_cs", c.chequeImportLineStatus),
+      (c) => formatMessage(this.props.intl, "cmr_cs",( c.chequeImportLineStatus).toLowerCase()),
       (c) => formatDateFromISO(this.props.modulesManager, this.props.intl, c.chequeImportLineDate),
     ];
     return result;
