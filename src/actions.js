@@ -94,52 +94,52 @@ export function initialize() {
     };
 }
 
-export function loadUser() {
-    return fetch({
-        endpoint: `${baseApiUrl}/core/users/current_user/`,
-        method: "GET",
-        types: ["CORE_USERS_CURRENT_USER_REQ", "CORE_USERS_CURRENT_USER_RESP", "CORE_USERS_CURRENT_USER_ERR"],
-    });
-}
+// export function loadUser() {
+//     return fetch({
+//         endpoint: `${baseApiUrl}/core/users/current_user/`,
+//         method: "GET",
+//         types: ["CORE_USERS_CURRENT_USER_REQ", "CORE_USERS_CURRENT_USER_RESP", "CORE_USERS_CURRENT_USER_ERR"],
+//     });
+// }
 
-export function login(credentials, source = null) {
-    return async (dispatch) => {
-        if (credentials) {
-            const mutation = `mutation authenticate($username: String!, $password: String!) {
-                tokenAuth(username: $username, password: $password) {
-                    refreshExpiresIn
-                }
-            }`;
+// export function login(credentials, source = null) {
+//     return async (dispatch) => {
+//         if (credentials) {
+//             const mutation = `mutation authenticate($username: String!, $password: String!) {
+//                 tokenAuth(username: $username, password: $password) {
+//                     refreshExpiresIn
+//                 }
+//             }`;
 
-            const csrfToken = getCsrfToken();
+//             const csrfToken = getCsrfToken();
 
-            try {
-                const response = await dispatch(
-                    graphqlMutation(mutation, credentials, ["CORE_AUTH_LOGIN_REQ", "CORE_AUTH_LOGIN_RESP", "CORE_AUTH_ERR"], {}, false, {
-                        "X-CSRFToken": csrfToken
-                    }),
-                );
-                if (response.payload?.errors?.length > 0) {
-                    const errorMessage = response.payload.errors[0].message;
-                    dispatch(authError({ message: errorMessage, name: "ApiError", status: 401 }, source));
-                    return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
-                }
-                const action = await dispatch(loadUser());
-                return { loginStatus: action.type, message: action?.payload?.response?.detail ?? "" };
-            } catch (error) {
-                dispatch(authError({ message: error.message, name: "ApiError", status: 401 }, source));
-                return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
-            }
-        }
-    };
-}
+//             try {
+//                 const response = await dispatch(
+//                     graphqlMutation(mutation, credentials, ["CORE_AUTH_LOGIN_REQ", "CORE_AUTH_LOGIN_RESP", "CORE_AUTH_ERR"], {}, false, {
+//                         "X-CSRFToken": csrfToken
+//                     }),
+//                 );
+//                 if (response.payload?.errors?.length > 0) {
+//                     const errorMessage = response.payload.errors[0].message;
+//                     dispatch(authError({ message: errorMessage, name: "ApiError", status: 401 }, source));
+//                     return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
+//                 }
+//                 const action = await dispatch(loadUser());
+//                 return { loginStatus: action.type, message: action?.payload?.response?.detail ?? "" };
+//             } catch (error) {
+//                 dispatch(authError({ message: error.message, name: "ApiError", status: 401 }, source));
+//                 return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
+//             }
+//         }
+//     };
+// }
 
-export function authError(error, source = null) {
-    return {
-        type: "CORE_AUTH_ERR",
-        payload: { ...error, source },
-    };
-}
+// export function authError(error, source = null) {
+//     return {
+//         type: "CORE_AUTH_ERR",
+//         payload: { ...error, source },
+//     };
+// }
 
 export function fetchCheckModificationHistory() {
     const payload =

@@ -12,7 +12,6 @@ import {
     Typography,
 } from '@material-ui/core';
 import { FormattedMessage, formatMessage, TextInput } from "@openimis/fe-core";
-import { useAuthentication } from "../hooks";
 
 const styles = theme => ({
     primaryButton: theme.dialog.primaryButton,
@@ -24,8 +23,6 @@ const AuthChequeDialog = ({ classes, cheque, onCancel, onConfirm, intl, user }) 
     const [credentials, setCredentials] = useState({ username: user?.username });
     const [serverResponse, setServerResponse] = useState({ loginStatus: "", message: null });
     const requestSent = useRef(false);
-
-    const auth = useAuthentication();
 
     const handleLoginError = (errorMessage) => {
         setServerResponse({ loginStatus: "CORE_AUTH_ERR", message: errorMessage });
