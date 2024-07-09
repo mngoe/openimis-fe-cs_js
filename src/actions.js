@@ -58,10 +58,18 @@ export function updateChequeStatus(mm, chequeStatus, clientMutationLabel, idCheq
 
 export function formatChequeStatusGQL(mm, chequeStatus) {
     return `
-      ${!!chequeStatus.chequeImportLineStatus ? `chequeImportLineStatus: "${chequeStatus.chequeImportLineStatus}"` : ""}
+      ${!!chequeStatus.chequeImportLineStatus ? `chequeImportLineStatus: "${capitalizeFirstLetter(chequeStatus.chequeImportLineStatus)}"` : ""}
       ${!!chequeStatus.idChequeImportLine ? `idChequeImportLine: ${chequeStatus.idChequeImportLine}` : ""}
     `;
 }
+
+function capitalizeFirstLetter(String){
+    if(!String){
+        return ''
+    }
+    return String.charAt(0).toUpperCase() +String.slice(1)
+}
+
 
 function getCsrfToken() {
     const CSRF_TOKEN_NAME = 'csrftoken';
