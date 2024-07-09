@@ -28,7 +28,7 @@ const DEFAULT_CONFIG = {
   ],
   "reducers": [{ key: 'cmr_cs', reducer }],
   "refs": [
-    { key: "cmr_cs.ChequeStatusPicker", ref: ChequeStatusPicker},
+    {key: "cmr_cs.ChequeStatusPicker", ref: ChequeStatusPicker},
     {key: "cmr_cs.ChequeDouble", ref: ROUTE_CMR_DOUBLE},
     {key: "cmr_cs.ChequeList", ref: ROUTE_CMR_CS_LIST},
     {key: "cmr_cs.ChequeStatus", ref: ROUTE_CMR_STATUS},

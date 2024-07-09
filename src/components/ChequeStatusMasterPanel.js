@@ -11,7 +11,6 @@ import {
   NumberInput,
   withModulesManager,
 } from "@openimis/fe-core";
-import ChequeStatusPicker from "../pickers/ChequeStatusPicker";
 
 const styles = (theme) => ({
   paper: theme.paper.paper,
@@ -67,9 +66,9 @@ class ChequeStatusMasterPanel extends FormPanel {
           </Grid>
           <Grid item xs={4} className={classes.item}>
 
-            <PublishedComponent
+          <PublishedComponent
               pubRef="cmr_cs.ChequeStatusPicker"
-              value={!!edited && !!edited.chequeImportLineStatus ? edited.chequeImportLineStatus : ""}
+              value={!!edited && !!edited.chequeImportLineStatus ? (edited.chequeImportLineStatus).toLowerCase() : ""}
               readOnly={readOnly}
               required={true}
               onChange={(v) => this.updateAttribute("chequeImportLineStatus", v)}
