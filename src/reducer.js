@@ -18,7 +18,14 @@ function reducer(
         myChequesImportPageInfo: { totalCount: 0 },
 
         submittingMutation: false,
-        mutation: {},    
+        mutation: {},
+
+        duplicatesCheque: [],
+        historyModification: {},
+        fetchingHistoryModification: false,
+        fetchedHistoryModification: false,
+        errorHistoryModification: null,
+        historyModificationInfo: { totalCount: 0 },
     },
     action,
 ) {
@@ -70,7 +77,44 @@ function reducer(
                 ...state,
                 fetchedMyChequesImport: false,
                 errorChequesImport: formatServerError(action.payload)
-            };  
+            };
+
+        case 'HISTORY_CHEQUE_REQ': {
+            return {
+                ...state,
+                historyModification: {},
+                fetchingHistoryModification: true,
+                historyModificationInfo: { totalCount: 0 }
+
+            }
+        };
+        case 'HISTORY_CHEQUE_RESP': {
+            const data = parseData(action.payload.data.ChequeUpdatedHistories);
+            const sortedData = data.sort((a, b) => new Date(b.updatedDate) - new Date(a.updatedDate));
+
+            return {
+                ...state,
+                historyModification: sortedData,
+                fetchingHistoryModification: false,
+                fetchedHistoryModification: true,
+                errorHistoryModification: formatGraphQLError(action.payload),
+                historyModificationInfo: { totalCount: sortedData.length }
+            };
+        };
+
+        case 'HISTORY_CHEQUE_ERR': {
+            return {
+                ...state,
+                historyModification: {},
+                fetchingHistoryModification: false,
+                fetchedHistoryModification: false,
+                errorHistoryModification: formatServerError(action.payload),
+                historyModificationInfo: { totalCount: 0 }
+
+
+            }
+        };
+
         default:
             return state;
     }

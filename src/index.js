@@ -9,9 +9,15 @@ import ChequeImportPage from "./pages/ChequeImportPage";
 import ChequeStatusPicker from "./pickers/ChequeStatusPicker";
 import ChequeSanteActivitiesReport from "./reports/ChequeSanteActivitiesReport";
 import ChequeSanteActivitiesFullLocationReport from "./reports/ChequeSanteActivitiesFullLocationReport";
+import ChequeStatusPage from "./pages/ChequeStatusPage";
+import ChequeHistoryPage from "./pages/ChequeHistoryPage";
 
 const ROUTE_CMR_CS_LIST = "cheque/list"
 const ROUTE_CMR_CS_IMPORT = "cheque/import"
+const ROUTE_CMR_STATUS = "cheque/status"
+const ROUTE_CMR_DOUBLE = "cheque/double"
+const ROUTE_CMR_CS_DUPLICATE_LIST = "cheque/list/duplicate"
+const ROUTE_CMR_CS_HISTORY = "cheque/history"
 
 const DEFAULT_CONFIG = {
   "translations": [
@@ -21,8 +27,14 @@ const DEFAULT_CONFIG = {
   ],
   "reducers": [{ key: 'cmr_cs', reducer }],
   "refs": [
-    { key: "cmr_cs.ChequeStatusPicker", ref: ChequeStatusPicker }
+    {key: "cmr_cs.ChequeStatusPicker", ref: ChequeStatusPicker},
+    {key: "cmr_cs.ChequeDouble", ref: ROUTE_CMR_DOUBLE},
+    {key: "cmr_cs.ChequeList", ref: ROUTE_CMR_CS_LIST},
+    {key: "cmr_cs.ChequeStatus", ref: ROUTE_CMR_STATUS},
+    // key: "cmr_cs.ChequeDoubles", ref: ROUTE_CMR_DOUBLES
+    { key: "cmr_cs.ChequeHistoryPage", ref: ROUTE_CMR_CS_HISTORY}
   ],
+
   "reports":[
     {
       key: "invoice_fosa_cs",
@@ -221,6 +233,8 @@ const DEFAULT_CONFIG = {
   "core.Router": [
     { path: ROUTE_CMR_CS_LIST, component: ChequeListPage },
     { path: ROUTE_CMR_CS_IMPORT, component: ChequeImportPage },
+    { path: ROUTE_CMR_STATUS + '/:cheque_code', component: ChequeStatusPage },
+    { path: ROUTE_CMR_CS_HISTORY, component: ChequeHistoryPage },
   ],
 }
 

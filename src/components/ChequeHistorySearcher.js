@@ -7,7 +7,7 @@ import { withTheme, withStyles } from "@material-ui/core/styles";
 import { IconButton, Typography, Tooltip } from "@material-ui/core";
 import { Searcher } from "@openimis/fe-core";
 import TabIcon from "@material-ui/icons/Tab";
-import { fetchCheques, fetchChequeSummaries } from "../actions"
+import { fetchCheckModificationHistory } from "../actions"
 import ChequeFilter from "./ChequeFilter";
 import {
   withModulesManager,
@@ -19,14 +19,13 @@ import {
   PublishedComponent,
 } from "@openimis/fe-core";
 
-const CHEQUE_SEARCHER_CONTRIBUTION_KEY = "cheque.Searcher";
 
 const styles = (theme) => ({});
 
-class ChequeSearcher extends Component {
-  state = {
-    random: null,
-  };
+class ChequeHistorySearcher extends Component {
+    state = {
+        random: null,
+      };
 
   constructor(props) {
     super(props);
@@ -41,7 +40,7 @@ class ChequeSearcher extends Component {
 
 
   fetch = (prms) => {
-    this.props.fetchChequeSummaries(this.props.modulesManager, prms, !!this.claimAttachments);
+    this.props.fetchCheckModificationHistory();
   };
 
   rowIdentifier = (r) => r.uuid;
@@ -82,8 +81,9 @@ class ChequeSearcher extends Component {
   headers = () => {
     var result = [
       "cmr_cs.checknum",
-      "cmr_cs.checkstate",
-      "cmr_cs.checkdate",
+      "cmr_cs.description",
+      "cmr_cs.checkupdatedate",
+      "cmr_cs.user"
     ];
     return result;
   };
@@ -91,66 +91,49 @@ class ChequeSearcher extends Component {
   sorts = () => {
     var result = [
       ["chequeImportLineCode", true],
-      ["chequeImportLineStatus", true],
-      ["chequeImportLineDate", false]
+      ["description", true],
+      ["updatedDate", true],
+      ["user", false]
     ];
     return result;
   };
 
   itemFormatters = () => {
     var result = [
-      (c) => c.chequeImportLineCode,
-      (c) => formatMessage(this.props.intl, "cmr_cs", (c.chequeImportLineStatus).toLowerCase()),
-      (c) => formatDateFromISO(this.props.modulesManager, this.props.intl, c.chequeImportLineDate),
+      (c) => c.chequeImportLine.chequeImportLineCode,
+      (c) => c.description,
+      (c) => formatDateFromISO(this.props.modulesManager, this.props.intl, c.updatedDate),
+      (c) => c.user.loginName,
+
     ];
     return result;
   };
-  rowLocked = (selection, claim) => !!claim.clientMutationId;
-  rowHighlighted = (selection, claim) => !!this.highlightAmount && claim.claimed > this.highlightAmount;
-  rowHighlightedAlt = (selection, claim) =>
-    !!this.highlightAltInsurees &&
-    selection.filter((c) => _.isEqual(c.insuree, claim.insuree)).length &&
-    !selection.includes(claim);
 
   render() {
     const {
       intl,
-      myCheques,
-      myChequesPageInfo,
-      fetchingCheques,
-      fetchedMyCheques,
-      errorCheques,
-      FilterExt,
-      filterPaneContributionsKey,
+      fetchedHistoryModification,
+      fetchingHistoryModification,
+      errorHistoryModification,
+      historyModification,
+      historyModificationInfo,
       actions,
-      defaultFilters,
-      cacheFiltersKey,
       onDoubleClick,
-      cheques,
-      duplicatesCheque, 
-      duplicate,
-      actionsContributionKey,
     } = this.props;
     let count = !!this.state.random && this.state.random.value;
     if (!count) {
-      count = myChequesPageInfo.totalCount;
+      count = historyModification.length;
     }
     return (
       <Fragment>
         <Searcher
           module="claim"
-          defaultFilters={defaultFilters}
-          cacheFiltersKey={cacheFiltersKey}
-          FilterPane={defaultFilters=="none" ?null: ChequeFilter}
-          FilterExt={FilterExt}
-          filterPaneContributionsKey={filterPaneContributionsKey}
-          items={!!duplicate ? duplicatesCheque : myCheques}
-          defaultOrderBy="-chequeImportLineDate"
-          itemsPageInfo={myChequesPageInfo}
-          fetchingItems={fetchingCheques}
-          fetchedItems={fetchedMyCheques}
-          errorItems={errorCheques}
-          tableTitle={!!duplicate? formatMessageWithValues(intl, "cmr_cs", "duplicateTableList", { count }): formatMessageWithValues(intl, "cmr_cs", "table", { count })}
+          items={historyModification}
+          fetchingItems={fetchingHistoryModification}
+          fetchedItems={fetchedHistoryModification}
+          itemsPageInfo={historyModificationInfo}
+          errorItems={errorHistoryModification}
+          tableTitle={formatMessageWithValues(intl, "cmr_cs", "historyTitle", { count })}
           rowsPerPageOptions={this.rowsPerPageOptions}
           defaultPageSize={this.defaultPageSize}
           fetch={this.fetch}
@@ -163,7 +146,6 @@ class ChequeSearcher extends Component {
           itemFormatters={this.itemFormatters}
           actions={actions}
           sorts={this.sorts}
-          onDoubleClick={onDoubleClick}
         />
       </Fragment>
     );
@@ -171,18 +153,17 @@ class ChequeSearcher extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  fetchingCheques: state.cmr_cs.fetchingCheques,
-  errorCheques: state.cmr_cs.errorCheques,
-  fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
-  myCheques: state.cmr_cs.myCheques,
-  duplicatesCheque: state.cmr_cs.duplicatesCheque,
-  myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
+    fetchingHistoryModification: state.cmr_cs.fetchingHistoryModification,
+    errorHistoryModification: state.cmr_cs.errorHistoryModification,
+    fetchedHistoryModification: state.cmr_cs.fetchedHistoryModification,
+    historyModification: state.cmr_cs.historyModification,
+    historyModificationInfo: state.cmr_cs.historyModificationInfo
 });
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ fetchChequeSummaries }, dispatch);
+  return bindActionCreators({ fetchCheckModificationHistory }, dispatch);
 };
 
 export default withModulesManager(
-  connect(mapStateToProps, mapDispatchToProps)(injectIntl(withTheme(withStyles(styles)(ChequeSearcher)))),
+  connect(mapStateToProps, mapDispatchToProps)(injectIntl(withTheme(withStyles(styles)(ChequeHistorySearcher)))),
 );
