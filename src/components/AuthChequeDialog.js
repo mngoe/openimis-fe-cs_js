@@ -11,7 +11,7 @@ import {
     Box,
     Typography,
 } from '@material-ui/core';
-import { FormattedMessage, formatMessage, TextInput } from "@openimis/fe-core";
+import { FormattedMessage, formatMessage, TextInput ,baseApiUrl, apiHeaders} from "@openimis/fe-core";
 
 const styles = theme => ({
     primaryButton: theme.dialog.primaryButton,
@@ -20,6 +20,7 @@ const styles = theme => ({
 
 const AuthChequeDialog = ({ classes, cheque, onCancel, onConfirm, intl, user }) => {
     const [isAuthenticating, setIsAuthenticating] = useState(false);
+    const LOGINURL = `${baseApiUrl}/api_fhir_r4`;
     const [credentials, setCredentials] = useState({ username: user?.username });
     const [serverResponse, setServerResponse] = useState({ loginStatus: "", message: null });
     const requestSent = useRef(false);
@@ -42,25 +43,37 @@ const AuthChequeDialog = ({ classes, cheque, onCancel, onConfirm, intl, user }) 
 
         setIsAuthenticating(true);
 
-        try {
-            const response = await auth.login(credentials, "AuthChequeDialog");
-            if (response.payload?.errors?.length) {
-                handleLoginError(formatMessage(intl, "cmr_cs", "incorrectPassword"));
-                return;
-            }
+        const config = {
+            headers: {
+              'content-type': 'application/json',
+            },
+          };
+          try {
+            const reponseLogin = async () => {
+              fetch(`${LOGINURL}/login/`, {
+                headers:{'content-type': 'application/json'},
+                body: JSON.stringify(credentials),
+                method: "POST",
+              }).then(response => {
+                if (response.status >= 400) {
+                    handleLoginError(formatMessage(intl, "cmr_cs", "incorrectPassword"));
+                    setIsAuthenticating(false);
 
-            const { loginStatus, message } = response;
-            setServerResponse({ loginStatus, message:"" });
-
-            if (loginStatus === "CORE_AUTH_ERR") {
-                setIsAuthenticating(false);
-            } else {
-                onConfirm();
+                }else{
+                    setIsAuthenticating(false);
+                    onConfirm()
+                    onCancel()
+                }
+           
+              });
             }
-        } catch (error) {
-            handleLoginError(formatMessage(intl, "cmr_cs", "incorrectPassword"));
+            reponseLogin();
+          } catch (error) {
+            console.error(error);
+            console.log(error)
+          }
         }
-    };
+    
 
     useEffect(() => {
         requestSent.current = false;

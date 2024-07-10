@@ -78,6 +78,7 @@ function reducer(
                 fetchedMyChequesImport: false,
                 errorChequesImport: formatServerError(action.payload)
             };
+       
         case 'HISTORY_CHEQUE_REQ': {
             return {
                 ...state,
