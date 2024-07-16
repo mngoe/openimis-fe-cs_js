@@ -3,8 +3,8 @@ import { withTheme, withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { injectIntl } from 'react-intl';
-import { fetchCheques, fetchCheckModificationHistory } from "../actions";
-import ChequeSearcher from "../components/ChequeSearcher";
+import { fetchCheckModificationHistory } from "../actions";
+import ChequeHistorySearcher from "../components/ChequeHistorySearcher";
 import { 
     ProgressOrError, 
     Table, 
@@ -14,29 +14,34 @@ import {
     historyPush,
     formatMessageWithValues, 
     FormattedMessage } from "@openimis/fe-core";
-
+import { Button } from "@material-ui/core"
 const CHEQUE_FILTER_KEY = "cheque.Filter";
 
 const styles = (theme) => ({
-  page: theme.page,
-});
+    page: theme.page,
+  });
 
-class ChequeListPage extends Component {
+class ChequeHistoryPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
           defaultFilters: props.modulesManager.getConf("fe-cmr-cs", "cmr_cs.defaultFilters", {
-            "chequeStatus": {
-              "value": "new",
-               "filter": "chequeImportLineStatus: \"new\"",
-            },
+            // "chequeStatus": {
+            //   "value": "New",
+            //    "filter": "chequeImportLineStatus: \"New\"",
+            // },
           }),
         };
       }
     componentDidMount() {
         this.query();
         this.props.fetchCheckModificationHistory()
+        // const storedData = localStorage.getItem('duplicatesCheque');
+        // if (storedData) {
+        //   const parsedData = JSON.parse(storedData);
+        //   this.props.fetchDuplicatesCheque(parsedData);
+        // }
     }
 
 
@@ -50,7 +55,7 @@ class ChequeListPage extends Component {
         if (!!this.state.beforeCursor) {
             prms.push(`before: "${this.state.beforeCursor}"`)
         }
-        this.props.fetchCheques(prms);
+        this.props.fetchCheckModificationHistory(prms);
     }
 
     onDoubleClick = (i, newTab = false) => {
@@ -59,9 +64,6 @@ class ChequeListPage extends Component {
     canSubmitAll = () => true;
     handleDuplicateNavigation = () => {
         historyPush(this.props.modulesManager, this.props.history, "cmr_cs.DuplicateChequeListPage",[], null)
-    }
-    handleHistoryNavigation = ()=>{
-        historyPush(this.props.modulesManager, this.props.history, "cmr_cs.ChequeHistoryPage",[], null)
     }
 
     render() {
@@ -74,21 +76,13 @@ class ChequeListPage extends Component {
             myCheques,
             myChequesPageInfo
         } = this.props;
-        const actions = [
-            {
-                action: this.handleHistoryNavigation,
-                label: formatMessage(this.props.intl, "cmr_cs", "history"),
-                enabled: this.canSubmitAll
-              },
-
-          ];
+    
       
                return (
             <div className={classes.page}>
-                <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
-                <ChequeSearcher
+            <Helmet title={formatMessage(this.props.intl, "cmr_cs", "cmr_cs.ChequeListHeader")} />
+                <ChequeHistorySearcher
                 defaultFilters={this.state.defaultFilters}
-                actions={actions}
                 cacheFiltersKey="claimReviewsPageFiltersCache"
                 filterPaneContributionsKey={CHEQUE_FILTER_KEY}
                 onDoubleClick={this.onDoubleClick}
@@ -99,19 +93,16 @@ class ChequeListPage extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-    fetchingCheques: state.cmr_cs.fetchingCheques,
-    errorCheques: state.cmr_cs.errorCheques,
-    fetchedMyCheques: state.cmr_cs.fetchedMyCheques,
-    myCheques: state.cmr_cs.myCheques,
-    myChequesPageInfo: state.cmr_cs.myChequesPageInfo,
-    duplicatesCheque: state.cmr_cs.duplicatesCheque,
+    fetchingHistoryModification: state.cmr_cs.fetchingHistoryModification,
+    errorHistoryModification: state.cmr_cs.errorHistoryModification,
+    fetchedHistoryModification: state.cmr_cs.fetchedHistoryModification,
     historyModification: state.cmr_cs.historyModification
 });
 
 
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ fetchCheques, fetchCheckModificationHistory }, dispatch);
+    return bindActionCreators({ fetchCheckModificationHistory }, dispatch);
 };
 
-export default injectIntl(withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ChequeListPage))));
+export default injectIntl(withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ChequeHistoryPage))));

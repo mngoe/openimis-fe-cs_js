@@ -13,6 +13,7 @@ export function fetchCheques(mm, filters) {
 
 export function fetchChequeSummaries(mm, filters) {
     var projections = [
+        "idChequeImportLine",
         "chequeImportLineCode",
         "chequeImportLineDate", 
         "chequeImportLineStatus"
@@ -28,4 +29,56 @@ export function fetchChequesImport() {
         ["idChequeImport","importDate", "storedFile"]
     );
     return graphql(payload, 'CMS_CS_CHECKIMPORT');
+}
+
+export function updateChequeStatus(mm, chequeStatus, clientMutationLabel, idChequeImportLine, chequeImportLineStatus) {
+    let mutation = formatMutation("updateChequeStatus", formatChequeStatusGQL(mm, chequeStatus), clientMutationLabel, idChequeImportLine, chequeImportLineStatus);
+    var requestedDateTime = new Date();
+    chequeStatus.clientMutationId = mutation.clientMutationId;
+    return graphql(mutation.payload, ["CMS_CS_CHECKIMPORT_REQ", "CMS_CS_UPDATE_CHECKIMPORT_RESP", "CMS_CS_CHECKIMPORT_ERR"], {
+        clientMutationId: mutation.clientMutationId,
+        clientMutationLabel, idChequeImportLine,
+        requestedDateTime
+    });
+
+}
+
+export function formatChequeStatusGQL(mm, chequeStatus) {
+    return `
+      ${!!chequeStatus.chequeImportLineStatus ? `chequeImportLineStatus: "${capitalizeFirstLetter(chequeStatus.chequeImportLineStatus)}"` : ""}
+      ${!!chequeStatus.idChequeImportLine ? `idChequeImportLine: ${chequeStatus.idChequeImportLine}` : ""}
+    `;
+}
+
+function capitalizeFirstLetter(String){
+    if(!String){
+        return ''
+    }
+    return String.charAt(0).toUpperCase() +String.slice(1)
+}
+
+export function fetchCheckModificationHistory() {
+    const payload =
+        `query {
+        ChequeUpdatedHistories {
+        edges {
+        node {
+        id
+        idChequeUpdated
+        chequeImportLine{
+        id
+        idChequeImportLine
+        chequeImportLineCode
+        }
+        user{
+        loginName
+        }
+        updatedDate
+        description
+        }
+        }
+        }
+        }`
+
+    return graphql(payload, 'HISTORY_CHEQUE')
 }
