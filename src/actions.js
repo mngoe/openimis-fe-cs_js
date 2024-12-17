@@ -73,24 +73,29 @@ function capitalizeFirstLetter(String){
 export function fetchCheckModificationHistory() {
     const payload =
         `query {
-        ChequeUpdatedHistories {
-        edges {
-        node {
-        id
-        idChequeUpdated
-        chequeImportLine{
-        id
-        idChequeImportLine
-        chequeImportLineCode
-        }
-        user{
-        loginName
-        }
-        updatedDate
-        description
-        }
-        }
-        }
+            ChequeUpdatedHistories {
+                edges {
+                    node {
+                        id
+                        idChequeUpdated
+                        chequeImportLine{
+                            id
+                            idChequeImportLine
+                            chequeImportLineCode
+                        }
+                        user{
+                            loginName
+                        }
+                        updatedDate
+                        description
+                    }
+                }
+                pageInfo {
+                hasNextPage
+                endCursor
+                }
+
+            }
         }`
 
     return graphql(payload, 'HISTORY_CHEQUE')
