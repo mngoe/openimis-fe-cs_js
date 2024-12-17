@@ -53,7 +53,6 @@ export function updateChequeStatus(mm, chequeStatus, clientMutationLabel, idCheq
         clientMutationLabel, idChequeImportLine,
         requestedDateTime
     });
-
 }
 
 export function formatChequeStatusGQL(mm, chequeStatus) {
@@ -74,6 +73,7 @@ export function fetchCheckModificationHistory() {
     const payload =
         `query {
             ChequeUpdatedHistories {
+            totalCount
                 edges {
                     node {
                         id
@@ -92,11 +92,12 @@ export function fetchCheckModificationHistory() {
                 }
                 pageInfo {
                 hasNextPage
-                endCursor
+                hasPreviousPage
+                startCursor
                 }
 
             }
         }`
-
+    console.log("payload cheque table ", payload)
     return graphql(payload, 'HISTORY_CHEQUE')
 }

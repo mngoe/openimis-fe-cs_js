@@ -50,6 +50,7 @@ class ChequeHistorySearcher extends Component {
   }
 
   filtersToQueryParams = (state) => {
+    console.log("enter ", state )
     let prms = Object.keys(state.filters)
       .filter((f) => !!state.filters[f]["filter"])
       .map((f) => state.filters[f]["filter"]);
@@ -75,6 +76,7 @@ class ChequeHistorySearcher extends Component {
         prms.push(`before: "${state.beforeCursor}"`);
       }
     }
+    console.log('params obtain ', this.prms)
     return prms;
   };
 
@@ -124,6 +126,10 @@ class ChequeHistorySearcher extends Component {
     if (!count) {
       count = historyModification.length;
     }
+    console.log('props cheque ', this.props )
+    console.log("state cheque ", this.state)
+    console.log("state defaultpage  ", this.defaultPageSize)
+    console.log('row per page ', this.rowsPerPageOptions)
     return (
       <Fragment>
         <Searcher
