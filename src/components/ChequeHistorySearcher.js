@@ -128,6 +128,8 @@ class ChequeHistorySearcher extends Component {
     }
     console.log('props cheque ', this.props )
     console.log("state cheque ", this.state)
+    console.log("state defaultpage  ", this.defaultPageSize)
+    console.log('row per page ', this.rowsPerPageOptions)
     return (
       <Fragment>
         <Searcher
