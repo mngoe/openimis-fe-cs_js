@@ -40,7 +40,7 @@ class ChequeHistorySearcher extends Component {
 
 
   fetch = (prms) => {
-    this.props.fetchCheckModificationHistory();
+    this.props.fetchCheckModificationHistory(prms);
   };
 
   rowIdentifier = (r) => r.uuid;
@@ -76,7 +76,7 @@ class ChequeHistorySearcher extends Component {
         prms.push(`before: "${state.beforeCursor}"`);
       }
     }
-    console.log('params obtain ', this.prms)
+    console.log('params obtain ', prms)
     return prms;
   };
 

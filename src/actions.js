@@ -69,10 +69,10 @@ function capitalizeFirstLetter(String){
     return String.charAt(0).toUpperCase() +String.slice(1)
 }
 
-export function fetchCheckModificationHistory() {
+export function fetchCheckModificationHistory(filters) {
     const payload =
         `query {
-            ChequeUpdatedHistories {
+            ChequeUpdatedHistories(${filters.join(",")}) {
             totalCount
                 edges {
                     node {
