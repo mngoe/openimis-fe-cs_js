@@ -72,7 +72,7 @@ function capitalizeFirstLetter(String){
 export function fetchCheckModificationHistory(filters) {
     const payload =
         `query {
-            ChequeUpdatedHistories(${filters.join(",")}) {
+            ChequeUpdatedHistories {
             totalCount
                 edges {
                     node {
@@ -98,6 +98,6 @@ export function fetchCheckModificationHistory(filters) {
 
             }
         }`
-    console.log("payload cheque table ", payload)
+    console.log("payload cheque table ", filters)
     return graphql(payload, 'HISTORY_CHEQUE')
 }

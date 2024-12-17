@@ -98,7 +98,7 @@ function reducer(
                 fetchingHistoryModification: false,
                 fetchedHistoryModification: true,
                 errorHistoryModification: formatGraphQLError(action.payload),
-                historyModificationInfo: { totalCount: sortedData.length }
+                historyModificationInfo: pageInfo(action.payload.data.ChequeUpdatedHistories) 
             };
         }
         

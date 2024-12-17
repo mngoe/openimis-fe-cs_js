@@ -68,7 +68,7 @@ class ChequeHistorySearcher extends Component {
       this.setState({ random: null });
     }
     if (!forced.length && !random) {
-      prms.push(`first: ${state.pageSize}`);
+      prms.push(`first: ${100}`);
       if (!!state.afterCursor) {
         prms.push(`after: "${state.afterCursor}"`);
       }
@@ -129,7 +129,7 @@ class ChequeHistorySearcher extends Component {
     console.log('props cheque ', this.props )
     console.log("state cheque ", this.state)
     console.log("state defaultpage  ", this.defaultPageSize)
-    console.log('row per page ', this.rowsPerPageOptions)
+    console.log('row per page ', historyModification)
     return (
       <Fragment>
         <Searcher
