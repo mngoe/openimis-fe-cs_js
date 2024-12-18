@@ -91,6 +91,7 @@ export function fetchCheckModificationHistory(filters) {
                     }
                 }
                 pageInfo {
+                endCursor
                 hasNextPage
                 hasPreviousPage
                 startCursor
