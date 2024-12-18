@@ -135,6 +135,7 @@ class ChequeSearcher extends Component {
     if (!count) {
       count = myChequesPageInfo.totalCount;
     }
+    console.log("cheque searcher props ", this.props)
     return (
       <Fragment>
         <Searcher
