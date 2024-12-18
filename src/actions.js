@@ -70,35 +70,36 @@ function capitalizeFirstLetter(String){
 }
 
 export function fetchCheckModificationHistory(filters) {
-    const payload =
-        `query {
-            ChequeUpdatedHistories(${!!filters ? filters.join(","): ""}) {
+    const payload = `
+    query {
+        ChequeUpdatedHistories(${filters && filters.length ? filters.join(", ") : ""}) {
             totalCount
-                edges {
-                    node {
+            edges {
+                node {
+                    id
+                    idChequeUpdated
+                    chequeImportLine {
                         id
-                        idChequeUpdated
-                        chequeImportLine{
-                            id
-                            idChequeImportLine
-                            chequeImportLineCode
-                        }
-                        user{
-                            loginName
-                        }
-                        updatedDate
-                        description
+                        idChequeImportLine
+                        chequeImportLineCode
                     }
+                    user {
+                        loginName
+                    }
+                    updatedDate
+                    description
                 }
-                pageInfo {
+            }
+            pageInfo {
                 endCursor
                 hasNextPage
                 hasPreviousPage
                 startCursor
-                }
-
             }
-        }`
+        }
+    }
+`;
+
     console.log("payload cheque table ", filters)
     return graphql(payload, 'HISTORY_CHEQUE')
 }
