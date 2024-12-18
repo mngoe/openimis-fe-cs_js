@@ -50,16 +50,17 @@ class ChequeHistorySearcher extends Component {
   }
 
   filtersToQueryParams = (state) => {
-    console.log("enter ", state )
     let prms = Object.keys(state.filters)
       .filter((f) => !!state.filters[f]["filter"])
       .map((f) => state.filters[f]["filter"]);
     let forced = this.forcedFilters();
     let random = state.filters["random"];
     if (forced.length > 0) {
+      console.log('enter step 1')
       prms.push(...forced.map((f) => f.filter));
     }
     if (!!random) {
+      console.log('enter step 2', random)
       prms.push(`first: ${random.value}`);
       prms.push(`orderBy: ["dateClaimed", "?"]`);
       this.setState({ random });
@@ -68,7 +69,8 @@ class ChequeHistorySearcher extends Component {
       this.setState({ random: null });
     }
     if (!forced.length && !random) {
-      prms.push(`first: ${100}`);
+      console.log('enter stpe 3',state.pageSize)
+      prms.push(`first: ${state.pageSize}`);
       if (!!state.afterCursor) {
         prms.push(`after: "${state.afterCursor}"`);
       }
@@ -76,7 +78,7 @@ class ChequeHistorySearcher extends Component {
         prms.push(`before: "${state.beforeCursor}"`);
       }
     }
-    console.log('params obtain ', prms)
+    console.log("params ", prms)
     return prms;
   };
 
