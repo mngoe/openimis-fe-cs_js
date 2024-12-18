@@ -76,6 +76,7 @@ class ChequeSearcher extends Component {
         prms.push(`before: "${state.beforeCursor}"`);
       }
     }
+    console.log("params ", prms)
     return prms;
   };
 
