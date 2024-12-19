@@ -70,10 +70,6 @@ function capitalizeFirstLetter(String){
 }
 
 export function fetchCheckModificationHistory(filters) {
-    filters = filters.filter((filter) => {
-        const match = filter.match(/^first:\s*(\d+)$/); 
-        return match || filter.startsWith("after:") || filter.startsWith("last:");
-    });
     const payload = `
     query {
         ChequeUpdatedHistories(${filters && filters.length ? filters.join(", ") : ""}) {
