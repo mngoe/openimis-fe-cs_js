@@ -70,9 +70,13 @@ function capitalizeFirstLetter(String){
 }
 
 export function fetchCheckModificationHistory(filters) {
+
+    const validFilters = !!filters && Array.isArray(filters) && filters.length
+        ? filters.join(", ")
+        : "";
     const payload = `
     query {
-        ChequeUpdatedHistories(${filters && filters.length ? filters.join(", ") : ""}) {
+        ChequeUpdatedHistories(${validFilters}) {
             totalCount
             edges {
                 node {
