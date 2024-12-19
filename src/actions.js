@@ -72,7 +72,7 @@ function capitalizeFirstLetter(String){
 export function fetchCheckModificationHistory(filters) {
     const payload = `
     query {
-        ChequeUpdatedHistories {
+        ChequeUpdatedHistories(${filters && filters.length ? filters.join(", ") : ""}) {
             totalCount
             edges {
                 node {
