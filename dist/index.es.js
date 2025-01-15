@@ -1,5 +1,5 @@
 import _defineProperty from '@babel/runtime/helpers/defineProperty';
-import { formatServerError, parseData, formatGraphQLError, pageInfo, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, formatMutation, PublishedComponent, TextInput, Contributions, Searcher, formatMessageWithValues, formatDateFromISO, Helmet, historyPush, ProgressOrError, Table, apiHeaders, baseApiUrl, ConstantBasedPicker, NumberInput, FormPanel, FormattedMessage, withHistory, Form, journalize } from '@openimis/fe-core';
+import { formatServerError, parseData, formatGraphQLError, pageInfo, withModulesManager, formatMessage, MainMenuContribution, formatPageQueryWithCount, graphql, formatMutation, PublishedComponent, TextInput, Contributions, Searcher, formatMessageWithValues, formatDateFromISO, Helmet, historyPush, ProgressOrError, Table, apiHeaders, baseApiUrl, ConstantBasedPicker, FormPanel, FormattedMessage, withHistory, Form, journalize } from '@openimis/fe-core';
 import _extends from '@babel/runtime/helpers/extends';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
 import _createClass from '@babel/runtime/helpers/createClass';
@@ -13,13 +13,13 @@ import { ImportExport, ListAlt, ScreenShare } from '@material-ui/icons';
 import _ from 'lodash';
 import { withTheme, withStyles } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux';
-import _asyncToGenerator from '@babel/runtime/helpers/asyncToGenerator';
-import _regeneratorRuntime from '@babel/runtime/regenerator';
 import 'redux-api-middleware';
 import _toConsumableArray from '@babel/runtime/helpers/toConsumableArray';
 import { Grid, Divider, Typography, Input, Button, Dialog, DialogTitle, DialogContent, DialogContentText, Box, DialogActions } from '@material-ui/core';
 import '@material-ui/icons/Tab';
 import _debounce from 'lodash/debounce';
+import _asyncToGenerator from '@babel/runtime/helpers/asyncToGenerator';
+import _regeneratorRuntime from '@babel/runtime/regenerator';
 import ReplayIcon from '@material-ui/icons/Replay';
 import _slicedToArray from '@babel/runtime/helpers/slicedToArray';
 
@@ -38,12 +38,12 @@ var messages_en = {
 	"cmr_cs.table": "Table Check ({count})",
 	"cmr_cs.duplicateTableList": "Duplicate  ({count})",
 	"cmr_cs-list.null": "All",
-	"cmr_cs-list.New": "New",
-	"cmr_cs-list.Used": "Used",
-	"cmr_cs-list.Cancel": "Cancel",
-	"cmr_cs.New": "New",
-	"cmr_cs.Used": "Used",
-	"cmr_cs.Cancel": "Cancel",
+	"cmr_cs-list.new": "New",
+	"cmr_cs-list.used": "Used",
+	"cmr_cs-list.cancel": "Cancel",
+	"cmr_cs.new": "New",
+	"cmr_cs.used": "Used",
+	"cmr_cs.cancel": "Cancel",
 	"cmr_cs.checknum": "Check Number",
 	"cmr_cs.checkstate": "Check Status",
 	"cmr_cs.checkdate": "Check Creation Date",
@@ -108,13 +108,13 @@ var messages_fr = {
 	"cmr_cs.DuplicateImport": " Les cheques present dans le fichier ont été importés. Liste des doublons détecté :  ",
 	"cmr_cs.dateFrom": "De",
 	"cmr_cs.dateTo": "A",
-	"cmr_cs.New": "Nouveau",
-	"cmr_cs.Used": "Utilisé",
-	"cmr_cs.Cancel": "Annulé",
+	"cmr_cs.new": "Nouveau",
+	"cmr_cs.used": "Utilisé",
+	"cmr_cs.cancel": "Annulé",
 	"cmr_cs-list": "Statut cheque",
-	"cmr_cs-list.New": "Nouveau",
-	"cmr_cs-list.Used": "Utilisé",
-	"cmr_cs-list.Cancel": "Annulé",
+	"cmr_cs-list.new": "Nouveau",
+	"cmr_cs-list.used": "Utilisé",
+	"cmr_cs-list.cancel": "Annulé",
 	"cmr_cs-list.null": "Tous",
 	"cmr_cs.chequeNo": "Numéro Cheque",
 	"chequeStatus.checknum": "Numéro de chèque",
@@ -235,9 +235,7 @@ function reducer() {
           fetchingHistoryModification: false,
           fetchedHistoryModification: true,
           errorHistoryModification: formatGraphQLError(action.payload),
-          historyModificationInfo: {
-            totalCount: sortedData.length
-          }
+          historyModificationInfo: pageInfo(action.payload.data.ChequeUpdatedHistories)
         });
       }
     case 'HISTORY_CHEQUE_ERR':
@@ -264,7 +262,7 @@ function reducer() {
   }
 }
 
-var CHEQUE_STATUS = ['New', 'Used', 'Cancel'];
+var CHEQUE_STATUS = ['new', 'used', 'cancel'];
 var RIGHT_ADD = 131301;
 
 function _callSuper$b(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct$b() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
@@ -344,58 +342,18 @@ function updateChequeStatus(mm, chequeStatus, clientMutationLabel, idChequeImpor
   });
 }
 function formatChequeStatusGQL(mm, chequeStatus) {
-  return "\n      ".concat(!!chequeStatus.chequeImportLineStatus ? "chequeImportLineStatus: \"".concat(chequeStatus.chequeImportLineStatus, "\"") : "", "\n      ").concat(!!chequeStatus.idChequeImportLine ? "idChequeImportLine: ".concat(chequeStatus.idChequeImportLine) : "", "\n    ");
+  return "\n      ".concat(!!chequeStatus.chequeImportLineStatus ? "chequeImportLineStatus: \"".concat(capitalizeFirstLetter(chequeStatus.chequeImportLineStatus), "\"") : "", "\n      ").concat(!!chequeStatus.idChequeImportLine ? "idChequeImportLine: ".concat(chequeStatus.idChequeImportLine) : "", "\n    ");
 }
-
-// export function loadUser() {
-//     return fetch({
-//         endpoint: `${baseApiUrl}/core/users/current_user/`,
-//         method: "GET",
-//         types: ["CORE_USERS_CURRENT_USER_REQ", "CORE_USERS_CURRENT_USER_RESP", "CORE_USERS_CURRENT_USER_ERR"],
-//     });
-// }
-
-// export function login(credentials, source = null) {
-//     return async (dispatch) => {
-//         if (credentials) {
-//             const mutation = `mutation authenticate($username: String!, $password: String!) {
-//                 tokenAuth(username: $username, password: $password) {
-//                     refreshExpiresIn
-//                 }
-//             }`;
-
-//             const csrfToken = getCsrfToken();
-
-//             try {
-//                 const response = await dispatch(
-//                     graphqlMutation(mutation, credentials, ["CORE_AUTH_LOGIN_REQ", "CORE_AUTH_LOGIN_RESP", "CORE_AUTH_ERR"], {}, false, {
-//                         "X-CSRFToken": csrfToken
-//                     }),
-//                 );
-//                 if (response.payload?.errors?.length > 0) {
-//                     const errorMessage = response.payload.errors[0].message;
-//                     dispatch(authError({ message: errorMessage, name: "ApiError", status: 401 }, source));
-//                     return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
-//                 }
-//                 const action = await dispatch(loadUser());
-//                 return { loginStatus: action.type, message: action?.payload?.response?.detail ?? "" };
-//             } catch (error) {
-//                 dispatch(authError({ message: error.message, name: "ApiError", status: 401 }, source));
-//                 return { loginStatus: "CORE_AUTH_ERR", message: "Unauthorized" };
-//             }
-//         }
-//     };
-// }
-
-// export function authError(error, source = null) {
-//     return {
-//         type: "CORE_AUTH_ERR",
-//         payload: { ...error, source },
-//     };
-// }
-
-function fetchCheckModificationHistory() {
-  var payload = "query {\n        ChequeUpdatedHistories {\n        edges {\n        node {\n        id\n        idChequeUpdated\n        chequeImportLine{\n        id\n        idChequeImportLine\n        chequeImportLineCode\n        }\n        user{\n        loginName\n        }\n        updatedDate\n        description\n        }\n        }\n        }\n        }";
+function capitalizeFirstLetter(String) {
+  if (!String) {
+    return '';
+  }
+  return String.charAt(0).toUpperCase() + String.slice(1);
+}
+function fetchCheckModificationHistory(filters) {
+  var validFilters = !!filters && Array.isArray(filters) && filters.length ? filters.join(", ") : "";
+  var payload = "\n    query {\n        ChequeUpdatedHistories(".concat(validFilters, ") {\n            totalCount\n            edges {\n                node {\n                    id\n                    idChequeUpdated\n                    chequeImportLine {\n                        id\n                        idChequeImportLine\n                        chequeImportLineCode\n                    }\n                    user {\n                        loginName\n                    }\n                    updatedDate\n                    description\n                }\n            }\n            pageInfo {\n                endCursor\n                hasNextPage\n                hasPreviousPage\n                startCursor\n            }\n        }\n    }\n");
+  console.log("payload cheque table ", filters);
   return graphql(payload, 'HISTORY_CHEQUE');
 }
 
@@ -567,6 +525,7 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
           prms.push("before: \"".concat(state.beforeCursor, "\""));
         }
       }
+      console.log("params ", prms);
       return prms;
     });
     _defineProperty(_this, "headers", function () {
@@ -581,7 +540,7 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
       var result = [function (c) {
         return c.chequeImportLineCode;
       }, function (c) {
-        return formatMessage(_this.props.intl, "cmr_cs", c.chequeImportLineStatus);
+        return formatMessage(_this.props.intl, "cmr_cs", c.chequeImportLineStatus.toLowerCase());
       }, function (c) {
         return formatDateFromISO(_this.props.modulesManager, _this.props.intl, c.chequeImportLineDate);
       }];
@@ -635,6 +594,7 @@ var ChequeSearcher = /*#__PURE__*/function (_Component) {
       if (!count) {
         count = myChequesPageInfo.totalCount;
       }
+      console.log("cheque searcher props ", this.props);
       return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(Searcher, {
         module: "claim",
         defaultFilters: defaultFilters,
@@ -738,7 +698,6 @@ var ChequeListPage = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.query();
-      this.props.fetchCheckModificationHistory();
       // const storedData = localStorage.getItem('duplicatesCheque');
       // if (storedData) {
       //   const parsedData = JSON.parse(storedData);
@@ -1247,7 +1206,7 @@ var ChequeStatusMasterPanel = /*#__PURE__*/function (_FormPanel) {
         item: true,
         xs: 4,
         className: classes.item
-      }, /*#__PURE__*/React.createElement(NumberInput, {
+      }, /*#__PURE__*/React.createElement(TextInput, {
         module: "cmr_cs",
         label: formatMessage(intl, "cmr_cs", "chequeStatus.checknum"),
         required: true,
@@ -1262,7 +1221,7 @@ var ChequeStatusMasterPanel = /*#__PURE__*/function (_FormPanel) {
         className: classes.item
       }, /*#__PURE__*/React.createElement(PublishedComponent, {
         pubRef: "cmr_cs.ChequeStatusPicker",
-        value: !!edited && !!edited.chequeImportLineStatus ? edited.chequeImportLineStatus : "",
+        value: !!edited && !!edited.chequeImportLineStatus ? edited.chequeImportLineStatus.toLowerCase() : "",
         readOnly: readOnly,
         required: true,
         onChange: function onChange(v) {
@@ -1308,6 +1267,7 @@ var AuthChequeDialog = function AuthChequeDialog(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     isAuthenticating = _useState2[0],
     setIsAuthenticating = _useState2[1];
+  var LOGINURL = "".concat(baseApiUrl, "/api_fhir_r4");
   var _useState3 = useState({
       username: user === null || user === void 0 ? void 0 : user.username
     }),
@@ -1330,46 +1290,55 @@ var AuthChequeDialog = function AuthChequeDialog(_ref) {
     setIsAuthenticating(false);
   };
   var onSubmit = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(e) {
-      var _response$payload, response, loginStatus;
-      return _regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(e) {
+      var reponseLogin;
+      return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
           case 0:
             e.preventDefault();
             setIsAuthenticating(true);
-            _context.prev = 2;
-            _context.next = 5;
-            return auth.login(credentials, "AuthChequeDialog");
-          case 5:
-            response = _context.sent;
-            if (!((_response$payload = response.payload) !== null && _response$payload !== void 0 && (_response$payload = _response$payload.errors) !== null && _response$payload !== void 0 && _response$payload.length)) {
-              _context.next = 9;
-              break;
+            try {
+              reponseLogin = /*#__PURE__*/function () {
+                var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
+                  return _regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) switch (_context.prev = _context.next) {
+                      case 0:
+                        fetch("".concat(LOGINURL, "/login/"), {
+                          headers: {
+                            'content-type': 'application/json'
+                          },
+                          body: JSON.stringify(credentials),
+                          method: "POST"
+                        }).then(function (response) {
+                          if (response.status >= 400) {
+                            handleLoginError(formatMessage(intl, "cmr_cs", "incorrectPassword"));
+                            setIsAuthenticating(false);
+                          } else {
+                            setIsAuthenticating(false);
+                            onConfirm();
+                            onCancel();
+                          }
+                        });
+                      case 1:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }, _callee);
+                }));
+                return function reponseLogin() {
+                  return _ref3.apply(this, arguments);
+                };
+              }();
+              reponseLogin();
+            } catch (error) {
+              console.error(error);
+              console.log(error);
             }
-            handleLoginError(formatMessage(intl, "cmr_cs", "incorrectPassword"));
-            return _context.abrupt("return");
-          case 9:
-            loginStatus = response.loginStatus, response.message;
-            setServerResponse({
-              loginStatus: loginStatus,
-              message: ""
-            });
-            if (loginStatus === "CORE_AUTH_ERR") {
-              setIsAuthenticating(false);
-            } else {
-              onConfirm();
-            }
-            _context.next = 17;
-            break;
-          case 14:
-            _context.prev = 14;
-            _context.t0 = _context["catch"](2);
-            handleLoginError(formatMessage(intl, "cmr_cs", "incorrectPassword"));
-          case 17:
+          case 4:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
-      }, _callee, null, [[2, 14]]);
+      }, _callee2);
     }));
     return function onSubmit(_x) {
       return _ref2.apply(this, arguments);
@@ -1801,7 +1770,7 @@ var ChequeHistorySearcher = /*#__PURE__*/function (_Component) {
       random: null
     });
     _defineProperty(_this, "fetch", function (prms) {
-      _this.props.fetchCheckModificationHistory();
+      _this.props.fetchCheckModificationHistory(prms);
     });
     _defineProperty(_this, "rowIdentifier", function (r) {
       return r.uuid;
@@ -1815,11 +1784,13 @@ var ChequeHistorySearcher = /*#__PURE__*/function (_Component) {
       var forced = _this.forcedFilters();
       var random = state.filters["random"];
       if (forced.length > 0) {
+        console.log('enter step 1');
         prms.push.apply(prms, _toConsumableArray(forced.map(function (f) {
           return f.filter;
         })));
       }
       if (!!random) {
+        console.log('enter step 2', random);
         prms.push("first: ".concat(random.value));
         prms.push("orderBy: [\"dateClaimed\", \"?\"]");
         _this.setState({
@@ -1832,6 +1803,7 @@ var ChequeHistorySearcher = /*#__PURE__*/function (_Component) {
         });
       }
       if (!forced.length && !random) {
+        console.log('enter stpe 3', state.pageSize);
         prms.push("first: ".concat(state.pageSize));
         if (!!state.afterCursor) {
           prms.push("after: \"".concat(state.afterCursor, "\""));
@@ -1840,6 +1812,7 @@ var ChequeHistorySearcher = /*#__PURE__*/function (_Component) {
           prms.push("before: \"".concat(state.beforeCursor, "\""));
         }
       }
+      console.log("params ", prms.join(", "));
       return prms;
     });
     _defineProperty(_this, "headers", function () {
@@ -1891,6 +1864,10 @@ var ChequeHistorySearcher = /*#__PURE__*/function (_Component) {
       if (!count) {
         count = historyModification.length;
       }
+      console.log('props cheque ', this.props);
+      console.log("state cheque ", this.state);
+      console.log("state defaultpage  ", this.defaultPageSize);
+      console.log('row per page ', historyModification);
       return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(Searcher, {
         module: "claim",
         items: historyModification,
@@ -1981,7 +1958,6 @@ var ChequeHistoryPage = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.query();
-      this.props.fetchCheckModificationHistory();
       // const storedData = localStorage.getItem('duplicatesCheque');
       // if (storedData) {
       //   const parsedData = JSON.parse(storedData);
