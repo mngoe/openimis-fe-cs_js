@@ -41,7 +41,6 @@ class ChequeHistorySearcher extends Component {
 
   fetch = (prms) => {
     this.props.fetchCheckModificationHistory(prms);
-  };
 
   rowIdentifier = (r) => r.uuid;
 
@@ -56,11 +55,9 @@ class ChequeHistorySearcher extends Component {
     let forced = this.forcedFilters();
     let random = state.filters["random"];
     if (forced.length > 0) {
-      console.log('enter step 1')
       prms.push(...forced.map((f) => f.filter));
     }
     if (!!random) {
-      console.log('enter step 2', random)
       prms.push(`first: ${random.value}`);
       prms.push(`orderBy: ["dateClaimed", "?"]`);
       this.setState({ random });
@@ -69,7 +66,6 @@ class ChequeHistorySearcher extends Component {
       this.setState({ random: null });
     }
     if (!forced.length && !random) {
-      console.log('enter stpe 3',state.pageSize)
       prms.push(`first: ${state.pageSize}`);
       if (!!state.afterCursor) {
         prms.push(`after: "${state.afterCursor}"`);
@@ -78,7 +74,6 @@ class ChequeHistorySearcher extends Component {
         prms.push(`before: "${state.beforeCursor}"`);
       }
     }
-    console.log("params ", prms.join(", "))
     return prms;
   };
 
@@ -128,10 +123,6 @@ class ChequeHistorySearcher extends Component {
     if (!count) {
       count = historyModification.length;
     }
-    console.log('props cheque ', this.props )
-    console.log("state cheque ", this.state)
-    console.log("state defaultpage  ", this.defaultPageSize)
-    console.log('row per page ', historyModification)
     return (
       <Fragment>
         <Searcher

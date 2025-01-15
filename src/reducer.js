@@ -78,7 +78,6 @@ function reducer(
                 fetchedMyChequesImport: false,
                 errorChequesImport: formatServerError(action.payload)
             };
-       
         case 'HISTORY_CHEQUE_REQ': {
             return {
                 ...state,
@@ -120,7 +119,6 @@ function reducer(
                 duplicatesCheque: action.payload,
                 duplicateChequePageInfo: {totalCount: action.payload.length}
             }
-
 
         default:
             return state;
