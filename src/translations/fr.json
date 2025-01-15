@@ -31,13 +31,6 @@
     "cmr_cs-list.cancel": "Annulé",
     "cmr_cs-list.null": "Tous",
     "cmr_cs.chequeNo":"Numéro Cheque",
-    "cmr_cs.DuplicateImport":" Les cheques present dans le fichier ont été importés. Liste des doublons détecté :  ",
-    "cmr_cs.new": "Nouveau",
-    "cmr_cs.used": "Utilisé",
-    "cmr_cs.cancel": "Annulé",
-    "cmr_cs-list.new": "Nouveau",
-    "cmr_cs-list.used": "Utilisé",
-    "cmr_cs-list.cancel": "Annulé",
     "chequeStatus.checknum":"Numéro de chèque",
     "chequeStatus.checkdate":"date",
     "password": "Mots de passe",
@@ -52,5 +45,4 @@
     "cmr_cs.description":"Description",
     "cmr_cs.checkupdatedate":"Date de Modification",
     "cmr_cs.user":"Utilisateur"
-
 }
