@@ -10,23 +10,23 @@ function reducer(
         fetchedMyCheque: false,
         myCheques: [],
         myChequesPageInfo: { totalCount: 0 },
-
+        authError: null,
         fetchingChequesImport: false,
         errorChequesImport: null,
         fetchedMyChequeImport: false,
         myChequesImport: [],
         myChequesImportPageInfo: { totalCount: 0 },
-
         submittingMutation: false,
         mutation: {},
-
         duplicatesCheque: [],
         historyModification: {},
         fetchingHistoryModification: false,
         fetchedHistoryModification: false,
         errorHistoryModification: null,
-        historyModificationInfo: { totalCount: 0 },
-    },
+        historyModificationInfo: {totalCount: 0},
+
+        duplicateChequePageInfo: {totalCount: 0}
+        },
     action,
 ) {
     switch (action.type) {
@@ -78,30 +78,29 @@ function reducer(
                 fetchedMyChequesImport: false,
                 errorChequesImport: formatServerError(action.payload)
             };
-
         case 'HISTORY_CHEQUE_REQ': {
             return {
                 ...state,
                 historyModification: {},
                 fetchingHistoryModification: true,
-                historyModificationInfo: { totalCount: 0 }
+                historyModificationInfo:{totalCount: 0}
 
             }
-        };
+        }
         case 'HISTORY_CHEQUE_RESP': {
             const data = parseData(action.payload.data.ChequeUpdatedHistories);
             const sortedData = data.sort((a, b) => new Date(b.updatedDate) - new Date(a.updatedDate));
-
+        
             return {
                 ...state,
-                historyModification: sortedData,
+                historyModification: sortedData, 
                 fetchingHistoryModification: false,
                 fetchedHistoryModification: true,
                 errorHistoryModification: formatGraphQLError(action.payload),
-                historyModificationInfo: { totalCount: sortedData.length }
+                historyModificationInfo: pageInfo(action.payload.data.ChequeUpdatedHistories) 
             };
-        };
-
+        }
+        
         case 'HISTORY_CHEQUE_ERR': {
             return {
                 ...state,
@@ -109,11 +108,17 @@ function reducer(
                 fetchingHistoryModification: false,
                 fetchedHistoryModification: false,
                 errorHistoryModification: formatServerError(action.payload),
-                historyModificationInfo: { totalCount: 0 }
+                historyModificationInfo:{totalCount: 0}
 
 
             }
-        };
+        }
+        case 'DUPLICATED_CHEQUE':
+            return {
+                ...state,
+                duplicatesCheque: action.payload,
+                duplicateChequePageInfo: {totalCount: action.payload.length}
+            }
 
         default:
             return state;

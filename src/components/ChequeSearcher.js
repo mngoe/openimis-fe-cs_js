@@ -76,6 +76,7 @@ class ChequeSearcher extends Component {
         prms.push(`before: "${state.beforeCursor}"`);
       }
     }
+    console.log("params ", prms)
     return prms;
   };
 
@@ -135,6 +136,7 @@ class ChequeSearcher extends Component {
     if (!count) {
       count = myChequesPageInfo.totalCount;
     }
+    console.log("cheque searcher props ", this.props)
     return (
       <Fragment>
         <Searcher

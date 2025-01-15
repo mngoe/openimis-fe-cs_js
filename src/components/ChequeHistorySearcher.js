@@ -40,8 +40,7 @@ class ChequeHistorySearcher extends Component {
 
 
   fetch = (prms) => {
-    this.props.fetchCheckModificationHistory();
-  };
+    this.props.fetchCheckModificationHistory(prms);
 
   rowIdentifier = (r) => r.uuid;
 
