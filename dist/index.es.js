@@ -2,9 +2,9 @@ import _defineProperty from '@babel/runtime/helpers/defineProperty';
 import _extends from '@babel/runtime/helpers/extends';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
 import _createClass from '@babel/runtime/helpers/createClass';
-import _inherits from '@babel/runtime/helpers/inherits';
 import _possibleConstructorReturn from '@babel/runtime/helpers/possibleConstructorReturn';
 import _getPrototypeOf from '@babel/runtime/helpers/getPrototypeOf';
+import _inherits from '@babel/runtime/helpers/inherits';
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -31,27 +31,19 @@ var messages_fr = {
 var RIGHT_ADD = 111002;
 var RIGHT_SUBMIT = 111007;
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
 var CmrCseMainMenu = /*#__PURE__*/function (_Component) {
-  _inherits(CmrCseMainMenu, _Component);
-
-  var _super = _createSuper(CmrCseMainMenu);
-
   function CmrCseMainMenu() {
     _classCallCheck(this, CmrCseMainMenu);
-
-    return _super.apply(this, arguments);
+    return _callSuper(this, CmrCseMainMenu, arguments);
   }
-
-  _createClass(CmrCseMainMenu, [{
+  _inherits(CmrCseMainMenu, _Component);
+  return _createClass(CmrCseMainMenu, [{
     key: "render",
     value: function render() {
       var rights = this.props.rights;
       var entries = [];
-
       if (!!rights.filter(function (r) {
         return r >= RIGHT_ADD && r <= RIGHT_SUBMIT;
       }).length) {
@@ -67,7 +59,6 @@ var CmrCseMainMenu = /*#__PURE__*/function (_Component) {
           route: "/cheque/list"
         });
       }
-
       if (!entries.length) return null;
       return /*#__PURE__*/React.createElement(MainMenuContribution, _extends({}, this.props, {
         header: formatMessage(this.props.intl, "cheque management", "cheque.mainMenu"),
@@ -76,21 +67,16 @@ var CmrCseMainMenu = /*#__PURE__*/function (_Component) {
       }));
     }
   }]);
-
-  return CmrCseMainMenu;
 }(Component);
-
 var mapStateToProps = function mapStateToProps(state) {
   return {
     rights: !!state.core && !!state.core.user && !!state.core.user.i_user ? state.core.user.i_user.rights : []
   };
 };
-
 var CmrCsModuleMainMenu = withModulesManager(injectIntl(connect(mapStateToProps)(CmrCseMainMenu)));
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var DEFAULT_CONFIG = {
   "translations": [{
     key: "en",
