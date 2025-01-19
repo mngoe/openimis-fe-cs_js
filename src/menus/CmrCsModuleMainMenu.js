@@ -3,14 +3,13 @@ import { injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { ListAlt, ScreenShare, ImportExport } from "@material-ui/icons";
 import { formatMessage, MainMenuContribution, withModulesManager } from "@openimis/fe-core";
-import { RIGHT_ADD, RIGHT_SUBMIT } from "../constants";
+import { RIGHT_ADD } from "../constants";
 
 class CmrCseMainMenu extends Component {
     render() {
       const { rights } = this.props;
       let entries = [];
-      if (!!rights.filter((r) => r >= RIGHT_ADD && r <= RIGHT_SUBMIT).length) {
-        // RIGHT_SEARCH is shared by HF & HQ staff)
+      if (!!rights.filter((r) => r == RIGHT_ADD).length) {
         entries.push({
           text: formatMessage(this.props.intl, "cheque", "menu.chequeImport"),
           icon: <ImportExport />,

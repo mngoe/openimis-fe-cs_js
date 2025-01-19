@@ -1,4 +1,4 @@
 import _ from "lodash";
 
-export const RIGHT_ADD = 111002;
-export const RIGHT_SUBMIT = 111007;
+export const CHEQUE_STATUS = ['new', 'used', 'cancel'];
+export const RIGHT_ADD = 131301;
